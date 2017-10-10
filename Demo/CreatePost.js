@@ -13,6 +13,17 @@ class CreatePost extends Component {
     };
   }
 
+  _createPost = async () => {
+    const { title, body } = this.state;
+    console.log('in createPost this.state: ', this.state);
+    await this.props.createPostMutation({
+      variables: {
+        title,
+        body
+      }
+    });
+  };
+
   render() {
     return (
       <View style={{width: 300, height: 200}}>
@@ -37,17 +48,6 @@ class CreatePost extends Component {
       </View>
     )
   }
-
-  _createPost = async () => {
-    const { title, body } = this.state;
-    console.log('in createPost this.state: ', this.state);
-    await this.props.createPostMutation({
-      variables: {
-        title,
-        body
-      }
-    });
-  };
 }
 
 const CREATE_POST_MUTATION = gql`

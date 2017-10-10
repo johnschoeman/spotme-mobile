@@ -6,6 +6,18 @@ import { NavigationActions } from 'react-navigation'
 import styles from '../../../styles/styles'
 
 export default class SessionFormScreen extends React.Component {
+
+  static navigationOptions = ({navigation}) => {
+    switch (navigation.state.params.formType) {
+      case 'logIn':
+      return { title: 'Log In' }
+      case 'signUp':
+      return { title: 'Sign Up' }
+      default:
+      return { title: 'No Title' }
+    }
+  }
+  
   constructor(props) {
     super(props)
 
@@ -14,22 +26,6 @@ export default class SessionFormScreen extends React.Component {
       password: ''
     }
 
-    this._handleChange = this._handleChange.bind(this)
-  }
-
-  static navigationOptions = ({navigation}) => {
-    switch (navigation.state.params.formType) {
-      case 'logIn':
-        return { title: 'Log In' }
-      case 'signUp':
-        return { title: 'Sign Up' }
-      default:
-        return { title: 'No Title' }
-    }
-  }
-
-  _handleChange (fieldName) {
-    return (e) => this.setState({[fieldName]: e.target.value})
   }
 
   render() {
@@ -44,10 +40,10 @@ export default class SessionFormScreen extends React.Component {
     return (
       <View style={styles.screen}>
         <FormLabel>Username</FormLabel>
-        <FormInput onChangeText={this._handleChange('username')}/>
+        <FormInput onChangeText={(username) => this.setState({username})}/>
         <FormValidationMessage>Error message</FormValidationMessage>
         <FormLabel>Password</FormLabel>
-        <FormInput onChangeText={this._handleChange('password')}/>
+        <FormInput onChangeText={(password) => this.setState({password})}/>
         <FormValidationMessage>Error message</FormValidationMessage>
         {/* TODO Button onPress should be a function mapped from a thunk action creator */}
         <Button

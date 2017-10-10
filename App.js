@@ -1,5 +1,5 @@
 import React from 'react';
-import { UIManager, StyleSheet, Text, View } from 'react-native';
+import { UIManager } from 'react-native';
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
 
