@@ -1,5 +1,5 @@
 # project: cj8lu8ukt06rv0132uuni3tx7
-# version: 2
+# version: 3
 
 type User implements Node {
   id: ID! @isUnique
@@ -24,4 +24,12 @@ type Post implements Node {
   updatedAt: DateTime!
   title: String!
   body: String!
+}
+
+type Spot implements Node {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  latitude: Float!
+  longitude: Float!
 }
