@@ -7,8 +7,8 @@ import configureStore, { client } from './src/redux/store/store';
 import { colors } from './src/utils/constants';
 
 // switch out MainNavigator for Demo to test John's graphql demo app
-import Demo from './Demo/Demo';
-// import MainNavigator from './src/components/navigators/Main'
+// import Demo from './Demo/Demo';
+import MainNavigator from './src/components/navigators/Main'
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -25,7 +25,7 @@ export default class App extends React.Component {
     return (
       <ApolloProvider store={store} client={client}>
         <ThemeProvider theme={colors}>
-          <Demo/>
+          <MainNavigator/>
         </ThemeProvider>
       </ApolloProvider>
     );
