@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk'
 
-import reducers from './reducers';
+import rootReducer from '../reducers/rootReducer'
+
+// Apollo redux setup learned from https://github.com/EQuimper/twitterclone-mobile-starter/blob/master/src/store.js
 
 const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj8lu8ukt06rv0132uuni3tx7',
@@ -15,8 +17,12 @@ export const client = new ApolloClient({
 
 const middlewares = [client.middleware(), thunk];
 
-export const store = createStore(
-  reducers(client),
-  undefined,
-  composeWithDevTools(applyMiddleware(...middlewares)),
-);
+const configureStore = (preloadedState = {}) => (
+  createStore(
+    rootReducer(client),
+    preloadedState,
+    composeWithDevTools(applyMiddleware(...middlewares))
+  )
+)
+
+export default configureStore
