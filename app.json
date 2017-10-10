@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "twitter-clone-graphql",
-    "description": "An empty new project",
+    "name": "spotme-mobile",
+    "description": "spotme on mobile",
     "slug": "mobile",
     "privacy": "public",
-    "sdkVersion": "19.0.0",
+    "sdkVersion": "21.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
