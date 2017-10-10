@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, Button } from 'react-native'
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-import { NavigationActions } from 'react-navigation'
 
-import styles from '../../../styles/styles'
+
+import SessionForm from './SessionForm'
+
 
 export default class SessionFormScreen extends React.Component {
 
@@ -17,7 +16,7 @@ export default class SessionFormScreen extends React.Component {
       return { title: 'No Title' }
     }
   }
-  
+
   constructor(props) {
     super(props)
 
@@ -29,27 +28,10 @@ export default class SessionFormScreen extends React.Component {
   }
 
   render() {
-    const resetNavigateHome = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Home' })
-      ]
-    })
-    const { dispatch } = this.props.navigation;
+    const { navigation } = this.props
 
     return (
-      <View style={styles.screen}>
-        <FormLabel>Username</FormLabel>
-        <FormInput onChangeText={(username) => this.setState({username})}/>
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Password</FormLabel>
-        <FormInput onChangeText={(password) => this.setState({password})}/>
-        <FormValidationMessage>Error message</FormValidationMessage>
-        {/* TODO Button onPress should be a function mapped from a thunk action creator */}
-        <Button
-          onPress={() => dispatch(resetNavigateHome)}
-          title='Submit' />
-      </View>
+      <SessionForm navigation={navigation}/>
     )
   }
 
