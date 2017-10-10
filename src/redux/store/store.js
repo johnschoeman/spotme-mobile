@@ -8,7 +8,7 @@ import rootReducer from '../reducers/rootReducer'
 // Apollo redux setup learned from https://github.com/EQuimper/twitterclone-mobile-starter/blob/master/src/store.js
 
 const networkInterface = createNetworkInterface({
-  uri: '', // TODO fill in correct backend uri
+  uri: 'https://api.graph.cool/simple/v1/cj8lu8ukt06rv0132uuni3tx7',
 });
 
 export const client = new ApolloClient({

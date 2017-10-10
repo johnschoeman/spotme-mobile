@@ -3,7 +3,7 @@ import { UIManager, StyleSheet, Text, View } from 'react-native';
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
 
-import { store, client } from './src/store';
+import configureStore, { client } from './src/redux/store/store';
 import { colors } from './src/utils/constants';
 
 // switch out MainNavigator for Demo to test John's graphql demo app
@@ -13,6 +13,12 @@ import Demo from './Demo/Demo';
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
+
+const preloadedState = {
+
+}
+
+const store = configureStore(preloadedState)
 
 export default class App extends React.Component {
   render() {
