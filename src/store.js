@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import thunk from 'redux-thunk';
 
-import reducers from './reducers';
+import reducers from './redux/reducers/rootReducer';
 
 const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj8lu8ukt06rv0132uuni3tx7',
