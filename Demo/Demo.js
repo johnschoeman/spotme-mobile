@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 
-import Welcome from './src/components/Welcome';
-import PostList from './src/components/PostList';
-import CreatePost from './src/components/CreatePost';
+import Welcome from './Welcome';
+import PostList from './PostList';
+import CreatePost from './CreatePost';
 
 export default class Demo extends React.Component {
   render() {

@@ -6,7 +6,9 @@ import { ThemeProvider } from 'styled-components';
 import { store, client } from './src/store';
 import { colors } from './src/utils/constants';
 
-import Demo from './Demo';
+// switch out MainNavigator for Demo to test John's graphql demo app
+import Demo from './Demo/Demo';
+// import MainNavigator from './src/components/navigators/Main'
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
