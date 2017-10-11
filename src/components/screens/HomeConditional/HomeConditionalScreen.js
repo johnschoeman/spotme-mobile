@@ -7,14 +7,21 @@ import WelcomeScreen from '../Welcome/WelcomeScreen'
 
 export default class HomeConditionalScreen extends React.Component {
 
+  static navigationOptions = (props) => {
+    // const { isLoggedIn } = props
+    // need to redo if we are keeping the title bar.
+    // navigationOptions does not have access to all of props,
+    // so isLoggedIn is always considered undefined here
+    // more info: https://reactnavigation.org/docs/navigators/navigation-options
+    return {
+      // title: isLoggedIn ? 'Home' : 'Welcome',
+      title: 'Home'
+    }
+  }
+
   constructor(props) {
     super(props)
   }
-
-  static navigationOptions = {
-    title: false ? 'Home' : 'Welcome', // TODO temp setting while awaiting auth & redux
-    // title: this.props.isLoggedIn ? 'Home' : 'Welcome',
-  };
 
   render() {
     const { isLoggedIn, navigation } = this.props
