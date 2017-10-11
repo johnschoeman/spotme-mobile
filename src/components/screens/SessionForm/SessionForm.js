@@ -1,25 +1,60 @@
 import React, { Component } from 'react';
-// import { GC_USER_ID, GC_AUTH_TOKEN } from '../constants';
-import { gql, graphql, compose } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import { AsyncStorage, View, Button } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 
+import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../utils/constants';
+import { CREATE_USER_MUTATION, SIGNIN_USER_MUTATION } from
+  '../../../graphql/mutations/SessionMutations'
 import styles from '../../../styles/styles'
-
-const GC_USER_ID = 'graphcool-user-id'
-const GC_AUTH_TOKEN = 'graphcool-auth-token'
-
 
 class SessionForm extends Component {
 
-  state = {
-    email: '',
-    password: '',
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      email: '',
+      password: '',
+    };
+  }
+
+  _handleSubmit = async () => {
+    const { email, password } = this.state
+    const userVariables = { variables: { email, password } }
+    let result;
+    if (this.props.navigation.state.params.formType === 'logIn') {
+      result = await this.props.signinUserMutation(userVariables)
+    } else {
+      result = await this.props.createUserMutation(userVariables)
+    }
+
+    this._saveUserData(result)
+    this._navigateHome()
+  }
+
+  _saveUserData = (res) => {
+    const { user, token } = res.data.signinUser
+    AsyncStorage.setItem(GC_USER_ID, user.id)
+    AsyncStorage.setItem(GC_AUTH_TOKEN, token)
+
+    this.props.receiveCurrentUser( { token, ...user } )
+
+    console.log('*** RESULT', res);
+    AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
+  }
+
+  _navigateHome() {
+    const resetNavigateHome = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHome)
+  }
 
   render() {
-
 
     return (
       <View style={styles.screen}>
@@ -31,88 +66,14 @@ class SessionForm extends Component {
         <FormValidationMessage>Error message</FormValidationMessage>
 
         <Button
-          onPress={() => this._confirm()}
+          onPress={() => this._handleSubmit()}
           title='Submit' />
       </View>
     )
   }
 
-  _confirm = async () => {
-    const { email, password } = this.state
-    if (this.props.navigation.state.params.formType === 'logIn') {
-      const result = await this.props.signinUserMutation({
-        variables: {
-          email,
-          password
-        }
-      })
-      const id = result.data.signinUser.user.id
-      const token = result.data.signinUser.token
-      this._saveUserData(id, token)
-    } else {
-      const result = await this.props.createUserMutation({
-        variables: {
-          email,
-          password
-        }
-      })
-      const id = result.data.signinUser.user.id
-      const token = result.data.signinUser.token
-
-      this._saveUserData(id, token)
-      const resetNavigateHome = NavigationActions.reset({
-        index: 0,
-        actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
-      })
-      const { dispatch } = this.props.navigation;
-      dispatch(resetNavigateHome)
-    }
-  }
-
-  _saveUserData = (id, token) => {
-    AsyncStorage.setItem(GC_USER_ID, id)
-    AsyncStorage.setItem(GC_AUTH_TOKEN, token)
-  }
 
 }
-
-const CREATE_USER_MUTATION = gql`
-mutation CreateUserMutation($email: String!, $password: String!) {
-  createUser(
-    authProvider: {
-      email: {
-        email: $email,
-        password: $password
-      }
-    }
-  ) {
-    id
-  }
-  signinUser(email: {
-    email: $email,
-    password: $password
-  }) {
-    token
-    user {
-      id
-    }
-  }
-}
-`
-
-const SIGNIN_USER_MUTATION = gql`
-mutation SigninUserMutation($email: String!, $password: String!) {
-  signinUser(email: {
-    email: $email,
-    password: $password
-  }) {
-    token
-    user {
-      id
-    }
-  }
-}
-`
 
 export default compose(
 graphql(CREATE_USER_MUTATION, { name: 'createUserMutation' }),
