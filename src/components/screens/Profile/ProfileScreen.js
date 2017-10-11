@@ -20,6 +20,18 @@ export default class ProfileScreen extends React.Component {
           title='Personal Information'
           description='Edit your profile.'
           onPress={() => navigate('')}/>
+        <ProfileButton
+          title='Vehicles'
+          description='Add your cars.'
+          onPress={() => navigate('')}/>
+        <ProfileButton
+          title='Payment Information'
+          description='Add preferred payment type.'
+          onPress={() => navigate('')}/>
+        <ProfileButton
+          title='Contact'
+          description='Talk to us.'
+          onPress={() => navigate('')}/>
       </View>
     )
   }
