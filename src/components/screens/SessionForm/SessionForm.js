@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation'
 
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../utils/constants';
 import { CREATE_USER_MUTATION, SIGNIN_USER_MUTATION } from
-  '../../../graphql/session/mutations'
+  '../../../graphql/mutations/SessionMutations'
 import styles from '../../../styles/styles'
 
 class SessionForm extends Component {
