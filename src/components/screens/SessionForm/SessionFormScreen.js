@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-import SessionForm from './SessionForm'
+import SessionFormContainer from './SessionFormContainer'
 
 
 export default class SessionFormScreen extends React.Component {
@@ -17,15 +17,15 @@ export default class SessionFormScreen extends React.Component {
     }
   }
 
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   render() {
     const { navigation } = this.props
 
     return (
-      <SessionForm navigation={navigation}/>
+      <SessionFormContainer navigation={navigation}/>
     )
   }
 
