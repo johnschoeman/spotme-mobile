@@ -10,7 +10,8 @@ export default class SpotPreview extends React.Component {
 		super()
 		this._renderPreview = this._renderPreview.bind(this)
 		this.state = {
-			marker: null
+			marker: null,
+			height: 0
 		}
 	}
 
