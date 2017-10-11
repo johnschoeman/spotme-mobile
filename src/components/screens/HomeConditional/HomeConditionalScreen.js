@@ -1,4 +1,5 @@
 import React from 'react'
+import { AsyncStorage } from 'react-native'
 
 import HomeScreen from '../Home/HomeScreen'
 import WelcomeScreen from '../Welcome/WelcomeScreen'
@@ -8,7 +9,6 @@ export default class HomeConditionalScreen extends React.Component {
 
   constructor(props) {
     super(props)
-
   }
 
   static navigationOptions = {
