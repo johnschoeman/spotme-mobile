@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { gql, graphql, compose } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import { AsyncStorage, View, Button } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
@@ -19,7 +19,7 @@ class SessionForm extends Component {
       password: '',
     };
   }
-  
+
   _handleSubmit = async () => {
     const { email, password } = this.state
     const userVariables = { variables: { email, password } }
