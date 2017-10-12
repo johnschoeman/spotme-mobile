@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  View, Text, StyleSheet
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform
 } from 'react-native'
 import { FormLabel, FormInput } from 'react-native-elements'
 
@@ -20,11 +20,20 @@ export default class NewSpotScreen extends React.Component {
 
     return (
       <View style={localStyles.screen}>
-        <View style={localStyles.headerView}>
-          <Text style={localStyles.headerText}>ADD SPOT</Text>
+        <View style={localStyles.screenTopSection}>
+          <View style={localStyles.headerView}>
+            <Text style={localStyles.headerText}>ADD SPOT</Text>
+          </View>
+          <ScrollView>
+            <FormLabel>ADDRESS</FormLabel>
+            <FormInput onChangeText={(address) => this.setState({address})}/>
+          </ScrollView>
         </View>
-        <FormLabel>ADDRESS</FormLabel>
-        <FormInput onChangeText={(address) => this.setState({address})}/>
+        <View style={localStyles.addButtonView}>
+          <TouchableOpacity style={localStyles.addButton}>
+          <Text style={localStyles.addButtonText}>CREATE SPOT</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -33,7 +42,7 @@ export default class NewSpotScreen extends React.Component {
 
 const localStyles = StyleSheet.create({
   screen: {
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'stretch',
     flex: 1,
   },
@@ -61,5 +70,28 @@ const localStyles = StyleSheet.create({
     marginBottom: 15,
     color: '#999',
   },
-
+  addButtonView: {
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0,  height: -1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    borderTopWidth: (Platform.OS === 'android') ? 1 : 0,
+    borderColor: '#CCC',
+    // elevation: 2,
+  },
+  addButton: {
+    width: 150,
+    padding: 7,
+    backgroundColor: '#999',
+    alignItems: 'center',
+    borderRadius: 16,
+  },
+  addButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+  },
 });
