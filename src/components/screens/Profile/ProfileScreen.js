@@ -49,25 +49,4 @@ const localStyles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  profileButton: {
-    borderWidth: 1,
-    borderColor: '#000',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 8,
-    marginRight: 8,
-    marginBottom: 15,
-    padding: 8,
-    justifyContent: 'space-between'
-  },
-  profileButtonTitle: {
-    fontSize: 25,
-    fontWeight: '400',
-
-  },
-  profileButtonDescription: {
-    fontSize: 25,
-    fontStyle: 'italic',
-    fontWeight: '200',
-  },
 });
