@@ -1,36 +1,18 @@
 import { gql } from 'react-apollo'
 
-const signInUser = `
-signinUser(email: {
-  email: $email,
-  password: $password
-}) {
-  token
-  user {
-    id
-    email
-  }
-}
-`
-
-export const CREATE_USER_MUTATION = gql`
-mutation CreateUserMutation($email: String!, $password: String!) {
-  createUser(
-    authProvider: {
-      email: {
-        email: $email,
-        password: $password
-      }
-    }
+export const CREATE_SPOT_MUTATION = gql`
+mutation CreateSpotMutation($address: String!) {
+  createSpot(
+    address: $address
   ) {
     id
+    address_number
+    address_street
+    address_city
+    address_state
+    address_zip
+    latitude
+    longitude
   }
-  ${signInUser}
-}
-`
-
-export const SIGNIN_USER_MUTATION = gql`
-mutation SigninUserMutation($email: String!, $password: String!) {
-  ${signInUser}
 }
 `
