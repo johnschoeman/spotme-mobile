@@ -13,19 +13,22 @@ export default class ProfileButton extends React.Component {
 
     return (
 
-      <TouchableHighlight onPress={onPress}>
-        <View style={localStyles.profileButton}>
-          <View>
-            <Text style={localStyles.profileButtonTitle}>
-              { title }
-            </Text>
-            <Text style={localStyles.profileButtonDescription}>
-              { description }
-            </Text>
+      <View style={localStyles.profileButtonContainer}>
+        <TouchableHighlight
+          onPress={onPress}>
+          <View style={localStyles.profileButton}>
+            <View>
+              <Text style={localStyles.profileButtonTitle}>
+                { title }
+              </Text>
+              <Text style={localStyles.profileButtonDescription}>
+                { description }
+              </Text>
+            </View>
+            <Icon name='chevron-thin-right' size={30}/>
           </View>
-          <Icon name='chevron-thin-right' size={30}/>
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+      </View>
 
     )
   }
@@ -33,14 +36,16 @@ export default class ProfileButton extends React.Component {
 }
 
 const localStyles = StyleSheet.create({
+  profileButtonContainer: {
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 15,
+  },
   profileButton: {
     borderWidth: 1,
     borderColor: '#000',
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 8,
-    marginRight: 8,
-    marginBottom: 15,
     padding: 8,
     justifyContent: 'space-between'
   },
