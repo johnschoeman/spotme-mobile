@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform
 } from 'react-native'
 
-import TwoLineMenuButton from '../../modules/TwoLineMenuButton'
+import buildSpotIndexItems from './buildSpotIndexItems'
 
 export default class HostSpotIndexScreen extends React.Component {
 
@@ -13,6 +13,23 @@ export default class HostSpotIndexScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation
+    // toggle next two lines to see screen with hardcoded list vs. redux data
+    const { ownSpots } = this.props
+    // const ownSpots = []
+    // for (let id = 0; id < 20; id++) {
+    //   const spot = {
+    //     id,
+    //     address: {
+    //       street: '1725 Tehama St',
+    //       city: 'San Francisco',
+    //       state: 'CA',
+    //       zip: '94112'
+    //     }
+    //   }
+    //   ownSpots.push(spot)
+    // }
+
+    const spotIndexItems = buildSpotIndexItems(ownSpots, navigate)
 
     return (
       <View style={localStyles.screen}>
@@ -21,6 +38,8 @@ export default class HostSpotIndexScreen extends React.Component {
             <Text style={localStyles.headerText}>My Spots</Text>
           </View>
           <ScrollView>
+            {spotIndexItems}
+            {/*
             <TwoLineMenuButton
               line1='1725 Tehama St'
               line2='San Francisco, CA, 94112'
@@ -81,6 +100,7 @@ export default class HostSpotIndexScreen extends React.Component {
               line1='Contact'
               line2='Talk to us.'
               onPress={() => navigate('')}/>
+              */}
           </ScrollView>
         </View>
         <View style={localStyles.addButtonView}>
