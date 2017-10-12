@@ -39,68 +39,6 @@ export default class HostSpotIndexScreen extends React.Component {
           </View>
           <ScrollView>
             {spotIndexItems}
-            {/*
-            <TwoLineMenuButton
-              line1='1725 Tehama St'
-              line2='San Francisco, CA, 94112'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='825 Battery St'
-              line2='San Francisco, CA'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Payment Information'
-              line2='Add preferred payment type.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-            <TwoLineMenuButton
-              line1='Contact'
-              line2='Talk to us.'
-              onPress={() => navigate('')}/>
-              */}
           </ScrollView>
         </View>
         <View style={localStyles.addButtonView}>
