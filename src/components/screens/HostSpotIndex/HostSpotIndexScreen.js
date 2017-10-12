@@ -35,7 +35,7 @@ export default class HostSpotIndexScreen extends React.Component {
       <View style={localStyles.screen}>
         <View style={localStyles.screenTopSection}>
           <View style={localStyles.headerView}>
-            <Text style={localStyles.headerText}>My Spots</Text>
+            <Text style={localStyles.headerText}>MY SPOTS</Text>
           </View>
           <ScrollView>
             {spotIndexItems}
