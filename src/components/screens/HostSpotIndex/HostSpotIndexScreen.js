@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-import ProfileButton from './ProfileButton'
+import TwoLineMenuButton from '../../modules/TwoLineMenuButton'
 
-export default class ProfileScreen extends React.Component {
+export default class HostSpotIndexScreen extends React.Component {
 
   // constructor(props) {
   //   super(props)
@@ -15,19 +15,19 @@ export default class ProfileScreen extends React.Component {
     return (
       <View style={localStyles.screen}>
         <Text style={localStyles.header}>PROFILE</Text>
-        <ProfileButton
+        <TwoLineMenuButton
           title='Personal Information'
           description='Edit your profile.'
           onPress={() => navigate('')}/>
-        <ProfileButton
+        <TwoLineMenuButton
           title='Vehicles'
           description='Add your cars.'
           onPress={() => navigate('')}/>
-        <ProfileButton
+        <TwoLineMenuButton
           title='Payment Information'
           description='Add preferred payment type.'
           onPress={() => navigate('')}/>
-        <ProfileButton
+        <TwoLineMenuButton
           title='Contact'
           description='Talk to us.'
           onPress={() => navigate('')}/>
