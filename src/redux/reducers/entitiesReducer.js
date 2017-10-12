@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import spotEntitiesReducer from './spotEntitiesReducer';
 
 const entitiesReducer = combineReducers({
-  session: spotEntitiesReducer,
+  spots: spotEntitiesReducer,
 });
 
 export default entitiesReducer;
