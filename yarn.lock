@@ -3731,7 +3731,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8:
+prop-types@15.5.10, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -3794,6 +3794,13 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-addons-update@^15.6.0:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-addons-update/-/react-addons-update-15.6.2.tgz#e53753c5b34887974510c882d7fb075851d5e504"
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.0"
+
 react-apollo@^1.4.8:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-1.4.8.tgz#b510f207b08ce4bd1e3adbd46a3ede68e3af27e7"
@@ -3825,9 +3832,21 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-animatable@^1.2.3:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
+
+react-native-button@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-2.1.0.tgz#a39e23292922afeea4f7be141dd43e18f1b51876"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
@@ -3866,6 +3885,13 @@ react-native-maps@0.15.3:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.15.3.tgz#5d9e0a8e30ecc51dc755b7a3b9d6b6ed5e2dd08c"
 
+react-native-modal@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-4.0.0.tgz#1e11633d54ae073f42e74bb4f37ef81b5cb5a820"
+  dependencies:
+    prop-types "15.5.10"
+    react-native-animatable "^1.2.3"
+
 react-native-safe-module@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-module/-/react-native-safe-module-1.2.0.tgz#a23824ca24edc2901913694a76646475113d570d"
@@ -3878,12 +3904,25 @@ react-native-side-menu@^1.0.2:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-star-rating@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-star-rating/-/react-native-star-rating-1.0.8.tgz#6e47d5335ddcc7920a5d92e6cc6478f8655a92a3"
+  dependencies:
+    prop-types "^15.5.10"
+    react-addons-update "^15.6.0"
+    react-native-button "^2.1.0"
+    react-native-vector-icons "^4.2.0"
+
 react-native-svg@5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-5.3.0.tgz#0d2ca98bee6726d627c2ca31617ac9c5f7d42daf"
   dependencies:
     color "^0.11.1"
     lodash "^4.16.6"
+
+react-native-swipe-gestures@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.2.tgz#914e1a72a94bc55b322b4622a01103ab879296dd"
 
 react-native-tab-navigator@^0.3.4:
   version "0.3.4"
@@ -3906,7 +3945,7 @@ react-native-vector-icons@4.1.1:
     prop-types "^15.5.8"
     yargs "^6.3.0"
 
-react-native-vector-icons@^4.4.2:
+react-native-vector-icons@^4.2.0, react-native-vector-icons@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.4.2.tgz#090f42ee0396c4cc4eae0ddaa518028ba8df40c7"
   dependencies:
