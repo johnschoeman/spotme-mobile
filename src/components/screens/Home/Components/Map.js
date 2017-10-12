@@ -9,6 +9,7 @@ export default class Map extends React.Component {
         super();
         this.onRegionChange = this.onRegionChange.bind(this)
         this._getLocationAsync = this._getLocationAsync.bind(this);
+        this.renderCurrentLocationMarker = this.renderCurrentLocationMarker.bind(this);
         this.state = {
             bottomInfo: [],
             backgroundColor: "white",
@@ -19,15 +20,13 @@ export default class Map extends React.Component {
                 longitudeDelta: 0.02,
             },
             activeMarker: null,
-            location: { coords: {
-                          latitude: 37.78825,
-                          longitude: -122.4324 }}
+            location: {}
         }
     }
 
     componentDidMount() {
       Location.getProviderStatusAsync({})
-      this._getLocationAsync();
+      this._getLocationAsync()
     }
 
     onRegionChange(region) {
@@ -60,6 +59,22 @@ export default class Map extends React.Component {
         }
       }
     };
+    renderCurrentLocationMarker() {
+      const locMarkerImg = require('../../../../../assets/icons/location_marker.png');
+      console.log(Object.keys(this.state.location));
+      if (Object.keys(this.state.location).length!== 0) {
+        return (
+          <MapView.Marker
+            coordinate={this.state.location.coords}
+            title="Current Location"
+            description="You are Here">
+            <Image
+              source={locMarkerImg}
+              style={{ width: 25, height: 25 }}/>
+          </MapView.Marker>
+        )
+      }      
+    }
 
     render() {
         const config = {
@@ -103,36 +118,29 @@ export default class Map extends React.Component {
         ]
         const { height, width } = Dimensions.get('window')
         const markerImg = require('../../../../../assets/icons/spotme_marker.png');
-        const locMarkerImg = require('../../../../../assets/icons/location_marker.png');
+        
         console.log("REGION", this.state.region)
         return (
             <View>
                 <MapView
-                    ref={ref => (this.map = ref)}
-                    onPress={() => this.setState({activeMarker: null})}
-                    style={{ height, width}}
-                    region={this.state.region}
-                    onRegionChange={this.onRegionChange}>
-                    {markers.map((marker) => (
-                        <MapView.Marker
-                            coordinate={marker.latlng}
-                            title={marker.title}
-                            description={marker.description}
-                            onPress={() => this.setState({activeMarker: marker})}
-                            key={marker.latlng.latitude}>
-                          <Image
-                            source={markerImg}
-                            style={{ width: 25, height: 25 }}/>
-                        </MapView.Marker>
-                    ))}
-                  <MapView.Marker
-                    coordinate={this.state.location.coords}
-                    title="Current Location"
-                    description="You are Here">
+                  ref={ref => (this.map = ref)}
+                  onPress={() => this.setState({activeMarker: null})}
+                  style={{ height, width}}
+                  region={this.state.region}
+                  onRegionChange={this.onRegionChange}>
+                  {markers.map((marker) => (
+                    <MapView.Marker
+                      coordinate={marker.latlng}
+                      title={marker.title}
+                      description={marker.description}
+                      onPress={() => this.setState({activeMarker: marker})}
+                      key={marker.latlng.latitude}>
                     <Image
-                      source={locMarkerImg}
+                      source={markerImg}
                       style={{ width: 25, height: 25 }}/>
-                  </MapView.Marker>
+                    </MapView.Marker>
+                  ))}
+                  {this.renderCurrentLocationMarker()}
                 </MapView>
                 <SpotPreview activeMarker={this.state.activeMarker}/>
                 <Text>Hello</Text>
