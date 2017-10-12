@@ -17,6 +17,8 @@ export default class TwoLineMenuButton extends React.Component {
 
       <View style={localStyles.profileButtonContainer}>
         <TouchableHighlight
+          activeOpacity={0.9}
+          underlayColor='#CCC'
           onPress={onPress}>
           <View style={localStyles.profileButton}>
             <View>
