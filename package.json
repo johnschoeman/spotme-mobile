@@ -14,15 +14,15 @@
     "react-apollo": "^1.4.8",
     "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.0.tar.gz",
     "react-native-elements": "^0.17.0",
+    "react-native-modal": "^4.0.0",
+    "react-native-star-rating": "^1.0.8",
+    "react-native-swipe-gestures": "^1.0.2",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.13",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "styled-components": "^2.1.1",
-    "react-native-modal": "^4.0.0",
-    "react-native-star-rating": "^1.0.8",
-    "react-native-swipe-gestures": "^1.0.2"
+    "styled-components": "^2.1.1"
   },
   "devDependencies": {
     "eslint": "^4.3.0",
