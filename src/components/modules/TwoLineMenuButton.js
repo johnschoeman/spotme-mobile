@@ -1,5 +1,7 @@
 import React from 'react'
-import { View, Text, TouchableHighlight, StyleSheet } from 'react-native'
+import {
+  View, Text, TouchableHighlight, StyleSheet
+} from 'react-native'
 import Icon from 'react-native-vector-icons/Entypo';
 
 export default class TwoLineMenuButton extends React.Component {
@@ -9,7 +11,7 @@ export default class TwoLineMenuButton extends React.Component {
   // }
 
   render() {
-    const { title, description, onPress } = this.props
+    const { line1, line2, onPress } = this.props
 
     return (
 
@@ -18,14 +20,14 @@ export default class TwoLineMenuButton extends React.Component {
           onPress={onPress}>
           <View style={localStyles.profileButton}>
             <View>
-              <Text style={localStyles.profileButtonTitle}>
-                { title }
+              <Text style={localStyles.profileButtonText}>
+                { line1 }
               </Text>
-              <Text style={localStyles.profileButtonDescription}>
-                { description }
+              <Text style={localStyles.profileButtonText}>
+                { line2 }
               </Text>
             </View>
-            <Icon name='chevron-thin-right' size={30}/>
+            <Icon name='chevron-thin-right' size={30} color='#999'/>
           </View>
         </TouchableHighlight>
       </View>
@@ -37,26 +39,18 @@ export default class TwoLineMenuButton extends React.Component {
 
 const localStyles = StyleSheet.create({
   profileButtonContainer: {
-    marginLeft: 8,
-    marginRight: 8,
-    marginBottom: 15,
   },
   profileButton: {
-    borderWidth: 1,
-    borderColor: '#000',
+    borderBottomWidth: 1,
+    borderColor: '#CCC',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8,
-    justifyContent: 'space-between'
+    padding: 15,
+    justifyContent: 'space-between',
   },
-  profileButtonTitle: {
-    fontSize: 25,
+  profileButtonText: {
+    fontSize: 20,
     fontWeight: '400',
-
-  },
-  profileButtonDescription: {
-    fontSize: 25,
-    fontStyle: 'italic',
-    fontWeight: '200',
+    color: '#999',
   },
 });
