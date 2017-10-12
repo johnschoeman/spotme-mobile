@@ -10,9 +10,9 @@ import HostSpotIndexScreenContainer from
 
 
 const MainNavigator = StackNavigator({
-  HostSpotIndex: { screen: HostSpotIndexScreenContainer },
   Home: { screen: HomeConditionalScreenContainer },
   SessionForm: { screen: SessionFormScreen },
+  HostSpotIndex: { screen: HostSpotIndexScreenContainer },
   // Profile: { screen: ProfileScreen },
 })
 
