@@ -1,10 +1,11 @@
 import React from 'react'
+import { graphql, gql } from 'react-apollo'
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform
 } from 'react-native'
 import { FormLabel, FormInput } from 'react-native-elements'
 
-export default class NewSpotScreen extends React.Component {
+class NewSpotScreen extends React.Component {
 
   constructor(props) {
     super(props)
@@ -12,6 +13,17 @@ export default class NewSpotScreen extends React.Component {
     this.state = {
       address: '',
     };
+  }
+
+  _handleSubmit = async () => {
+    const { address } = this.state
+    const spotVariables = { variables: { address } }
+
+    const result = await this.props.addSpotMutation(spotVariables)
+
+    debugger
+    this.props.receiveSpot()
+    this.props.navigateBack()
   }
 
   render() {
@@ -30,8 +42,10 @@ export default class NewSpotScreen extends React.Component {
           </ScrollView>
         </View>
         <View style={localStyles.addButtonView}>
-          <TouchableOpacity style={localStyles.addButton}>
-          <Text style={localStyles.addButtonText}>CREATE SPOT</Text>
+          <TouchableOpacity
+            style={localStyles.addButton}
+            onPress={() => this._handleSubmit()}>
+            <Text style={localStyles.addButtonText}>CREATE SPOT</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -95,3 +109,22 @@ const localStyles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+const CREATE_SPOT_MUTATION = gql`
+mutation CreateSpotMutation($address: String!) {
+  createSpotMutation(
+    address: $address
+  ) {
+    id
+    address_number
+    address_street
+    address_city
+    address_state
+    address_zip
+    latitude
+    longitude
+  }
+}
+`
+
+export default graphql(CREATE_SPOT_MUTATION, { name: 'createSpotMutation' })(NewSpotScreen)
