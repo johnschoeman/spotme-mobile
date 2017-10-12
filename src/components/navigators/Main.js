@@ -8,9 +8,9 @@ import ProfileScreen from '../screens/Profile/ProfileScreen'
 
 
 const MainNavigator = StackNavigator({
-  Profile: { screen: ProfileScreen },
   Home: { screen: HomeConditionalScreenContainer },
   SessionForm: { screen: SessionFormScreen },
+  Profile: { screen: ProfileScreen },
 })
 
 export default MainNavigator;
