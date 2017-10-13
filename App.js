@@ -15,7 +15,12 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 }
 
 const preloadedState = {
-
+  entities: {
+    spots: {}
+  },
+  session: {
+    currentUser: null
+  }
 }
 
 const store = configureStore(preloadedState)

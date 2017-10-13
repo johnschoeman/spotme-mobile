@@ -2,7 +2,7 @@
   "expo": {
     "name": "spotme-mobile",
     "description": "spotme on mobile",
-    "slug": "mobile",
+    "slug": "expo-auth0",
     "privacy": "public",
     "sdkVersion": "21.0.0",
     "version": "1.0.0",
