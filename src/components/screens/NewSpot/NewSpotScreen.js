@@ -21,15 +21,13 @@ class NewSpotScreen extends React.Component {
     const spotVariables = { variables: { address } }
 
     const result = await this.props.createSpotMutation(spotVariables)
-
     const spot = result.data.createSpot
-    this.props.receiveSpot()
+    this.props.receiveSpot(spot)
+    this.state.address = ''
     this.props.navigateBack()
   }
 
   render() {
-    const { navigate } = this.props.navigation
-    // toggle next two lines to see screen with hardcoded list vs. redux data
 
     return (
       <View style={localStyles.screen}>
