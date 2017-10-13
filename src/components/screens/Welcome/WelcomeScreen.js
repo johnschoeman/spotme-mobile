@@ -11,7 +11,9 @@ export default class WelcomeScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.screen}>
-        <SessionFormContainer navigation={this.props.navigation}/>
+        <Button
+          onPress={() => navigate('SessionForm', { formType: 'signIn' })}
+          title='Sign In' />
         <Button
           onPress={() => navigate('SessionForm', { formType: 'signUp' })}
           title='Sign Up' />
