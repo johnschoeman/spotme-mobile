@@ -9,6 +9,7 @@ export default class SpotPreview extends React.Component {
 	constructor(){
 		super()
 		this._renderPreview = this._renderPreview.bind(this)
+		this._renderFull = this._renderFull.bind(this)
 		this.onSwipe = this.onSwipe.bind(this)
 		this.state = {
 			marker: null,
@@ -24,12 +25,13 @@ export default class SpotPreview extends React.Component {
 	}
 
 	onSwipe(gestureName, gestureState) {
-		const { SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
+		const { height, width } = Dimensions.get('window')
+		const { SWIPE_UP, SWIPE_DOWN } = swipeDirections;
 		switch (gestureName) {
 			case SWIPE_UP:
 				LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
 				console.log("IT SWIPEES UP")
-				this.setState({height: 500})
+				this.setState({height: height - 25})
 				break;
 			case SWIPE_DOWN:
 				LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -40,12 +42,39 @@ export default class SpotPreview extends React.Component {
 		}
 	}
 
+	_renderFull() {
+		const { height, width } = Dimensions.get('window')
+		if (this.state.marker) {
+			return (
+				<Animated.View style={{ height: this.state.height, width }}>
+					<Text>{this.state.marker.price}</Text>
+				</Animated.View>
+			)
+		}
+	}
+
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
 		if (this.state.marker) {
 			return(
-				<Animated.View style={{height: this.state.height, width}}> 
-					<Text>{this.state.marker.title}</Text>
+				<Animated.View style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}> 
+					<Image
+						style={{ width: 140, height: 80 }}
+						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
+					<View style={{ flexDirection: 'column', paddingLeft: 100, paddingTop: 10, paddingRight: 20 }}>
+						<StarRating
+							disabled={false}
+							maxStars={5}
+							rating={this.state.marker.rating}
+							selectedStar={(rating) => {
+								let marker = this.state.marker
+								marker.rating = rating
+								this.setState({ marker: marker })
+							}}
+							starSize={20}
+						/>
+						<Text style={{ fontSize: 18 }}>${this.state.marker.price}.00/hr</Text>
+					</View>
 				</Animated.View> 
 			)
 		}
@@ -63,7 +92,7 @@ export default class SpotPreview extends React.Component {
 					onSwipe={(direction, state) => this.onSwipe(direction, state)}
 					config={config}
 				>
-					{this._renderPreview()}
+					{this.state.height <= 150 ? this._renderPreview() : this._renderFull()}
 				</GestureRecognizer>
 			</View>
 		)
