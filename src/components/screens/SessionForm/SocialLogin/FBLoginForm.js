@@ -40,6 +40,7 @@ export default class FBLoginForm extends React.Component {
           || 'something went wrong while logging in');
         return;
       }
+      resultCode.params.code
       console.log("HI I'M HERERERERERE")
     }
   }
