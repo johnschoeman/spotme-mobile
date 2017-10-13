@@ -39,6 +39,7 @@ class FBLoginForm extends React.Component {
         redirect_uri: redirectUrl,
       }),
     });
+    console.log(resultCode);
 
     if (resultCode.type === 'success') {
       if (resultCode.error) {
