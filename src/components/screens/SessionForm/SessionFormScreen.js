@@ -3,9 +3,7 @@ import { View } from 'react-native';
 
 import SessionFormContainer from './SessionFormContainer'
 import FBLoginFormContainer from './SocialLogin/FBLoginFormContainer'
-
 import styles from '../../../styles/styles'
-
 
 export default class SessionFormScreen extends React.Component {
 

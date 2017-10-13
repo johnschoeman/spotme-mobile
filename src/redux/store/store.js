@@ -9,7 +9,7 @@ import rootReducer from '../reducers/rootReducer'
 const networkInterface = createNetworkInterface({
   uri: 'https://spotme-backend.herokuapp.com/graphql',  // production backend
   // uri: 'https://api.graph.cool/simple/v1/cj8lu8ukt06rv0132uuni3tx7', // graphcool backend
-  // uri: 'http://localhost:3000/graphql', // local host server
+  // uri: 'http://localhost:3000/', // local host server
 });
 
 export const client = new ApolloClient({
