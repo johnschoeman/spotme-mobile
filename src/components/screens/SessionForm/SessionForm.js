@@ -44,6 +44,8 @@ class SessionForm extends Component {
     const { spots } = user
     delete user.spots
 
+    debugger
+
     this.props.receiveCurrentUser( { user, spots } )
 
     console.log('*** RESULT', res);
