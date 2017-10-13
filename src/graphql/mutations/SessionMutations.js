@@ -9,17 +9,17 @@ signinUser(email: {
   user {
     id
     email
-  }
-  spots {
-    id
-    address_number
-    address_street
-    address_city
-    address_state
-    address_zip
-    latitude
-    longitude
-    host_id
+    spots {
+      id
+      address_number
+      address_street
+      address_city
+      address_state
+      address_zip
+      latitude
+      longitude
+      host_id
+    }
   }
 }
 `
