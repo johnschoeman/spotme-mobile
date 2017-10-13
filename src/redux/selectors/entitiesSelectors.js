@@ -3,6 +3,6 @@ export const getOwnSpots = (state) => {
   const currentUser = state.session.currentUser
 
   // TODO: change back to currentUser.id
-  const ownSpots = allSpots.filter(spot => spot.hostId === 1)//currentUser.id)
+  const ownSpots = allSpots.filter(spot => spot.host_id === currentUser.id)
   return ownSpots
 }

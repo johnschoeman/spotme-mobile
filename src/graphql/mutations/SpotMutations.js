@@ -13,6 +13,7 @@ mutation CreateSpotMutation($address: String!) {
     address_zip
     latitude
     longitude
+    host_id
   }
 }
 `
