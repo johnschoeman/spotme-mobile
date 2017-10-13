@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, applyMiddleware, compose } from 'redux';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import thunk from 'redux-thunk'
 
@@ -19,12 +18,26 @@ export const client = new ApolloClient({
 
 const middlewares = [client.middleware(), thunk];
 
-const configureStore = (preloadedState = {}) => (
-  createStore(
+const configureStore = (preloadedState = {}) => {
+  const enhancer = compose(
+    applyMiddleware(...middlewares),
+    global.reduxNativeDevTools ?
+      global.reduxNativeDevTools() :
+      noop => noop
+  );
+
+  const store = createStore(
     rootReducer(client),
     preloadedState,
-    composeWithDevTools(applyMiddleware(...middlewares))
+    enhancer
   )
-)
+  // If you have other enhancers & middlewares
+  // update the store after creating / changing to allow devTools to use them
+  if (global.reduxNativeDevTools) {
+    global.reduxNativeDevTools.updateStore(store);
+  }
+
+  return store
+}
 
 export default configureStore

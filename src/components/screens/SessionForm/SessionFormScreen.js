@@ -1,7 +1,10 @@
 import React from 'react'
-
+import { View } from 'react-native';
 
 import SessionFormContainer from './SessionFormContainer'
+import FBLoginFormContainer from './SocialLogin/FBLoginFormContainer'
+
+import styles from '../../../styles/styles'
 
 
 export default class SessionFormScreen extends React.Component {
@@ -25,7 +28,9 @@ export default class SessionFormScreen extends React.Component {
     const { navigation } = this.props
 
     return (
-      <SessionFormContainer navigation={navigation}/>
+      <View style={styles.screen}>
+        <SessionFormContainer navigation={navigation}/>
+      </View>
     )
   }
 

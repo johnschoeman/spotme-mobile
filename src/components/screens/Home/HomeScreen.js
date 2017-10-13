@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Button } from 'react-native'
 import Map from './Components/Map'
-import SpotPreview from './Components/SpotPreview'
+
 
 import styles from '../../../styles/styles'
 
@@ -24,7 +24,6 @@ export default class WelcomeScreen extends React.Component {
     return (
       <View style={styles.screen}>
         <Map setMarker={this.setMarker}/>
-        <SpotPreview activeMarker={this.state.activeMarker} />
       </View>
     )
   }
