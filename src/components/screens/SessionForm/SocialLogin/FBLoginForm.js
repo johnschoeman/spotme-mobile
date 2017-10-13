@@ -39,7 +39,6 @@ class FBLoginForm extends React.Component {
         redirect_uri: redirectUrl,
       }),
     });
-    console.log(resultCode);
 
     if (resultCode.type === 'success') {
       if (resultCode.error) {
@@ -50,7 +49,6 @@ class FBLoginForm extends React.Component {
 
       const redirect_uri = redirectUrl; //"https://spotme.us.webtask.io/@spotme/expo-auth0";
       const authorization_code = resultCode.params.code;
-
       const fbVariables = { variables: { authorization_code, redirect_uri } }
       const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
       const idToken = fbMutationResponse.data.getFBToken.id_token
