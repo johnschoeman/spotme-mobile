@@ -4,9 +4,9 @@ import TwoLineMenuButton from '../../modules/TwoLineMenuButton'
 
 const buildSpotIndexItems = (spots, navigate) => {
   return spots.map(spot => {
-    const { street, city, state } = spot.address
-    const line1 = street
-    const line2 = [city, state].join(', ')
+    const { address_number, address_street, address_city, address_state } = spot
+    const line1 = `${address_number} ${address_street}`
+    const line2 = [address_city, address_state].join(', ')
 
     return (
       <TwoLineMenuButton
