@@ -21,8 +21,6 @@ class NewSpotScreen extends React.Component {
     const spotVariables = { variables: { address } }
 
     const result = await this.props.createSpotMutation(spotVariables)
-    console.log('#######RESULT', result)
-    debugger
     const spot = result.data.createSpot
     this.props.receiveSpot(spot)
     this.state.address = ''
