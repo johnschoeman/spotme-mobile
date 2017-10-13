@@ -42,7 +42,9 @@ export default class HostSpotIndexScreen extends React.Component {
           </ScrollView>
         </View>
         <View style={localStyles.addButtonView}>
-          <TouchableOpacity style={localStyles.addButton}>
+          <TouchableOpacity
+            onPress={() => navigate('NewSpot')}
+            style={localStyles.addButton}>
             <Text style={localStyles.addButtonText}>ADD SPOT</Text>
           </TouchableOpacity>
         </View>
