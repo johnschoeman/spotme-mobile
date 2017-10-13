@@ -1,9 +1,12 @@
 import React from 'react';
-import { Alert, Image, Button, Text, View } from 'react-native';
+import { AsyncStorage, Alert, Image, Button, Text, View } from 'react-native';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import Expo, { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
+import { NavigationActions } from 'react-navigation'
+
+import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
 import styles from '../../../../styles/styles'
 
 const auth0ClientId = 'PODS1ov5gcTRNmWec61GhXDZO9jLt-yT';
@@ -17,11 +20,15 @@ function toQueryString(params) {
 }
 
 class FBLoginForm extends React.Component {
-  state = {
-      userInfo: null,
-  };
+  constructor() {
+    super();
+    this.loginWithAuth0FB = this.loginWithAuth0FB.bind(this);
+    this.state = {
+        email: null,
+    }
+  }
 
-  _loginWithAuth0FB = async () => {
+  loginWithAuth0FB = async () => {
     const redirectUrl = AuthSession.getRedirectUrl();
     console.log(redirectUrl)
     const resultCode = await AuthSession.startAsync({
@@ -34,10 +41,7 @@ class FBLoginForm extends React.Component {
       }),
     });
 
-    console.log(resultCode);
-    console.log("resultCode PARAMS",resultCode.params);
     if (resultCode.type === 'success') {
-      console.log('resultCode.error', resultCode.error);
       if (resultCode.error) {
         Alert.alert('Error', resultCode.error.message
           || 'something went wrong while logging in');
@@ -46,27 +50,53 @@ class FBLoginForm extends React.Component {
 
       const redirect_uri = redirectUrl; //"https://spotme.us.webtask.io/@spotme/expo-auth0";
       const authorization_code = resultCode.params.code;
-      console.log('auth code', typeof authorizationCode );
-      console.log('redirect uri', typeof redirectUri );
 
       const fbVariables = { variables: { authorization_code, redirect_uri } }
       // const idToken = await this.props.getFBTokenMutation(authorizationCode, redirectUri)
       const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
-      console.log("fbMutationResponse: ", fbMutationResponse)
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
       console.log("decodedToken", decodedToken);
-
-      //Sign in user
-       
+      this.setState({email: decodedToken.email});
+      const userVariables = {variables: { email: this.state.email } }
+      console.log("THIS PROPS: ", this.props);
+      let res;
+      res = await this.props.createUserSocialMutation(userVariables);
+      console.log("I MADE IT HERE")
+      res = await this.props.signinSocialMutation(userVariables);
+      this._saveUserData(res)
+      this._navigateHome()
     }
+  }
+
+  _saveUserData = (res) => {
+    console.log(res.data.signInSocial)
+    const { user, token } = res.data.signInSocial
+    console.log("USER: ", user)
+    console.log("TOKEN: ", token)
+    AsyncStorage.setItem(GC_USER_ID, user.id)
+    AsyncStorage.setItem(GC_AUTH_TOKEN, token)
+
+    this.props.receiveCurrentUser({ token, ...user })
+
+    console.log('*** RESULT', res);
+    AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
+  }
+
+  _navigateHome() {
+    const resetNavigateHome = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Home' })]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHome)
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.screen}>
-        <Button title="Login with Facebook" onPress={this._loginWithAuth0FB} />
+        <Button title="Login with Facebook" onPress={this.loginWithAuth0FB} />
       </View>
     )
   }
@@ -94,20 +124,28 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
     ) {
       id
     }
-    signinUserSocial(
+    signInSocial(
       email: $email
     ) {
-      id
+      token
+      user {
+        id
+        email
+      }
     }
   }
 `;
 
 const SIGNIN_SOCIAL_MUTATION = gql`
-  mutation SignInSocialMutation($email: String!) {
-    signinUserSocial(
+  mutation SigninSocialMutation($email: String!) {
+    signInSocial(
       email: $email
     ) {
-      id
+      token
+      user {
+        id
+        email
+      }
     }
   }
 `;
@@ -115,5 +153,5 @@ const SIGNIN_SOCIAL_MUTATION = gql`
 export default compose(
   graphql(GET_FB_TOKEN_MUTATION, { name: 'getFBTokenMutation' }),
   graphql(SIGNIN_SOCIAL_MUTATION, { name: 'signinSocialMutation'}),
-  graphql(CREATE_USER_SOCIAL_MUTATION, { name: 'createUserSocialMutation '})
+  graphql(CREATE_USER_SOCIAL_MUTATION, { name: 'createUserSocialMutation'})
 )(FBLoginForm);
