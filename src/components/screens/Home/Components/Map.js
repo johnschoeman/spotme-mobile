@@ -2,6 +2,7 @@ import React from 'react';
 import { Constants, MapView, Location, Permissions } from 'expo';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import SpotPreview from './SpotPreview'
+import LocationAutocomplete from './LocationAutocomplete'
 import { Animated, LayoutAnimation, Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 
 export default class Map extends React.Component {
@@ -124,7 +125,7 @@ export default class Map extends React.Component {
             <View>
                 <MapView
                   ref={ref => (this.map = ref)}
-                  onPress={() => console.log("YSDFSDF")}
+                  onPress={() => Keyboard.dismiss}
                   style={{ height, width}}
                   region={this.state.region}
                   onRegionChange={this.onRegionChange}>
@@ -142,6 +143,7 @@ export default class Map extends React.Component {
                   ))}
                   {this.renderCurrentLocationMarker()}
                 </MapView>
+                <LocationAutocomplete activeMarker={this.state.activeMarker}/>
                 <SpotPreview activeMarker={this.state.activeMarker}/>
                 <Text>Hello</Text>
             </View>
