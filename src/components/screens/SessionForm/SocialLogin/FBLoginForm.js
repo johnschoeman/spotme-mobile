@@ -1,5 +1,7 @@
 import React from 'react';
 import { Alert, Image, Button, Text, View } from 'react-native';
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import Expo, { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
 import styles from '../../../../styles/styles'
@@ -14,7 +16,7 @@ function toQueryString(params) {
     .join('&');
 }
 
-export default class FBLoginForm extends React.Component {
+class FBLoginForm extends React.Component {
   state = {
       userInfo: null,
   };
@@ -27,7 +29,7 @@ export default class FBLoginForm extends React.Component {
         connection: 'facebook',
         client_id: auth0ClientId,
         response_type: 'code',
-        scope: 'openid profile',
+        scope: 'openid profile email',
         redirect_uri: redirectUrl,
       }),
     });
@@ -35,13 +37,25 @@ export default class FBLoginForm extends React.Component {
     console.log(resultCode);
     console.log("resultCode PARAMS",resultCode.params);
     if (resultCode.type === 'success') {
+      console.log('resultCode.error', resultCode.error);
       if (resultCode.error) {
         Alert.alert('Error', resultCode.error.message
           || 'something went wrong while logging in');
         return;
       }
-      resultCode.params.code
-      console.log("HI I'M HERERERERERE")
+
+      const redirect_uri = redirectUrl; //"https://spotme.us.webtask.io/@spotme/expo-auth0";
+      const authorization_code = resultCode.params.code;
+      console.log('auth code', typeof authorizationCode );
+      console.log('redirect uri', typeof redirectUri );
+
+      const fbVariables = { variables: { authorization_code, redirect_uri } }
+      // const idToken = await this.props.getFBTokenMutation(authorizationCode, redirectUri)
+      const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
+      console.log("fbMutationResponse: ", fbMutationResponse)
+      const idToken = fbMutationResponse.data.getFBToken.id_token
+      const decodedToken = jwtDecoder(idToken);
+      console.log("decodedToken", decodedToken);
     }
   }
 
@@ -54,3 +68,34 @@ export default class FBLoginForm extends React.Component {
     )
   }
 }
+
+const GET_FB_TOKEN_MUTATION = gql`
+  mutation GetFBTokenMutation($authorization_code: String!, $redirect_uri: String!) {
+    getFBToken(
+      authorization_code: $authorization_code, 
+      redirect_uri: $redirect_uri,
+    ) {
+      id_token
+    }
+  }
+`;
+// mutation {
+//   getFBToken(authorization_code: "RjsNkD0iM9b8XVY8", redirect_uri: "https://spotme.us.webtask.io/@spotme/expo-auth0") {
+//     id_token
+//   }
+// }
+
+const SIGNIN_SOCIAL_MUTATION = gql`
+  mutation SignInSocialMutation($email: String!) {
+    createUserSocial(
+      email: $email
+    ) {
+      id
+    }
+  }
+`;
+
+export default compose(
+  graphql(GET_FB_TOKEN_MUTATION, { name: 'getFBTokenMutation' }),
+  graphql(SIGNIN_SOCIAL_MUTATION, { name: 'createUserMutation'})
+)(FBLoginForm);
