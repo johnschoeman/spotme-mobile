@@ -76,6 +76,9 @@ export default class SpotPreview extends React.Component {
 							source={{ uri: 'http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg' }}
 						/>
 					</View>
+					<View>
+						<Text>DESCRIPTIONS</Text>
+					</View>
 					<View style={{ justifyContent: 'center', paddingTop: 10 }}>
 						<Text>RESERVE NOW</Text>
 					</View>
