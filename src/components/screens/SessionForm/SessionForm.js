@@ -5,6 +5,7 @@ import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elemen
 import { NavigationActions } from 'react-navigation'
 
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../utils/constants';
+import { FORM_TYPE_SIGN_IN, FORM_TYPE_SIGN_UP } from '../Welcome/WelcomeScreen';
 import { CREATE_USER_MUTATION, SIGNIN_USER_MUTATION } from
   '../../../graphql/mutations/SessionMutations'
 import styles from '../../../styles/styles'
@@ -23,10 +24,11 @@ class SessionForm extends Component {
   _handleSubmit = async () => {
     const { email, password } = this.state
     const userVariables = { variables: { email, password } }
+    const { formType } = this.props.navigation.state.params
     let result;
-    if (this.props.navigation.state.params.formType === 'logIn') {
+    if (formType === FORM_TYPE_SIGN_IN) {
       result = await this.props.signinUserMutation(userVariables)
-    } else {
+    } else if (formType === FORM_TYPE_SIGN_UP) {
       result = await this.props.createUserMutation(userVariables)
     }
 
