@@ -1,51 +1,50 @@
 import React from 'react'
+import { graphql, gql } from 'react-apollo'
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform
 } from 'react-native'
+import { FormLabel, FormInput } from 'react-native-elements'
+import { CREATE_SPOT_MUTATION } from '../../../graphql/mutations/SpotMutations'
 
-import buildSpotIndexItems from './buildSpotIndexItems'
+class NewSpotScreen extends React.Component {
 
-export default class HostSpotIndexScreen extends React.Component {
+  constructor(props) {
+    super(props)
 
-  // constructor(props) {
-  //   super(props)
-  // }
+    this.state = {
+      address: '',
+    };
+  }
+
+  _handleSubmit = async () => {
+    const { address } = this.state
+    const spotVariables = { variables: { address } }
+
+    const result = await this.props.createSpotMutation(spotVariables)
+    const spot = result.data.createSpot
+    this.props.receiveSpot(spot)
+    this.state.address = ''
+    this.props.navigateBack()
+  }
 
   render() {
-    const { navigate } = this.props.navigation
-    // toggle next two lines to see screen with hardcoded list vs. redux data
-    const { ownSpots } = this.props
-    // const ownSpots = []
-    // for (let id = 0; id < 20; id++) {
-    //   const spot = {
-    //     id,
-    //     address: {
-    //       street: '1725 Tehama St',
-    //       city: 'San Francisco',
-    //       state: 'CA',
-    //       zip: '94112'
-    //     }
-    //   }
-    //   ownSpots.push(spot)
-    // }
-
-    const spotIndexItems = buildSpotIndexItems(ownSpots, navigate)
 
     return (
       <View style={localStyles.screen}>
         <View style={localStyles.screenTopSection}>
           <View style={localStyles.headerView}>
-            <Text style={localStyles.headerText}>MY SPOTS</Text>
+            <Text style={localStyles.headerText}>ADD SPOT</Text>
           </View>
           <ScrollView>
-            {spotIndexItems}
+            <FormLabel>ADDRESS</FormLabel>
+            <FormInput onChangeText={(address) => this.setState({address})}/>
           </ScrollView>
         </View>
         <View style={localStyles.addButtonView}>
           <TouchableOpacity
-            onPress={() => navigate('NewSpot')}
-            style={localStyles.addButton}>
-            <Text style={localStyles.addButtonText}>ADD SPOT</Text>
+            style={localStyles.addButton}
+            onPress={() => this._handleSubmit()}>
+            <Text style={localStyles.addButtonText}>CREATE SPOT</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -56,7 +55,7 @@ export default class HostSpotIndexScreen extends React.Component {
 
 const localStyles = StyleSheet.create({
   screen: {
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'stretch',
     flex: 1,
   },
@@ -109,3 +108,5 @@ const localStyles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+export default graphql(CREATE_SPOT_MUTATION, { name: 'createSpotMutation' })(NewSpotScreen)
