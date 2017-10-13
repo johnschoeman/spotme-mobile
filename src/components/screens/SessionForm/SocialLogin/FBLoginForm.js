@@ -1,11 +1,12 @@
 import React from 'react';
-import { Alert, Image, Button, Text, View } from 'react-native';
+import { AsyncStorage, Alert, Image, Button, Text, View } from 'react-native';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import Expo, { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
 import styles from '../../../../styles/styles'
 
+import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
 const auth0ClientId = 'PODS1ov5gcTRNmWec61GhXDZO9jLt-yT';
 const auth0Domain = 'https://spotme.auth0.com';
 
@@ -58,8 +59,25 @@ class FBLoginForm extends React.Component {
       console.log("decodedToken", decodedToken);
 
       //Sign in user
-       
+      const email = decodedToken["email"];
+      console.log('email:', email);
+      const userVariables = { variables: { email }};
+
+      const signInResponse = await this.props.createUserSocialMutation(userVariables);
+      console.log('signInResponse: ', signInResponse);
+      this._saveUserData(signInResponse);
     }
+  }
+
+  _saveUserData = (res) => {
+    const { user, token } = res.data.signinUser
+    AsyncStorage.setItem(GC_USER_ID, user.id)
+    AsyncStorage.setItem(GC_AUTH_TOKEN, token)
+
+    this.props.receiveCurrentUser( { token, ...user } )
+
+    console.log('*** RESULT', res);
+    AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   render() {
@@ -94,7 +112,7 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
     ) {
       id
     }
-    signinUserSocial(
+    signInSocial(
       email: $email
     ) {
       id
@@ -104,7 +122,7 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
 
 const SIGNIN_SOCIAL_MUTATION = gql`
   mutation SignInSocialMutation($email: String!) {
-    signinUserSocial(
+    signInSocial(
       email: $email
     ) {
       id
