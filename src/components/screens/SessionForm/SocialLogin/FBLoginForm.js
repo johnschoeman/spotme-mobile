@@ -56,6 +56,9 @@ class FBLoginForm extends React.Component {
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
       console.log("decodedToken", decodedToken);
+
+      //Sign in user
+       
     }
   }
 
@@ -84,10 +87,24 @@ const GET_FB_TOKEN_MUTATION = gql`
 //     id_token
 //   }
 // }
+const CREATE_USER_SOCIAL_MUTATION = gql`
+  mutation CreateUserSocialMutation($email: String!) {
+    createUserSocial(
+      email: $email
+    ) {
+      id
+    }
+    signinUserSocial(
+      email: $email
+    ) {
+      id
+    }
+  }
+`;
 
 const SIGNIN_SOCIAL_MUTATION = gql`
   mutation SignInSocialMutation($email: String!) {
-    createUserSocial(
+    signinUserSocial(
       email: $email
     ) {
       id
@@ -97,5 +114,6 @@ const SIGNIN_SOCIAL_MUTATION = gql`
 
 export default compose(
   graphql(GET_FB_TOKEN_MUTATION, { name: 'getFBTokenMutation' }),
-  graphql(SIGNIN_SOCIAL_MUTATION, { name: 'createUserMutation'})
+  graphql(SIGNIN_SOCIAL_MUTATION, { name: 'signinSocialMutation'}),
+  graphql(CREATE_USER_SOCIAL_MUTATION, { name: 'createUserSocialMutation '})
 )(FBLoginForm);
