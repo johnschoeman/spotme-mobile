@@ -10,6 +10,7 @@ export default class SpotPreview extends React.Component {
 		super()
 		this._renderPreview = this._renderPreview.bind(this)
 		this.onSwipe = this.onSwipe.bind(this)
+		
 		this.state = {
 			marker: null,
 			height: 150
@@ -24,12 +25,13 @@ export default class SpotPreview extends React.Component {
 	}
 
 	onSwipe(gestureName, gestureState) {
-		const { SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
+		console.log("GESTURE STATE", gestureState)
+		const { height, width } = Dimensions.get('window')
+		const { SWIPE_UP, SWIPE_DOWN } = swipeDirections;
 		switch (gestureName) {
 			case SWIPE_UP:
 				LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-				console.log("IT SWIPEES UP")
-				this.setState({height: 500})
+				this.setState({height: height - 25 })
 				break;
 			case SWIPE_DOWN:
 				LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -40,12 +42,37 @@ export default class SpotPreview extends React.Component {
 		}
 	}
 
+	_renderFull(){
+		const { height, width } = Dimensions.get('window')
+		if (this.state.marker) {
+			return (
+				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
+					<View style={{ justifyContent: 'center' }}>
+						<Image
+							style={{ height: 200, width: width }}
+							source={{ uri: 'http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg' }}
+						/>
+					</View>
+				</Animated.View>
+			)
+		}
+	}
+
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
 		if (this.state.marker) {
 			return(
-				<Animated.View style={{height: this.state.height, width}}> 
-					<Text>{this.state.marker.title}</Text>
+				<Animated.View style={{height: this.state.height, width, flexDirection: "row", justifyContent: 'space-around', paddingTop: 10}}>
+					<View> 
+						<Image
+							style={{ height: 80, width: 140}}
+							source={{ uri: 'http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg' }}
+						/>
+					</View>
+					<View style={{flexDirection: 'column'}}>
+						<Text>{this.state.marker.title}</Text>
+						<Text>{this.state.marker.price}</Text>
+					</View>
 				</Animated.View> 
 			)
 		}
@@ -54,7 +81,7 @@ export default class SpotPreview extends React.Component {
 	render(){
 		console.log(this.state.marker);
 		const config = {
-			velocityThreshold: 0.3,
+			velocityThreshold: 0,
 			directionalOffsetThreshold: 80,
 		};
 		return(
@@ -63,7 +90,7 @@ export default class SpotPreview extends React.Component {
 					onSwipe={(direction, state) => this.onSwipe(direction, state)}
 					config={config}
 				>
-					{this._renderPreview()}
+					{this.state.height > 150 ? this._renderFull() : this._renderPreview()}
 				</GestureRecognizer>
 			</View>
 		)
