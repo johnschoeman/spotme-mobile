@@ -124,7 +124,7 @@ export default class Map extends React.Component {
             <View>
                 <MapView
                   ref={ref => (this.map = ref)}
-                  onPress={() => this.setState({activeMarker: null})}
+                  onPress={() => console.log("YSDFSDF")}
                   style={{ height, width}}
                   region={this.state.region}
                   onRegionChange={this.onRegionChange}>
