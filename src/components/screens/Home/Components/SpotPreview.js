@@ -4,8 +4,9 @@ import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures'
 import Modal from 'react-native-modal';
 import { Animated, LayoutAnimation } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import { graphql, gql } from 'react-apollo';
 
-export default class SpotPreview extends React.Component {
+class SpotPreview extends React.Component {
 	constructor(){
 		super()
 		this._renderPreview = this._renderPreview.bind(this)
@@ -13,15 +14,16 @@ export default class SpotPreview extends React.Component {
 		this.onSwipe = this.onSwipe.bind(this)
 		
 		this.state = {
-			marker: null,
+			marker: {},
+			markerId: null,
 			height: 150
 		}
 	}
 
 	componentWillReceiveProps(newProps){
-		if (this.state.marker !== newProps.marker) {
+		if (this.state.markerId !== newProps.markerId) {
 			console.log("I HAVE RECEIVED NEW PROPS", newProps)
-			this.setState({marker: newProps.activeMarker})
+			this.setState({markerId: newProps.activeMarkerId})
 		}
 	}
 
@@ -115,7 +117,15 @@ export default class SpotPreview extends React.Component {
 	}
 
 	render(){
-		console.log(this.state.marker);
+		let spot;
+		let spot_id = this.props.activeMarkerId;
+		let spotVaribles = { variable: {spot_id: spot_id}}
+		if (this.props.getSpot) {
+			spot = this.props.getSpot(spotVaribles).getSpot;
+		} else {
+			spot = {};
+		}
+		// console.log('markers: ', markers);
 		const config = {
 			velocityThreshold: 0,
 			directionalOffsetThreshold: 80,
@@ -132,3 +142,37 @@ export default class SpotPreview extends React.Component {
 		)
 	}
 }
+
+const GET_SPOT_QUERY = gql`
+query GetSpot($spot_id: Int) {
+	getSpot(spot_id: $spot_id) {
+		id
+		latitude
+		longitude
+		description
+		image_url
+		price
+		rating
+		address_number
+		address_street
+		address_city
+		address_state
+		address_zip
+		reservations {
+			id
+			start_time
+			end_time
+			spot {
+				id
+			}
+			user {
+				id
+				email
+			}
+		}
+	}
+}
+`;
+
+// export default graphql(GET_SPOT_QUERY, {name: 'getSpot'})(SpotPreview);
+export default SpotPreview;

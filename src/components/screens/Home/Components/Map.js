@@ -21,7 +21,7 @@ class Map extends React.Component {
                 latitudeDelta: 0.02,
                 longitudeDelta: 0.02,
             },
-            activeMarker: null,
+            activeMarker: {id: 1},
             location: {}
         }
     }
@@ -47,10 +47,10 @@ class Map extends React.Component {
 
     _getLocationAsync = async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
-      console.log("STATUS:", status)
+      // console.log("STATUS:", status)
       if (status === 'granted') {
         const location = await Location.getCurrentPositionAsync({});
-        console.log("LOCATION:", location);
+        // console.log("LOCATION:", location);
         if(location !== this.state.location) {
           this.setState({
             region: { latitude: location.coords.latitude, 
@@ -69,7 +69,7 @@ class Map extends React.Component {
     };
     renderCurrentLocationMarker() {
       const locMarkerImg = require('../../../../../assets/icons/location_marker.png');
-      console.log(Object.keys(this.state.location));
+      // console.log(Object.keys(this.state.location));
       if (Object.keys(this.state.location).length!== 0) {
         return (
           <MapView.Marker
@@ -87,9 +87,7 @@ class Map extends React.Component {
     render() {
 
         let markers;
-        console.log('this.props.getSpots', this.props.getSpots);
         if (this.props.getSpots.allSpots) {
-          console.log('markers', markers);
           markers = this.props.getSpots.allSpots;
         } else {
           markers = [];
@@ -99,48 +97,8 @@ class Map extends React.Component {
             velocityThreshold: 0.3,
             directionalOffsetThreshold: 80,
         };
-        // const markers = [
-        //     {
-        //         latlng: {
-        //             latitude: 37.78825,
-        //             longitude: -122.4204
-        //         },
-        //         title: "home",
-        //         image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
-        //         rating: 5,
-        //         price: 5.0,
-        //         description: "THIS IS MY HOME"
-        //     },
-        //     {
-        //         latlng: {
-        //             latitude: 37.78835,
-        //             longitude: -122.4314
-        //         },
-        //         title: "work",
-        //         image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
-        //         rating: 4,
-        //         price: 10.0,
-        //         description: "THIS IS MY WORK"
-        //     },
-        //     {
-        //         latlng: {
-        //             latitude: 37.78455,
-        //             longitude: -122.4124
-        //         },
-        //         title: "gym",
-        //         image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
-        //         rating: 3,
-        //         price: 7.0,
-        //         description: "THIS IS MY GYM"
-        //     }
-        // ]
         const { height, width } = Dimensions.get('window')
 				const markerImg = require('../../../../../assets/icons/spotme_marker.png');
-				// let markers = []
-        // if(this.props.data){
-				// 	markers = this.props.data.allSpots
-				// 	console.log("MAPS", this.props.data.allSpots)
-				// }
         return (
             <View>
                 <MapView
@@ -151,19 +109,16 @@ class Map extends React.Component {
                   onRegionChange={this.onRegionChange}>
                   {markers.map((marker) => (
                     <MapView.Marker
-                      coordinate={marker.latlng}
-                      title={marker.title}
-                      description={marker.description}
+                      coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
                       onPress={() => this.setState({activeMarker: marker})}
-                      key={marker.latlng.latitude}>
+                      key={marker.id}>
                     <Image
-                      source={markerImg}
                       style={{ width: 25, height: 25 }}/>
                     </MapView.Marker>
                   ))}
                   {this.renderCurrentLocationMarker()}
                 </MapView>
-                <SpotPreview activeMarker={this.state.activeMarker}/>
+                <SpotPreview activeMarkerId={this.state.activeMarker.id}/>
                 <Text>Hello</Text>
             </View>
         );
@@ -179,27 +134,24 @@ const styles = StyleSheet.create({
     }
 });
 
-// const GET_SPOTS = gql`
-//   query GetSpots($first: Int, $skip: Int) {
-// 		allSpots(first: $first, skip: $skip) {
-// 			id
-// 			latitude
-// 			longitude
-// 		}
-// 	}
-// `
-
 const GET_SPOTS = gql`
-  query GetSpots {
-		allSpots {
+  query GetSpots($first: Int, $skip: Int) {
+		allSpots(first: $first, skip: $skip) {
 			id
 			latitude
 			longitude
 		}
 	}
-`;
+`
 
-// <LocationAutocomplete activeMarker={this.state.activeMarker}/>
-
+// const GET_SPOTS = gql`
+//   query GetSpots {
+// 		allSpots {
+// 			id
+// 			latitude
+// 			longitude
+// 		}
+// 	}
+// `;
 
 export default graphql(GET_SPOTS, {name: 'getSpots'})(Map);
