@@ -1,10 +1,9 @@
 import React from 'react';
-import { Constants, MapView, Location, Permissions } from 'expo';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+import { MapView, Location, Permissions } from 'expo';
+import { Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { graphql, gql } from 'react-apollo'
 import SpotPreview from './SpotPreview'
-import { graphql, compose, gql } from 'react-apollo'
-import LocationAutocomplete from './LocationAutocomplete'
-import { Animated, LayoutAnimation, Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+// import LocationAutocomplete from './LocationAutocomplete'
 
 class Map extends React.Component {
     constructor() {
@@ -29,7 +28,7 @@ class Map extends React.Component {
     componentDidMount() {
       Location.getProviderStatusAsync({})
 			this._getLocationAsync()
-			this.props.getSpots()
+			// this.props.getSpots()
     }
 
     onRegionChange(region) {
@@ -42,10 +41,8 @@ class Map extends React.Component {
 
     _getLocationAsync = async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
-      console.log("STATUS:", status)
       if (status === 'granted') {
         const location = await Location.getCurrentPositionAsync({});
-        console.log("LOCATION:", location);
         if(location !== this.state.location) {
           this.setState({
             region: { latitude: location.coords.latitude, 
@@ -64,7 +61,6 @@ class Map extends React.Component {
     };
     renderCurrentLocationMarker() {
       const locMarkerImg = require('../../../../../assets/icons/location_marker.png');
-      console.log(Object.keys(this.state.location));
       if (Object.keys(this.state.location).length!== 0) {
         return (
           <MapView.Marker
@@ -80,6 +76,12 @@ class Map extends React.Component {
     }
 
     render() {
+        let markers;
+        if (this.props.getSpots.allSpots) {
+            markers = this.props.getSpots.allSpots;
+        } else {
+            markers = [];
+        }
         const config = {
             velocityThreshold: 0.3,
             directionalOffsetThreshold: 80,
@@ -121,8 +123,8 @@ class Map extends React.Component {
         // ]
         const { height, width } = Dimensions.get('window')
         const markerImg = require('../../../../../assets/icons/spotme_marker.png');
-        
-        console.log("MAPS", this.props.data.allSpots)
+        const activeMarkerImg = require('../../../../../assets/icons/spotme_marker_selected.png');
+        // console.log("MAPS", this.props.data.allSpots)
         return (
             <View>
                 <MapView
@@ -133,19 +135,15 @@ class Map extends React.Component {
                   onRegionChange={this.onRegionChange}>
                   {markers.map((marker) => (
                     <MapView.Marker
-                      coordinate={marker.latlng}
-                      title={marker.title}
-                      description={marker.description}
+                      coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
                       onPress={() => this.setState({activeMarker: marker})}
-                      key={marker.latlng.latitude}>
-                    <Image
-                      source={markerImg}
-                      style={{ width: 25, height: 25 }}/>
+                      key={marker.id}>
+                      <Image source={markerImg}
+                            style={{ width: 25, height: 25 }} />
                     </MapView.Marker>
                   ))}
                   {this.renderCurrentLocationMarker()}
                 </MapView>
-                <LocationAutocomplete activeMarker={this.state.activeMarker}/>
                 <SpotPreview activeMarker={this.state.activeMarker}/>
                 <Text>Hello</Text>
             </View>
