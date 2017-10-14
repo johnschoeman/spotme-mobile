@@ -41,7 +41,10 @@ class SessionForm extends Component {
     AsyncStorage.setItem(GC_USER_ID, user.id)
     AsyncStorage.setItem(GC_AUTH_TOKEN, token)
 
-    this.props.receiveCurrentUser( { token, ...user } )
+    const { spots } = user
+    delete user.spots
+
+    this.props.receiveCurrentUser( { user, spots } )
 
     console.log('*** RESULT', res);
     AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
@@ -60,12 +63,15 @@ class SessionForm extends Component {
 
     return (
       <View style={styles.screen}>
-        <FormLabel>Email</FormLabel>
-        <FormInput onChangeText={(email) => this.setState({email})}/>
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Password</FormLabel>
-        <FormInput onChangeText={(password) => this.setState({password})}/>
-        <FormValidationMessage>Error message</FormValidationMessage>
+        <View>
+          <FormLabel>Email</FormLabel>
+          <FormInput onChangeText={(email) => this.setState({email})}/>
+          {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
+          <FormLabel>Password</FormLabel>
+          <FormInput onChangeText={(password) => this.setState({password})}/>
+          {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
+        </View>
+
 
         <Button
           onPress={() => this._handleSubmit()}

@@ -2,6 +2,9 @@ import {
   RECEIVE_SPOT,
   RECEIVE_SPOTS,
 } from '../actions/spotEntityActions';
+import {
+  RECEIVE_CURRENT_USER
+} from '../actions/sessionActions'
 import { arrayToObj } from './shapers'
 
 const nullUser = {
@@ -18,7 +21,9 @@ const sessionReducer = (state = nullUser, action) => {
       newState[spot.id] = spot;
       return newState
     case RECEIVE_SPOTS:
-      return arrayToObj(spots)
+      return Object.assign(newState, arrayToObj(spots))
+    case RECEIVE_CURRENT_USER:
+      return Object.assign(newState, arrayToObj(spots))
     default:
       return state;
   }
