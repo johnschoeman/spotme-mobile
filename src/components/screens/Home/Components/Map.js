@@ -29,8 +29,13 @@ class Map extends React.Component {
     componentDidMount() {
       Location.getProviderStatusAsync({})
 			this._getLocationAsync()
-			this.props.getSpots()
-    }
+			// console.log("SPOTSSSSSKSDFLSKJFSDF", this.props.getSpots)
+			// this.props.getSpots()
+		}
+		
+		// _getMarkersAsync = async () => {
+		// 	this.props.getSpots()
+		// }
 
     onRegionChange(region) {
         this.setState({ region })
@@ -80,6 +85,8 @@ class Map extends React.Component {
     }
 
     render() {
+				let markers = this.props.getSpots.allSpots
+				console.log(markers)
         const config = {
             velocityThreshold: 0.3,
             directionalOffsetThreshold: 80,
@@ -120,9 +127,12 @@ class Map extends React.Component {
         //     }
         // ]
         const { height, width } = Dimensions.get('window')
-        const markerImg = require('../../../../../assets/icons/spotme_marker.png');
-        
-        console.log("MAPS", this.props.data.allSpots)
+				const markerImg = require('../../../../../assets/icons/spotme_marker.png');
+				// let markers = []
+        // if(this.props.data){
+				// 	markers = this.props.data.allSpots
+				// 	console.log("MAPS", this.props.data.allSpots)
+				// }
         return (
             <View>
                 <MapView
@@ -145,7 +155,6 @@ class Map extends React.Component {
                   ))}
                   {this.renderCurrentLocationMarker()}
                 </MapView>
-                <LocationAutocomplete activeMarker={this.state.activeMarker}/>
                 <SpotPreview activeMarker={this.state.activeMarker}/>
                 <Text>Hello</Text>
             </View>
@@ -162,14 +171,27 @@ const styles = StyleSheet.create({
     }
 });
 
+// const GET_SPOTS = gql`
+//   query GetSpots($first: Int, $skip: Int) {
+// 		allSpots(first: $first, skip: $skip) {
+// 			id
+// 			latitude
+// 			longitude
+// 		}
+// 	}
+// `
+
 const GET_SPOTS = gql`
-  query GetSpots($first: Int, $skip: Int) {
-		allSpots(first: $first, skip: $skip) {
+  query GetSpots {
+		allSpots {
 			id
 			latitude
 			longitude
 		}
 	}
 `
+
+// <LocationAutocomplete activeMarker={this.state.activeMarker}/>
+
 
 export default graphql(GET_SPOTS, {name: 'getSpots'})(Map);
