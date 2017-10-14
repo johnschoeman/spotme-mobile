@@ -2,7 +2,7 @@ import React from 'react';
 import { Constants, MapView, Location, Permissions } from 'expo';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import SpotPreview from './SpotPreview'
-import { graphql, compose, gql } from 'react-apollo'
+import { graphql, gql } from 'react-apollo';
 import LocationAutocomplete from './LocationAutocomplete'
 import { Animated, LayoutAnimation, Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 
@@ -85,8 +85,16 @@ class Map extends React.Component {
     }
 
     render() {
-				let markers = this.props.getSpots.allSpots
-				console.log(markers)
+
+        let markers;
+        console.log('this.props.getSpots', this.props.getSpots);
+        if (this.props.getSpots.allSpots) {
+          console.log('markers', markers);
+          markers = this.props.getSpots.allSpots;
+        } else {
+          markers = [];
+        }
+        console.log('markers: ', markers);
         const config = {
             velocityThreshold: 0.3,
             directionalOffsetThreshold: 80,
@@ -189,7 +197,7 @@ const GET_SPOTS = gql`
 			longitude
 		}
 	}
-`
+`;
 
 // <LocationAutocomplete activeMarker={this.state.activeMarker}/>
 
