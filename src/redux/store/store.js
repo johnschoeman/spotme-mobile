@@ -7,7 +7,11 @@ import rootReducer from '../reducers/rootReducer'
 // Apollo redux setup learned from https://github.com/EQuimper/twitterclone-mobile-starter/blob/master/src/store.js
 
 const networkInterface = createNetworkInterface({
+<<<<<<< HEAD
   // uri: 'https://spotme-backend.herokuapp.com/graphql',  // production backend
+=======
+  // uri: 'https://spotme-backend.herokuapp.com/',  // production backend
+>>>>>>> 5102f305bc2e20a3320903844786079f0cd1f0ae
   // uri: 'https://api.graph.cool/simple/v1/cj8lu8ukt06rv0132uuni3tx7', // graphcool backend
   uri: 'http://localhost:3000/', // local host server
 });
