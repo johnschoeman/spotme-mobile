@@ -28,11 +28,11 @@ export default class HomeConditionalScreen extends React.Component {
     const { navigate } = navigation
     return (
 
-      // isLoggedIn ? (
+      isLoggedIn ? (
         <HomeScreen navigation={navigation} />
-      // ) : (
-      //   <WelcomeScreen navigation={navigation} />
-      // )
+      ) : (
+        <WelcomeScreen navigation={navigation} />
+      )
     )
   }
 
