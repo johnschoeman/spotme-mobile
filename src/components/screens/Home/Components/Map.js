@@ -2,10 +2,11 @@ import React from 'react';
 import { Constants, MapView, Location, Permissions } from 'expo';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import SpotPreview from './SpotPreview'
+import { graphql, compose, gql } from 'react-apollo'
 import LocationAutocomplete from './LocationAutocomplete'
 import { Animated, LayoutAnimation, Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 
-export default class Map extends React.Component {
+class Map extends React.Component {
     constructor() {
         super();
         this.onRegionChange = this.onRegionChange.bind(this)
@@ -27,7 +28,8 @@ export default class Map extends React.Component {
 
     componentDidMount() {
       Location.getProviderStatusAsync({})
-      this._getLocationAsync()
+			this._getLocationAsync()
+			this.props.getSpots()
     }
 
     onRegionChange(region) {
@@ -82,45 +84,45 @@ export default class Map extends React.Component {
             velocityThreshold: 0.3,
             directionalOffsetThreshold: 80,
         };
-        const markers = [
-            {
-                latlng: {
-                    latitude: 37.78825,
-                    longitude: -122.4204
-                },
-                title: "home",
-                image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
-                rating: 5,
-                price: 5.0,
-                description: "THIS IS MY HOME"
-            },
-            {
-                latlng: {
-                    latitude: 37.78835,
-                    longitude: -122.4314
-                },
-                title: "work",
-                image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
-                rating: 4,
-                price: 10.0,
-                description: "THIS IS MY WORK"
-            },
-            {
-                latlng: {
-                    latitude: 37.78455,
-                    longitude: -122.4124
-                },
-                title: "gym",
-                image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
-                rating: 3,
-                price: 7.0,
-                description: "THIS IS MY GYM"
-            }
-        ]
+        // const markers = [
+        //     {
+        //         latlng: {
+        //             latitude: 37.78825,
+        //             longitude: -122.4204
+        //         },
+        //         title: "home",
+        //         image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
+        //         rating: 5,
+        //         price: 5.0,
+        //         description: "THIS IS MY HOME"
+        //     },
+        //     {
+        //         latlng: {
+        //             latitude: 37.78835,
+        //             longitude: -122.4314
+        //         },
+        //         title: "work",
+        //         image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
+        //         rating: 4,
+        //         price: 10.0,
+        //         description: "THIS IS MY WORK"
+        //     },
+        //     {
+        //         latlng: {
+        //             latitude: 37.78455,
+        //             longitude: -122.4124
+        //         },
+        //         title: "gym",
+        //         image_url: "http://res.cloudinary.com/ddgt25kwb/image/upload/c_scale,w_179/v1507653351/garage-spot_bcnnyu.jpg",
+        //         rating: 3,
+        //         price: 7.0,
+        //         description: "THIS IS MY GYM"
+        //     }
+        // ]
         const { height, width } = Dimensions.get('window')
         const markerImg = require('../../../../../assets/icons/spotme_marker.png');
         
-        console.log("REGION", this.state.region)
+        console.log("MAPS", this.props.data.allSpots)
         return (
             <View>
                 <MapView
@@ -159,3 +161,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 });
+
+const GET_SPOTS = gql`
+  query GetSpots($first: Int, $skip: Int) {
+		allSpots(first: $first, skip: $skip) {
+			id
+			latitude
+			longitude
+		}
+	}
+`
+
+export default graphql(GET_SPOTS, {name: 'getSpots'})(Map);
