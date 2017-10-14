@@ -9,6 +9,8 @@ import HostSpotIndexScreenContainer from
   '../screens/HostSpotIndex/HostSpotIndexScreenContainer'
 import NewSpotScreenContainer from
   '../screens/NewSpot/NewSpotScreenContainer'
+import MenuScreenContainer from
+  '../screens/Menu/MenuScreenContainer'
 
 
 const MainNavigator = StackNavigator({
@@ -16,6 +18,7 @@ const MainNavigator = StackNavigator({
   SessionForm: { screen: SessionFormScreen },
   HostSpotIndex: { screen: HostSpotIndexScreenContainer },
   NewSpot: { screen: NewSpotScreenContainer },
+  Menu: { screen: MenuScreenContainer },
   // Profile: { screen: ProfileScreen },
 })
 
