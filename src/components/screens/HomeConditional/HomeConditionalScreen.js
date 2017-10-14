@@ -40,7 +40,7 @@ export default class HomeConditionalScreen extends React.Component {
 
 // TODO: delete this
 // use this version to test spot creation
-
+//
 // import React from 'react'
 // import { AsyncStorage, Button } from 'react-native'
 //

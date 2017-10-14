@@ -63,12 +63,15 @@ class SessionForm extends Component {
 
     return (
       <View style={styles.screen}>
-        <FormLabel>Email</FormLabel>
-        <FormInput onChangeText={(email) => this.setState({email})}/>
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Password</FormLabel>
-        <FormInput onChangeText={(password) => this.setState({password})}/>
-        <FormValidationMessage>Error message</FormValidationMessage>
+        <View>
+          <FormLabel>Email</FormLabel>
+          <FormInput onChangeText={(email) => this.setState({email})}/>
+          {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
+          <FormLabel>Password</FormLabel>
+          <FormInput onChangeText={(password) => this.setState({password})}/>
+          {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
+        </View>
+
 
         <Button
           onPress={() => this._handleSubmit()}
