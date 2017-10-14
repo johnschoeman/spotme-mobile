@@ -125,6 +125,7 @@ class Map extends React.Component {
         const markerImg = require('../../../../../assets/icons/spotme_marker.png');
         const activeMarkerImg = require('../../../../../assets/icons/spotme_marker_selected.png');
         // console.log("MAPS", this.props.data.allSpots)
+        console.log(markers[0]);
         return (
             <View>
                 <MapView
@@ -136,6 +137,7 @@ class Map extends React.Component {
                   {markers.map((marker) => (
                     <MapView.Marker
                       coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+                      title={marker.address_number+" "+marker.address_street}
                       onPress={() => this.setState({activeMarker: marker})}
                       key={marker.id}>
                       <Image source={markerImg}
@@ -166,6 +168,9 @@ const GET_SPOTS = gql`
 			id
 			latitude
 			longitude
+            address_number
+            address_street
+
 		}
 	}
 `
