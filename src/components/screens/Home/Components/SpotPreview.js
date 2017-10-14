@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { Animated, LayoutAnimation, Text, View, Image, Dimensions } from 'react-native';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
-import Modal from 'react-native-modal';
-import { Animated, LayoutAnimation } from 'react-native';
 import StarRating from 'react-native-star-rating';
 
 export default class SpotPreview extends React.Component {
@@ -20,7 +18,7 @@ export default class SpotPreview extends React.Component {
 
 	componentWillReceiveProps(newProps){
 		if (this.state.marker !== newProps.marker) {
-			console.log("I HAVE RECEIVED NEW PROPS", newProps)
+			// console.log("I HAVE RECEIVED NEW PROPS", newProps)
 			this.setState({marker: newProps.activeMarker})
 		}
 	}
@@ -91,7 +89,9 @@ export default class SpotPreview extends React.Component {
 		const { height, width } = Dimensions.get('window')
 		if (this.state.marker) {
 			return(
-				<Animated.View style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}> 
+				<Animated.View 
+					onPress={() => this.setState({ height: height - 25 })}
+					style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}> 
 					<Image
 						style={{ width: 140, height: 80 }}
 						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
@@ -115,15 +115,17 @@ export default class SpotPreview extends React.Component {
 	}
 
 	render(){
-		console.log(this.state.marker);
+		const { height, width } = Dimensions.get('window')
 		const config = {
 			velocityThreshold: 0,
 			directionalOffsetThreshold: 80,
 		};
 		return(
-      		<View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
+      		<View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}
+           onPress={() => this.setState({ height: height - 25 })}>
 				<GestureRecognizer
 					onSwipe={(direction, state) => this.onSwipe(direction, state)}
+					onPress={() => this.setState({ height: height - 25})}
 					config={config}
 				>
 					{this.state.height <= 150 ? this._renderPreview() : this._renderFull()}
