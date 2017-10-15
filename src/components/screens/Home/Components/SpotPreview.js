@@ -110,7 +110,7 @@ class SpotPreview extends React.Component {
 		const { height, width } = Dimensions.get('window')
 		const config = {
 			velocityThreshold: 0.3,
-			directionalOffsetThreshold: 10,
+			directionalOffsetThreshold: 80,
 		};
 		return(
       <View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
