@@ -18,6 +18,9 @@
     },
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.aateam.spotme"
     }
   }
 }

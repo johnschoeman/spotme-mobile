@@ -5,6 +5,8 @@ import Modal from 'react-native-modal';
 import StarRating from 'react-native-star-rating';
 import { Ionicons } from '@expo/vector-icons';
 
+import ReservationFormContainer from '../ReservationForm/ReservationFormContainer'
+
 export default class SpotShow extends React.Component {
   constructor() {
     super()
@@ -39,13 +41,14 @@ export default class SpotShow extends React.Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 10,
     };
+    const { navigation } = this.props
     if (this.state.spot) {
       const spot = this.state.spot
-      const address1 = spot.address_street && spot.address_number ? 
-        `${spot.address_number} ${spot.address_street}` : 
+      const address1 = spot.address_street && spot.address_number ?
+        `${spot.address_number} ${spot.address_street}` :
         `Latitude: ${spot.latitude}`
-      const address2 = spot.address_city && spot.address_state && spot.address_zip ? 
-        `${spot.address_city}, ${spot.address_state} ${spot.address_zip}` : 
+      const address2 = spot.address_city && spot.address_state && spot.address_zip ?
+        `${spot.address_city}, ${spot.address_state} ${spot.address_zip}` :
         `Longitude: ${spot.longitude}`
       const description = spot.description ? spot.description : "N/A"
       return (
@@ -58,7 +61,7 @@ export default class SpotShow extends React.Component {
             <View style={{ width, alignItems: 'center'}}>
               <Ionicons name="ios-arrow-down" size={20} color="black" />
             </View>
-            <View style={{ flexDirection: 'row', paddingTop: 10, paddingHorizontal: 5, justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', paddingTop: 10, paddingHorizontal: 30, justifyContent: 'space-between' }}>
               <View style={{
                 flexDirection: 'column'
               }}>
@@ -86,17 +89,10 @@ export default class SpotShow extends React.Component {
                 source={{ uri: 'http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg' }}
               />
             </View>
-            <View>
-              <Text>DESCRIPTION: </Text>
-              <Text>{description}</Text>
-            </View>
-            <View style={{ justifyContent: 'center', paddingTop: 10 }}>
-              <Text>RESERVE NOW: </Text>
-            </View>
           </GestureRecognizer>
+          <ReservationFormContainer navigation={navigation} spot={spot}/>
         </Animated.View>
       )
     }
   }
 }
-
