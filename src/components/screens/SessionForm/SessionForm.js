@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
 import { AsyncStorage, View, StyleSheet, Text } from 'react-native'
 import {
-  FormLabel, FormInput, FormValidationMessage, SocialIcon, Button
+  FormLabel, FormInput, FormValidationMessage, Button
 } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 
@@ -10,7 +10,6 @@ import FBLoginFormContainer from '../SessionForm/SocialLogin/FBLoginFormContaine
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../utils/constants';
 import { CREATE_USER_MUTATION, SIGNIN_USER_MUTATION } from
   '../../../graphql/mutations/SessionMutations'
-import styles from '../../../styles/styles'
 
 class SessionForm extends Component {
 
@@ -49,8 +48,8 @@ class SessionForm extends Component {
 
     this.props.receiveCurrentUser( { user, spots } )
 
-    console.log('*** RESULT', res);
-    AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
+    // console.log('*** RESULT', res);
+    // AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   _navigateHome() {
@@ -84,7 +83,10 @@ class SessionForm extends Component {
             onPress={() => this._handleSubmit()}
             title={formTypeTrue}
             borderRadius={25}
-            icon={{name: 'login', type: 'material-community'}}
+            icon={{
+              name: isLogin ? 'login' : 'user-follow',
+              type: isLogin ? 'material-community' : 'simple-line-icon'
+            }}
             buttonStyle={localStyles.button} />
           <FBLoginFormContainer
             navigation={this.props.navigation}

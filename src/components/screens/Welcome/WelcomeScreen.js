@@ -1,7 +1,5 @@
 import React from 'react';
-import { Alert, Image, Button, Text, View, StyleSheet } from 'react-native';
-import Expo, { AuthSession } from 'expo';
-import styles from '../../../styles/styles'
+import { Image, StyleSheet } from 'react-native';
 import SessionFormContainer from '../SessionForm/SessionFormContainer'
 
 
