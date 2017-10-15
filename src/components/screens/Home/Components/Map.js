@@ -3,7 +3,6 @@ import { MapView, Location, Permissions } from 'expo';
 import { Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { graphql, gql } from 'react-apollo'
 import SpotPreview from './SpotPreview'
-import LocationAutocomplete from './LocationAutocomplete'
 
 class Map extends React.Component {
     constructor() {
@@ -119,7 +118,6 @@ class Map extends React.Component {
                 ))}
                 {this.renderCurrentLocationMarker()}
               </MapView>
-              <LocationAutocomplete activeMarker={this.state.activeSpot} />
               <SpotPreview activeSpot={this.state.activeSpot}/>
           </View>
         );
