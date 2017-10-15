@@ -3,7 +3,6 @@ import { graphql, compose } from 'react-apollo'
 import { AsyncStorage, Text, View, Button } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
-import Slider from "react-native-slider";
 
 import { CREATE_RESERVATION_MUTATION } from
     '../../../graphql/mutations/ReservationMutations'
@@ -15,9 +14,7 @@ class ReservationForm extends Component {
       super(props)
 
       this.state = {
-        spot_id: 1,
-        start_time: "2018-12-13T20:02:39Z",
-        end_time: "2018-12-13T20:02:56Z",   
+        end_time: new Date(),
       };
     }
 
@@ -41,8 +38,7 @@ class ReservationForm extends Component {
 
         return (
           <View style={styles.screen}>
-            <Slider />
-            <Text>Hihihihihihi</Text>
+
           </View>
         )
     }

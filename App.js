@@ -28,6 +28,7 @@ const preloadedState = {
 const store = configureStore(preloadedState)
 
 export default class App extends React.Component {
+
   render() {
     return (
       <ApolloProvider store={store} client={client}>
