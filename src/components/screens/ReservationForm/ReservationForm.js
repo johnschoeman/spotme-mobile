@@ -138,12 +138,6 @@ const localStyles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 10,
     paddingBottom: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0,  height: -1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-    borderColor: '#CCC',
-    // elevation: 2,
   },
   reserveButton: {
     width: 150,
