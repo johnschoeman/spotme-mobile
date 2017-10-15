@@ -7,31 +7,22 @@ import styles from '../../../styles/styles'
 
 export default class SpotShowScreen extends React.Component {
 
-    // static navigationOptions = ({ navigation }) => {
-    //     switch (navigation.state.params.formType) {
-    //         case 'logIn':
-    //             return { title: 'Log In' }
-    //         case 'signUp':
-    //             return { title: 'Sign Up' }
-    //         default:
-    //             return { title: 'No Title' }
-    //     }
-    // }
+  // static navigationOptions = ({ navigation }) => {
+  // }
 
-    // constructor(props) {
-    //   super(props)
-    // }
+  // constructor(props) {
+  //   super(props)
+  // }
 
-    render() {
-        const { navigation } = this.props
-        let { spot } = this.props
-        spot = spot || this.props.navigation.state.params.spot
-        return (
-            <View style={styles.screen}>
-                <SpotShow navigation={navigation} spot={spot}/>
-                <ReservationFormContainer navigation={navigation} spot={spot}/>
-            </View>
-        )
-    }
+  render() {
+    const { navigation } = this.props
+    let { spot } = this.props
+    spot = spot || this.props.navigation.state.params.spot
+    return (
+      <View style={styles.screen}>
+        <SpotShow navigation={navigation} spot={spot}/>
+      </View>
+    )
+  }
 
 }
