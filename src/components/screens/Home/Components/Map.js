@@ -28,7 +28,7 @@ class Map extends React.Component {
       Location.getProviderStatusAsync({})
 			this._getLocationAsync()
 		}
-		
+
     onRegionChange(region) {
         this.setState({ region })
     }
@@ -43,13 +43,13 @@ class Map extends React.Component {
         const location = await Location.getCurrentPositionAsync({});
         if(location !== this.state.location) {
           this.setState({
-            region: { latitude: location.coords.latitude, 
-                      longitude: location.coords.longitude, 
+            region: { latitude: location.coords.latitude,
+                      longitude: location.coords.longitude,
                       latitudeDelta: 0.02,
                       longitudeDelta: 0.02, }
           });
-          this.animateTo({ latitude: location.coords.latitude, 
-                                 longitude: location.coords.longitude, 
+          this.animateTo({ latitude: location.coords.latitude,
+                                 longitude: location.coords.longitude,
                                  latitudeDelta: 0.02,
                                  longitudeDelta: 0.02 })
           this.setState({ location });
@@ -70,7 +70,7 @@ class Map extends React.Component {
               style={{ width: 25, height: 25 }}/>
           </MapView.Marker>
         )
-      }      
+      }
     }
 
     render() {
@@ -101,7 +101,7 @@ class Map extends React.Component {
                 region={this.state.region}
                 onRegionChange={this.onRegionChange}>
                 {Object.keys(spots).map((key) => (
-                  <MapView.Marker 
+                  <MapView.Marker
                     coordinate={{ latitude: spots[key].latitude, longitude: spots[key].longitude}}
                     onPress={() => this.setState({ activeSpot: spots[key]})}
                     key={key}
