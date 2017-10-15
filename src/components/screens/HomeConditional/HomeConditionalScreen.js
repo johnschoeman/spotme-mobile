@@ -1,5 +1,5 @@
 import React from 'react'
-import { AsyncStorage, Button } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 import HomeScreen from '../Home/HomeScreen'
 import WelcomeScreen from '../Welcome/WelcomeScreen'
@@ -11,27 +11,23 @@ export default class HomeConditionalScreen extends React.Component {
     return {
       title: screenProps.isLoggedIn ? 'Home' : 'Welcome',
       headerRight: screenProps.isLoggedIn && (
-        <Button
-          title='Menu'
-          onPress={() => navigate('Menu')}/>
+        <Icon.Button
+          name='gear'
+          onPress={() => navigate('Menu')}
+          style={{marginRight: 10}}/>
       )
     }
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { isLoggedIn, navigation } = this.props
-    const { navigate } = navigation
     return (
 
-      // isLoggedIn ? (
+      isLoggedIn ? (
         <HomeScreen navigation={navigation} />
-      // ) : (
-        // <WelcomeScreen navigation={navigation} />
-      // )
+      ) : (
+        <WelcomeScreen navigation={navigation} />
+      )
 
     )
   }
