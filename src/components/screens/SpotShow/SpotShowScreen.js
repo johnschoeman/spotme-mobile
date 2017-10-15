@@ -24,7 +24,8 @@ export default class SpotShowScreen extends React.Component {
 
     render() {
         const { navigation } = this.props
-        const { spot } = this.props
+        let { spot } = this.props
+        spot = spot || this.props.navigation.state.params.spot
         console.log("I'M IN SPOT SHOW SCREEN: ", this.props)
         return (
             <View style={styles.screen}>
