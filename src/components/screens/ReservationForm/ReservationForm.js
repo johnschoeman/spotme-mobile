@@ -26,14 +26,14 @@ class ReservationForm extends Component {
 
   _handleSubmit = async () => {
       const { duration } = this.state
-      const { spot_id } = this.props.spot
+      const spot_id = Number(this.props.spot.id)
       const now = new Date()
       const start_time = now.toISOString()
       const end_time = this.addMinutes(now, duration).toISOString()
       const reservationVariables = { variables: { spot_id, start_time, end_time } }
       const result = await this.props.createReservationMutation(reservationVariables)
-      // redux dispatch
-      // resetNavigateHome()
+      // redux dispatch?
+      this._resetNavigateHome()
   }
 
   _resetNavigateHome = () => {
@@ -128,7 +128,7 @@ const localStyles = StyleSheet.create({
   },
   labelDurationText: {
     textAlign: 'right',
-    marginRight: 25,
+    marginRight: 30,
     color: '#666'
   },
   slider: {
