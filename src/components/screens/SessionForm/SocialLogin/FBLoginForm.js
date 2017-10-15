@@ -4,10 +4,10 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
-import { NavigationActions } from 'react-navigation'
 import { Button } from 'react-native-elements'
+import { NavigationActions } from 'react-navigation'
 
-import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
+import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../../utils/constants';
 
 const auth0ClientId = 'PODS1ov5gcTRNmWec61GhXDZO9jLt-yT';
 const auth0Domain = 'https://spotme.auth0.com';
@@ -53,20 +53,30 @@ class FBLoginForm extends React.Component {
       const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
-
+      console.log(decodedToken)
       this.setState({email: decodedToken.email});
-      const userVariables = {variables: { email: decodedToken.email } }
+      const userVariables = {variables: { email: decodedToken.email, avatar_url: decodedToken.picture, username: decodedToken.nickname } }
+      console.log("variables: ", userVariables)
       let res;
       res = await this.props.createUserSocialMutation(userVariables);
       this._saveUserData(res)
-      this._navigateHome()
+      this._resetNavigateHome()
     }
+  }
+
+  _resetNavigateHome = () => {
+    const resetNavigateHomeAction = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHomeAction)
   }
 
   _saveUserData = (res) => {
     const { user, token } = res.data.signInSocial
-    AsyncStorage.setItem(GC_USER_ID, user.id)
-    AsyncStorage.setItem(GC_AUTH_TOKEN, token)
+    AsyncStorage.setItem(SPOTME_USER_ID, user.id)
+    AsyncStorage.setItem(SPOTME_AUTH_TOKEN, token)
 
     const { spots } = user
     delete user.spots
@@ -74,16 +84,7 @@ class FBLoginForm extends React.Component {
     this.props.receiveCurrentUser( { user, spots } )
 
     // console.log('*** RESULT', res);
-    // AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
-  }
-
-  _navigateHome() {
-    const resetNavigateHome = NavigationActions.reset({
-      index: 0,
-      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
-    })
-    const { dispatch } = this.props.navigation;
-    dispatch(resetNavigateHome)
+    // AsyncStorage.getItem(SPOTME_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   render() {
@@ -114,9 +115,11 @@ const GET_FB_TOKEN_MUTATION = gql`
 `;
 
 const CREATE_USER_SOCIAL_MUTATION = gql`
-  mutation CreateUserSocialMutation($email: String!) {
+  mutation CreateUserSocialMutation($email: String!, $avatar_url: String, $username: String) {
     createUserSocial(
-      email: $email
+      email: $email,
+      avatar_url: $avatar_url,
+      username: $username,
     ) {
       id
     }
@@ -127,6 +130,8 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
       user {
         id
         email
+        avatar_url
+        username
         spots {
           id
           address_number
