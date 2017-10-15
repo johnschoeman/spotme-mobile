@@ -27,14 +27,8 @@ class Map extends React.Component {
     componentDidMount() {
       Location.getProviderStatusAsync({})
 			this._getLocationAsync()
-			// console.log("SPOTSSSSSKSDFLSKJFSDF", this.props.getSpots)
-			// this.props.getSpots()
 		}
 		
-		// _getspotsAsync = async () => {
-		// 	this.props.getSpots()
-		// }
-
     onRegionChange(region) {
         this.setState({ region })
     }
@@ -45,10 +39,8 @@ class Map extends React.Component {
 
     _getLocationAsync = async () => {
       const { status } = await Permissions.askAsync(Permissions.LOCATION);
-      // console.log("STATUS:", status)
       if (status === 'granted') {
         const location = await Location.getCurrentPositionAsync({});
-        // console.log("LOCATION:", location);
         if(location !== this.state.location) {
           this.setState({
             region: { latitude: location.coords.latitude, 
@@ -67,7 +59,6 @@ class Map extends React.Component {
     };
     renderCurrentLocationMarker() {
       const locMarkerImg = require('../../../../../assets/icons/location_marker.png');
-      // console.log(Object.keys(this.state.location));
       if (Object.keys(this.state.location).length!== 0) {
         return (
           <MapView.Marker
@@ -97,7 +88,6 @@ class Map extends React.Component {
         const { height, width } = Dimensions.get('window')
         const spotImg = require('../../../../../assets/icons/spotme_marker.png');
         const activeSpotImg = require('../../../../../assets/icons/spotme_marker_selected.png');
-        // console.log("MAPS", this.props.data.allSpots)
         return (
           <View>
               <MapView
@@ -110,10 +100,8 @@ class Map extends React.Component {
                   <MapView.Marker 
                     coordinate={{ latitude: spots[key].latitude, longitude: spots[key].longitude}}
                     onPress={() => this.setState({ activeSpot: spots[key]})}
-                    key={key}>
-                    <Image source={spotImg}
-                      style={{ width: 25, height: 25 }}/>
-                  </MapView.Marker>
+                    key={key}
+                    image={spotImg}/>
                 ))}
                 {this.renderCurrentLocationMarker()}
               </MapView>
@@ -131,37 +119,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 });
-
-// const GET_SPOTS = gql`
-//   query GetSpots {
-// 		allSpots {
-// 			id
-// 			latitude
-// 			longitude
-// 			description
-// 			image_url
-// 			price
-// 			rating
-// 			address_number
-// 			address_street
-// 			address_city
-// 			address_state
-// 			address_zip
-// 			reservations {
-// 			id
-// 			start_time
-// 			end_time
-// 			spot {
-// 				id
-// 			}
-// 			user {
-// 				id
-// 				email
-// 			}
-// 		}
-// 		}
-// 	}
-// `
 
 const GET_SPOTS = gql`
   query GetSpots($first: Int, $skip: Int) {
