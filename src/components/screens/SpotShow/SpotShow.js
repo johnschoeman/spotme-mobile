@@ -8,21 +8,33 @@ export default class SpotShow extends React.Component {
   constructor() {
     super()
     this.state = {
-      spot: this.props.spot
+      spot: {}
     }
   }
+
+  componentDidMount() {
+    this.setState({ spot: this.props.spot});
+  }
+
   render() {
     const { height, width } = Dimensions.get('window')
     if (this.state.spot) {
-      console.log("spot SETTINGS!!!!!", this.state.spot)
+      const spot = this.state.spot
+      const address1 = spot.address_street && spot.address_number ? 
+        `${spot.address_number} ${spot.address_street}` : 
+        `Latitude: ${spot.latitude}`
+      const address2 = spot.address_city && spot.address_state && spot.address_zip ? 
+        `${spot.address_city}, ${spot.address_state} ${spot.address_zip}` : 
+        `Longitude: ${spot.longitude}`
+      const description = spot.description ? spot.description : "N/A"
       return (
         <Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', paddingTop: 10, paddingRight: 5, paddingLeft: 5, justifyContent: 'space-between' }}>
             <View style={{
               flexDirection: 'column'
             }}>
-              <Text>825 Tehama st,</Text>
-              <Text>San Francisco, CA</Text>
+              <Text>{address1}</Text>
+              <Text>{address2}</Text>
             </View>
             <View style={{ flexDirection: 'column' }}>
               <StarRating
@@ -46,10 +58,11 @@ export default class SpotShow extends React.Component {
             />
           </View>
           <View>
-            <Text>DESCRIPTIONS</Text>
+            <Text>DESCRIPTION: </Text>
+            <Text>{description}</Text>
           </View>
           <View style={{ justifyContent: 'center', paddingTop: 10 }}>
-            <Text>RESERVE NOW</Text>
+            <Text>RESERVE NOW: </Text>
           </View>
         </Animated.View>
       )

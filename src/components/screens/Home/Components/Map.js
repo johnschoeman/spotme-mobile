@@ -120,7 +120,6 @@ class Map extends React.Component {
                 {this.renderCurrentLocationMarker()}
               </MapView>
               <SpotPreview activeSpot={this.state.activeSpot}/>
-              <Text>Hello</Text>
           </View>
         );
     }
