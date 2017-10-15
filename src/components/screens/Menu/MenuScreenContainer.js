@@ -6,7 +6,7 @@ const mapStateToProps = (state, ownProps) => {
   const currentUser = state.session.currentUser
   console.log(currentUser);
   return {
-
+    currentUser
   };
 };
 

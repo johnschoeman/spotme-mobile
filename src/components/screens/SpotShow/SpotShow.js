@@ -99,3 +99,4 @@ export default class SpotShow extends React.Component {
     }
   }
 }
+
