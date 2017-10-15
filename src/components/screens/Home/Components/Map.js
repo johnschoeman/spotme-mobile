@@ -101,7 +101,7 @@ class Map extends React.Component {
                     coordinate={{ latitude: spots[key].latitude, longitude: spots[key].longitude}}
                     onPress={() => this.setState({ activeSpot: spots[key]})}
                     key={key}
-                    image={spotImg}/>
+                    image={this.state.activeSpot === spots[key] ? activeSpotImg : spotImg}/>
                 ))}
                 {this.renderCurrentLocationMarker()}
               </MapView>
