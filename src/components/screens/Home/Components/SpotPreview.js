@@ -13,17 +13,17 @@ class SpotPreview extends React.Component {
 		this.onSwipe = this.onSwipe.bind(this)
 		
 		this.state = {
-			marker: null,
-			markerId: null,
+			spot: null,
+			spotId: null,
 			height: 150
 		}
 	}
 
 	componentWillReceiveProps(newProps){
-		if (newProps.activeMarker) {
-			if (this.state.marker !== newProps.activeMarker) {
+		if (newProps.activeSpot) {
+			if (this.state.spot !== newProps.activeSpot) {
 				console.log("I HAVE RECEIVED NEW PROPS", newProps)
-				this.setState({marker: newProps.activeMarker})
+				this.setState({spot: newProps.activeSpot})
 			}
 		}
 	}
@@ -48,51 +48,18 @@ class SpotPreview extends React.Component {
 
 	_renderFull(){
 		const { height, width } = Dimensions.get('window')
-		if (this.state.marker) {
-			console.log("MARKER SETTINGS!!!!!", this.state.marker)
-			return (
+		console.log("SPOT: ", this.state.spot);
+		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
-					<View style={{ flexDirection: 'row', paddingTop: 10, paddingRight: 5, paddingLeft: 5, justifyContent: 'space-between' }}>
-						<View style={{
-							flexDirection: 'column'}}>
-							<Text>825 Tehama st,</Text>
-							<Text>San Francisco, CA</Text>
-						</View>
-						<View style={{ flexDirection: 'column' }}>
-							<StarRating
-								disabled={false}
-								maxStars={5}
-								rating={this.state.marker.rating}
-								selectedStar={(rating) => {
-									let marker = this.state.marker
-									marker.rating = rating
-									this.setState({ marker: marker })
-								}}
-								starSize={20}
-							/>
-							<Text style={{ fontSize: 18 }}>${this.state.marker.price}.00/hr</Text>
-						</View>
-					</View>
-					<View style={{ justifyContent: 'center', paddingTop: 10 }}>
-						<Image
-							style={{ height: 200, width: width }}
-							source={{ uri: 'http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg' }}
-						/>
-					</View>
-					<View>
-						<Text>DESCRIPTIONS</Text>
-					</View>
-					<View style={{ justifyContent: 'center', paddingTop: 10 }}>
-						<Text>RESERVE NOW</Text>
-					</View>
+					<SpotShowScreen spot={this.state.spot}/>
 				</Animated.View>
-			)
-		}
+		)
 	}
 
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
-		if (this.state.marker) {
+		console.log("HEY YOU HAVE A SPOT?", this.state.spot)
+		if (this.state.spot) {
 			return(
 				<Animated.View 
 					onPress={() => this.setState({ height: height - 25 })}
@@ -104,15 +71,15 @@ class SpotPreview extends React.Component {
 						<StarRating
 							disabled={false}
 							maxStars={5}
-							rating={this.state.marker["rating"]}
+							rating={this.state.spot["rating"]}
 							selectedStar={(rating) => {
-								let marker = this.state.marker
-								marker["rating"] = rating
-								this.setState({ marker: marker })
+								let spot = this.state.spot
+								spot["rating"] = rating
+								this.setState({ spot: spot })
 							}}
 							starSize={20}
 						/>
-						<Text style={{ fontSize: 18 }}>${this.state.marker["price"]}.00/hr</Text>
+						<Text style={{ fontSize: 18 }}>${this.state.spot["price"]}/hr</Text>
 					</View>
 				</Animated.View> 
 			)
@@ -121,11 +88,11 @@ class SpotPreview extends React.Component {
 
 	render(){
 		// let spot;
-		// let spot_id = this.props.activeMarkerId;
+		// let spot_id = this.props.activespotId;
 		// let spotVaribles = { variable: {spot_id: spot_id}}
 		// if (this.props.getSpot) {
 		// 	spot = this.props.getSpot(spotVaribles).getSpot;
-		// 	this.setState({marker: spot})
+		// 	this.setState({spot: spot})
 		// } else {
 		// 	spot = {};
 		// }
@@ -136,6 +103,7 @@ class SpotPreview extends React.Component {
 			velocityThreshold: 0.3,
 			directionalOffsetThreshold: 10,
 		};
+		console.log("THIS HEIGHT: ", this.state.height)
 		return(
       <View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
 				<GestureRecognizer
@@ -143,7 +111,7 @@ class SpotPreview extends React.Component {
 					onPress={() => this.setState({ height: height - 25})}
 					config={config}
 				>
-					{this.state.height <= 150 ? this._renderPreview() : <SpotShowScreen />}
+					{this.state.height <= 150 ? this._renderPreview() : this._renderFull()}
 				</GestureRecognizer>
 			</View>
 		)
