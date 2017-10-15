@@ -12,11 +12,11 @@ import MenuScreenContainer from
 import SpotShowScreen from '../screens/SpotShow/SpotShowScreen'
 
 const MainNavigator = StackNavigator({
-  SpotShow: { screen: SpotShowScreen },
   Home: { screen: HomeConditionalScreenContainer },
   HostSpotIndex: { screen: HostSpotIndexScreenContainer },
   NewSpot: { screen: NewSpotScreenContainer },
   Menu: { screen: MenuScreenContainer },
+  SpotShow: { screen: SpotShowScreen },
   // Profile: { screen: ProfileScreen },
 })
 
