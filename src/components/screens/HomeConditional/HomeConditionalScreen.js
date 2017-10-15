@@ -4,7 +4,6 @@ import { AsyncStorage } from 'react-native'
 import HomeScreen from '../Home/HomeScreen'
 import WelcomeScreen from '../Welcome/WelcomeScreen'
 
-
 export default class HomeConditionalScreen extends React.Component {
 
   static navigationOptions = (props) => {
@@ -28,11 +27,12 @@ export default class HomeConditionalScreen extends React.Component {
     const { navigate } = navigation
     return (
 
-      isLoggedIn ? (
+      // isLoggedIn ? (
         <HomeScreen navigation={navigation} />
-      ) : (
-        <WelcomeScreen navigation={navigation} />
-      )
+      // ) : (
+      //   <WelcomeScreen navigation={navigation} />
+      // )
+
     )
   }
 

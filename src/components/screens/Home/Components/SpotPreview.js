@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { Animated, LayoutAnimation, Text, View, Image, Dimensions } from 'react-native';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
-import Modal from 'react-native-modal';
-import { Animated, LayoutAnimation } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import { graphql, gql } from 'react-apollo';
 
@@ -21,11 +19,17 @@ class SpotPreview extends React.Component {
 	}
 
 	componentWillReceiveProps(newProps){
+<<<<<<< HEAD
 		if (newProps.activeMarker) {
 			if (this.state.marker !== newProps.activeMarker) {
 				console.log("I HAVE RECEIVED NEW PROPS", newProps)
 				this.setState({marker: newProps.activeMarker})
 			}
+=======
+		if (this.state.marker !== newProps.marker) {
+			// console.log("I HAVE RECEIVED NEW PROPS", newProps)
+			this.setState({marker: newProps.activeMarker})
+>>>>>>> f7edb1ac6cab442dfdc69dc1c37f19967238e6fd
 		}
 	}
 
@@ -95,7 +99,9 @@ class SpotPreview extends React.Component {
 		const { height, width } = Dimensions.get('window')
 		if (this.state.marker) {
 			return(
-				<Animated.View style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}> 
+				<Animated.View 
+					onPress={() => this.setState({ height: height - 25 })}
+					style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}> 
 					<Image
 						style={{ width: 140, height: 80 }}
 						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
@@ -130,6 +136,7 @@ class SpotPreview extends React.Component {
 		// }
 		// console.log("SSSSSSPPPPPPOOOOOOOOTTTTTTT", spot)
 
+		const { height, width } = Dimensions.get('window')
 		const config = {
 			velocityThreshold: 0.3,
 			directionalOffsetThreshold: 10,
@@ -138,6 +145,7 @@ class SpotPreview extends React.Component {
       <View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
 				<GestureRecognizer
 					onSwipe={(direction, state) => this.onSwipe(direction, state)}
+					onPress={() => this.setState({ height: height - 25})}
 					config={config}
 				>
 					{this.state.height <= 150 ? this._renderPreview() : this._renderFull()}
