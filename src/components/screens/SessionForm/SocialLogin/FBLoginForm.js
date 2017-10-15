@@ -53,6 +53,8 @@ class FBLoginForm extends React.Component {
       const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
+      debugger;
+      console.log('decodedToken', decodedToken);
       this.setState({email: decodedToken.email});
       const userVariables = {variables: { email: decodedToken.email } }
       let res;
@@ -63,7 +65,7 @@ class FBLoginForm extends React.Component {
   }
 
   _saveUserData = (res) => {
-    const { user, token } = res.data.signinUser
+    const { user, token } = res.data.signInSocial
     AsyncStorage.setItem(GC_USER_ID, user.id)
     AsyncStorage.setItem(GC_AUTH_TOKEN, token)
 
@@ -126,6 +128,17 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
       user {
         id
         email
+        spots {
+          id
+          address_number
+          address_street
+          address_city
+          address_state
+          address_zip
+          latitude
+          longitude
+          host_id
+        }
       }
     }
   }
