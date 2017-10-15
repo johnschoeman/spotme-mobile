@@ -61,29 +61,38 @@ class SpotPreview extends React.Component {
 		const { height, width } = Dimensions.get('window')
 		console.log("HEY YOU HAVE A SPOT?", this.state.spot)
 		if (this.state.spot) {
+			const spot = this.state.spot
+			const address1 = spot.address_street && spot.address_number ?
+				`${spot.address_number} ${spot.address_street}` :
+				`Latitude: ${spot.latitude}`
+			const address2 = spot.address_city && spot.address_state && spot.address_zip ?
+				`${spot.address_city}, ${spot.address_state} ${spot.address_zip}` :
+				`Longitude: ${spot.longitude}`
 			return(
 				<Animated.View 
 					onPress={() => this.setState({ height: height - 25 })}
-					style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}>
-					<View>
-						<Ionicons name="md-checkmark-circle" size={15} color="black" />
-					</View>
-					<Image
-						style={{ width: 140, height: 80 }}
-						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
-					<View style={{ flexDirection: 'column', paddingLeft: 100, paddingTop: 10, paddingRight: 20 }}>
-						<StarRating
-							disabled={false}
-							maxStars={5}
-							rating={this.state.spot["rating"]}
-							selectedStar={(rating) => {
-								let spot = this.state.spot
-								spot["rating"] = rating
-								this.setState({ spot: spot })
-							}}
-							starSize={20}
-						/>
-						<Text style={{ fontSize: 18 }}>${this.state.spot["price"]}/hr</Text>
+					style={{ height: 200, width, paddingTop: 5, paddingLeft: 10, alignItems: 'center'}}>
+					<Ionicons name="ios-arrow-up" size={20} color="black" />
+					<Text>{address1}</Text>
+					<Text>{address2}</Text>
+					<View style={{ flexDirection: 'row', paddingTop: 20 }}>
+						<Image
+							style={{ width: 140, height: 80 }}
+							source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
+						<View style={{ flexDirection: 'column', paddingLeft: 100, paddingTop: 10, paddingRight: 20 }}>
+							<StarRating
+								disabled={false}
+								maxStars={5}
+								rating={this.state.spot["rating"]}
+								selectedStar={(rating) => {
+									let spot = this.state.spot
+									spot["rating"] = rating
+									this.setState({ spot: spot })
+								}}
+								starSize={20}
+							/>
+							<Text style={{ fontSize: 18 }}>${this.state.spot["price"]}/hr</Text>
+						</View>
 					</View>
 				</Animated.View> 
 			)
