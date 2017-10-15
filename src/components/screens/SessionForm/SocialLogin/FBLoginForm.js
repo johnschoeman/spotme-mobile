@@ -53,8 +53,7 @@ class FBLoginForm extends React.Component {
       const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
-      debugger;
-      console.log('decodedToken', decodedToken);
+
       this.setState({email: decodedToken.email});
       const userVariables = {variables: { email: decodedToken.email } }
       let res;
