@@ -39,7 +39,6 @@ class ReservationForm extends Component {
 
         return (
           <View style={styles.screen}>
-          
           </View>
         )
     }

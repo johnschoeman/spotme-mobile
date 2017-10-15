@@ -14,10 +14,10 @@ export default class HostSpotIndexScreen extends React.Component {
   // }
 
   logoutAndNavigateHome() {
-    this.props.logoutUser();
     AsyncStorage.removeItem(SPOTME_USER_ID)
     AsyncStorage.removeItem(SPOTME_AUTH_TOKEN)
     this._resetNavigateHome()
+    this.props.logoutUser();
   }
 
   _resetNavigateHome = () => {
@@ -28,19 +28,24 @@ export default class HostSpotIndexScreen extends React.Component {
     const { dispatch } = this.props.navigation;
     dispatch(resetNavigateHomeAction)
   }
-  
+
   render() {
-    const { navigate } = this.props.navigation
-    console.log("CurrentUser, ", this.props.currentUser)
+    const { currentUser, navigation } = this.props
+    const { navigate } = navigation
+
     return (
       <View style={localStyles.screen}>
         <View style={localStyles.screenTopSection}>
-          <View style={localStyles.headerView}>
-            <Image
-              style={{ width: 50, height: 50, borderRadius: 25 }}
-              source={{ uri: this.props.currentUser.avatar_url }} />
-            <Text style={localStyles.headerText}>{this.props.currentUser.username}</Text>
-          </View>
+
+          {
+            currentUser &&
+            <View style={localStyles.headerView}>
+              <Image
+                style={{ width: 50, height: 50, borderRadius: 25 }}
+                source={{ uri: currentUser.avatar_url }} />
+              <Text style={localStyles.headerText}>{currentUser.username}</Text>
+            </View>
+          }
           <ScrollView>
             <OneLineMenuButton
               content='My Spots'
