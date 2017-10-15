@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import Expo, { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
 import { NavigationActions } from 'react-navigation'
+import { SocialIcon } from 'react-native-elements'
 
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
 import styles from '../../../../styles/styles'
@@ -89,9 +90,12 @@ class FBLoginForm extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.screen}>
-        <Button title="Login with Facebook" onPress={this.loginWithAuth0FB} />
-      </View>
+      <SocialIcon
+        title='Sign In With Facebook'
+        button
+        type='facebook'
+        onPress={this.loginWithAuth0FB}
+      />
     )
   }
 }
