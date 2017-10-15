@@ -138,23 +138,65 @@ const styles = StyleSheet.create({
 });
 
 const GET_SPOTS = gql`
-  query GetSpots($first: Int, $skip: Int) {
-		allSpots(first: $first, skip: $skip) {
+  query GetSpots {
+		allSpots {
 			id
 			latitude
 			longitude
+			description
+			image_url
+			price
+			rating
+			address_number
+			address_street
+			address_city
+			address_state
+			address_zip
+			reservations {
+			id
+			start_time
+			end_time
+			spot {
+				id
+			}
+			user {
+				id
+				email
+			}
+		}
 		}
 	}
 `
 
 // const GET_SPOTS = gql`
-//   query GetSpots {
-// 		allSpots {
+//   query GetSpots($first: Int, $skip: Int) {
+// 		allSpots(first: $first, skip: $skip) {
 // 			id
 // 			latitude
 // 			longitude
+// 			description
+// 			image_url
+// 			price
+// 			rating
+// 			address_number
+// 			address_street
+// 			address_city
+// 			address_state
+// 			address_zip
+// 			reservations {
+// 			id
+// 			start_time
+// 			end_time
+// 			spot {
+// 				id
+// 			}
+// 			user {
+// 				id
+// 				email
+// 			}
+// 		}
 // 		}
 // 	}
-// `;
+// `
 
 export default graphql(GET_SPOTS, {name: 'getSpots'})(Map);
