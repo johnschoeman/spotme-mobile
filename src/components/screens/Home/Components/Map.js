@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapView, Location, Permissions } from 'expo';
-import { Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { Keyboard, StyleSheet, Text, View, Image, Dimensions, Platform } from 'react-native';
 import { graphql, gql } from 'react-apollo'
 import SpotPreview from './SpotPreview'
 
@@ -74,7 +74,7 @@ class Map extends React.Component {
     }
 
     render() {
-
+        console.log("OS", Platform.OS);
         let spots;
         if (this.props.getSpots.allSpots) {
           spots = this.props.getSpots.allSpots;
@@ -86,8 +86,12 @@ class Map extends React.Component {
           directionalOffsetThreshold: 80,
         };
         const { height, width } = Dimensions.get('window')
-        const spotImg = require('../../../../../assets/icons/spotme_marker.png');
-        const activeSpotImg = require('../../../../../assets/icons/spotme_marker_selected.png');
+        const spotImgiOS = require('../../../../../assets/icons/spotme_marker.png') 
+        const spotImgAndroid = require('../../../../../assets/icons/spotme_marker_android.png')
+        const activeSpotImgiOS = require('../../../../../assets/icons/spotme_marker_selected.png');
+        const activeSpotImgAndroid = require('../../../../../assets/icons/spotme_marker_selected_android.png')
+        const spotImg = Platform.OS === "ios" ? spotImgiOS : spotImgAndroid
+        const activeSpotImg = Platform.OS === "ios" ? activeSpotImgiOS : activeSpotImgAndroid
         return (
           <View>
               <MapView
