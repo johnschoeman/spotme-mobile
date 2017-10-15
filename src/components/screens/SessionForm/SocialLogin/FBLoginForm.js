@@ -89,9 +89,10 @@ class FBLoginForm extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { formType } = this.props
     return (
       <SocialIcon
-        title='Sign In With Facebook'
+        title={`${FormType} With Facebook`}
         button
         type='facebook'
         onPress={this.loginWithAuth0FB}
