@@ -1,11 +1,11 @@
 import React from 'react';
-import { AsyncStorage, Alert, Image, Button, Text, View } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import Expo, { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
 import { NavigationActions } from 'react-navigation'
-import { SocialIcon } from 'react-native-elements'
+import { Button } from 'react-native-elements'
 
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
 import styles from '../../../../styles/styles'
@@ -55,7 +55,6 @@ class FBLoginForm extends React.Component {
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
       this.setState({email: decodedToken.email});
-      debugger
       const userVariables = {variables: { email: decodedToken.email } }
       let res;
       res = await this.props.createUserSocialMutation(userVariables);
@@ -88,14 +87,17 @@ class FBLoginForm extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
     const { formType } = this.props
+
     return (
-      <SocialIcon
-        title={`${FormType} With Facebook`}
-        button
-        type='facebook'
+      <Button
+        title={`${formType} With Facebook`}
+        small
+        icon={{name: 'facebook', type: 'entypo'}}
         onPress={this.loginWithAuth0FB}
+        backgroundColor='#3B5998'
+        borderRadius={25}
+        buttonStyle={{}}
       />
     )
   }

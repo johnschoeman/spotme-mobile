@@ -69,7 +69,7 @@ class SessionForm extends Component {
 
     return (
       <View style={localStyles.container}>
-        <Text style={localStyles.heading}>Log in</Text>
+        <Text style={localStyles.heading}>{formTypeTrue}</Text>
         <View style={localStyles.form}>
           <FormLabel>Email</FormLabel>
           <FormInput onChangeText={(email) => this.setState({email})}/>
@@ -83,13 +83,19 @@ class SessionForm extends Component {
           <Button
             onPress={() => this._handleSubmit()}
             title={formTypeTrue}
-            icon={{name: 'login', type: 'material-community'}} />
+            borderRadius={25}
+            icon={{name: 'login', type: 'material-community'}}
+            buttonStyle={localStyles.button} />
           <FBLoginFormContainer
             navigation={this.props.navigation}
-            formType={formTypeTrue}/>
+            formType={formTypeTrue}
+            buttonStyle={localStyles.button}/>
           <Button
             onPress={() => this.setState({isLogin: !isLogin})}
-            title={`Switch to ${formTypeFalse}`}/>
+            title={`Switch to ${formTypeFalse}`}
+            backgroundColor='transparent'
+            color='blue'
+            buttonStyle={localStyles.button}/>
         </View>
       </View>
     )
@@ -126,6 +132,9 @@ const localStyles = StyleSheet.create({
   },
   form: {
     marginBottom: 20,
+  },
+  button: {
+    marginVertical: 10,
   }
 })
 
