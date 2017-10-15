@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
-import { AsyncStorage, View, Button, StyleSheet, Text } from 'react-native'
-import { FormLabel, FormInput, FormValidationMessage, SocialIcon } from 'react-native-elements'
+import { AsyncStorage, View, StyleSheet, Text } from 'react-native'
+import {
+  FormLabel, FormInput, FormValidationMessage, SocialIcon, Button
+} from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 
 import FBLoginFormContainer from '../SessionForm/SocialLogin/FBLoginFormContainer'
@@ -61,10 +63,14 @@ class SessionForm extends Component {
   }
 
   render() {
+    const { isLogin } = this.state
+    const formTypeTrue = this.state.isLogin ? 'Sign In' : 'Sign Up'
+    const formTypeFalse = this.state.isLogin ?  'Sign Up' : 'Sign In'
 
     return (
       <View style={localStyles.container}>
-        <View>
+        <Text style={localStyles.heading}>Log in</Text>
+        <View style={localStyles.form}>
           <FormLabel>Email</FormLabel>
           <FormInput onChangeText={(email) => this.setState({email})}/>
           {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
@@ -73,9 +79,18 @@ class SessionForm extends Component {
           {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
         </View>
 
-        <Button
-          onPress={() => this._handleSubmit()}
-          title='Submit' />
+        <View>
+          <Button
+            onPress={() => this._handleSubmit()}
+            title={formTypeTrue}
+            icon={{name: 'login', type: 'material-community'}} />
+          <FBLoginFormContainer
+            navigation={this.props.navigation}
+            formType={formTypeTrue}/>
+          <Button
+            onPress={() => this.setState({isLogin: !isLogin})}
+            title={`Switch to ${formTypeFalse}`}/>
+        </View>
       </View>
     )
   }
@@ -96,7 +111,7 @@ const localStyles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(255,255,255,0.9)',
     borderRadius: 20,
-    height: 300,
+    height: 'auto',
     width: 300,
     justifyContent: 'space-between',
     alignItems: 'stretch',
@@ -106,6 +121,11 @@ const localStyles = StyleSheet.create({
   heading: {
     textAlign: 'center',
     fontSize: 30,
+    fontWeight: '500',
+    color: '#555',
+  },
+  form: {
+    marginBottom: 20,
   }
 })
 
