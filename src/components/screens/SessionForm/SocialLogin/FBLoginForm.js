@@ -54,7 +54,8 @@ class FBLoginForm extends React.Component {
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
       this.setState({email: decodedToken.email});
-      const userVariables = {variables: { email: this.state.email } }
+      debugger
+      const userVariables = {variables: { email: decodedToken.email } }
       let res;
       res = await this.props.createUserSocialMutation(userVariables);
       this._saveUserData(res)
@@ -63,11 +64,14 @@ class FBLoginForm extends React.Component {
   }
 
   _saveUserData = (res) => {
-    const { user, token } = res.data.signInSocial
+    const { user, token } = res.data.signinUser
     AsyncStorage.setItem(GC_USER_ID, user.id)
     AsyncStorage.setItem(GC_AUTH_TOKEN, token)
 
-    this.props.receiveCurrentUser({ token, ...user })
+    const { spots } = user
+    delete user.spots
+
+    this.props.receiveCurrentUser( { user, spots } )
 
     console.log('*** RESULT', res);
     AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
@@ -76,7 +80,7 @@ class FBLoginForm extends React.Component {
   _navigateHome() {
     const resetNavigateHome = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Home' })]
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
     })
     const { dispatch } = this.props.navigation;
     dispatch(resetNavigateHome)
@@ -95,7 +99,7 @@ class FBLoginForm extends React.Component {
 const GET_FB_TOKEN_MUTATION = gql`
   mutation GetFBTokenMutation($authorization_code: String!, $redirect_uri: String!) {
     getFBToken(
-      authorization_code: $authorization_code, 
+      authorization_code: $authorization_code,
       redirect_uri: $redirect_uri,
     ) {
       id_token
