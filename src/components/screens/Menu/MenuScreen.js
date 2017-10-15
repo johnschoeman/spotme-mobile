@@ -1,14 +1,25 @@
 import React from 'react'
 import {
-  View, Text, StyleSheet, ScrollView, Platform
+  View, Text, StyleSheet, ScrollView, Platform, AsyncStorage
 } from 'react-native'
 
 import OneLineMenuButton from '../../modules/OneLineMenuButton'
+import { resetNavigateHome } from '../SessionForm/sessionFunctions'
+import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../utils/constants';
 
 export default class HostSpotIndexScreen extends React.Component {
 
   constructor(props) {
     super(props)
+
+    resetNavigateHome = resetNavigateHome.bind(this)
+  }
+
+  logoutAndNavigateHome() {
+    this.props.logoutUser();
+    AsyncStorage.removeItem(SPOTME_USER_ID)
+    AsyncStorage.removeItem(SPOTME_AUTH_TOKEN)
+    resetNavigateHome();
   }
 
   render() {
@@ -24,6 +35,9 @@ export default class HostSpotIndexScreen extends React.Component {
             <OneLineMenuButton
               content='My Spots'
               onPress={() => navigate('HostSpotIndex')}/>
+            <OneLineMenuButton
+              content='Log out'
+              onPress={() => this.logoutAndNavigateHome}/>
           </ScrollView>
         </View>
       </View>
