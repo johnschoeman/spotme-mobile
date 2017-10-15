@@ -53,9 +53,10 @@ class FBLoginForm extends React.Component {
       const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
-
+      console.log(decodedToken)
       this.setState({email: decodedToken.email});
-      const userVariables = {variables: { email: decodedToken.email } }
+      const userVariables = {variables: { email: decodedToken.email, avatar_url: decodedToken.picture, username: decodedToken.nickname } }
+      console.log("variables: ", userVariables)
       let res;
       res = await this.props.createUserSocialMutation(userVariables);
       this._saveUserData(res)
@@ -114,9 +115,11 @@ const GET_FB_TOKEN_MUTATION = gql`
 `;
 
 const CREATE_USER_SOCIAL_MUTATION = gql`
-  mutation CreateUserSocialMutation($email: String!) {
+  mutation CreateUserSocialMutation($email: String!, $avatar_url: String, $username: String) {
     createUserSocial(
-      email: $email
+      email: $email,
+      avatar_url: $avatar_url,
+      username: $username,
     ) {
       id
     }
@@ -127,6 +130,8 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
       user {
         id
         email
+        avatar_url
+        username
         spots {
           id
           address_number

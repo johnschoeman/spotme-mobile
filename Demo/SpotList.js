@@ -9,18 +9,13 @@ class SpotList extends React.Component {
 
   render() {
     const SpotListComponent = (props) => {
-      console.log('props', props);
       const data = props.data;
-      console.log('data', data);
       const loading = data.loading
-      console.log('loading', loading);
       if (loading) {
-        console.log('wut');
         return <Text>Loading</Text>
       } 
       const allSpots = data.allSpots
       const getSpot = data.getSpot
-      console.log('allSpots: ', allSpots);
       return (
         <View>
           {allSpots.map(spot => (

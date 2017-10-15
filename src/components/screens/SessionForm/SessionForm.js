@@ -75,7 +75,7 @@ class SessionForm extends Component {
           <FormInput onChangeText={(email) => this.setState({email})}/>
           {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
           <FormLabel>Password</FormLabel>
-          <FormInput onChangeText={(password) => this.setState({password})}/>
+          <FormInput secureTextEntry onChangeText={(password) => this.setState({password})}/>
           {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
         </View>
 
