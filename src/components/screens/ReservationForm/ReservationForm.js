@@ -30,6 +30,7 @@ class ReservationForm extends Component {
       const end_time = this.addMinutes(now, duration).toISOString()
       const reservationVariables = { variables: { spot_id, start_time, end_time } }
       const result = await this.props.createReservationMutation(reservationVariables)
+      // redux dispatch
       // resetNavigateHome()
   }
 
@@ -62,11 +63,31 @@ class ReservationForm extends Component {
           step={15}
           value={this.state.duration}
           onValueChange={(val) => this.setState({duration: val})}
-          />
+        />
+        <TouchableOpacity
+          style={localStyles.reserveButton}
+          onPress={() => this._handleSubmit()}>
+          <Text style={localStyles.reserveButtonText}>RESERVE NOW</Text>
+        </TouchableOpacity>
       </View>
     )
   }
 }
+
+const localStyles = StyleSheet.create({
+  reserveButton: {
+    width: 150,
+    padding: 7,
+    backgroundColor: 'rgb(150, 0, 0)',
+    alignItems: 'center',
+    borderRadius: 16,
+  },
+  reserveButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+  }
+})
 
 export default compose(
     graphql(CREATE_RESERVATION_MUTATION, { name: 'createReservationMutation' })
