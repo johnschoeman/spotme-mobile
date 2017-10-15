@@ -14,7 +14,7 @@ class SpotPreview extends React.Component {
 		this.onSwipe = this.onSwipe.bind(this)
 		
 		this.state = {
-			marker: {},
+			marker: null,
 			markerId: null,
 			height: 150
 		}
@@ -22,9 +22,9 @@ class SpotPreview extends React.Component {
 
 	componentWillReceiveProps(newProps){
 		if (newProps.activeMarker) {
-			if (this.state.markerId !== newProps.activeMarker.id) {
+			if (this.state.marker !== newProps.activeMarker) {
 				console.log("I HAVE RECEIVED NEW PROPS", newProps)
-				this.setState({markerId: newProps.activeMarker.id})
+				this.setState({marker: newProps.activeMarker})
 			}
 		}
 	}
@@ -103,15 +103,15 @@ class SpotPreview extends React.Component {
 						<StarRating
 							disabled={false}
 							maxStars={5}
-							rating={this.state.marker.rating}
+							rating={this.state.marker["rating"]}
 							selectedStar={(rating) => {
 								let marker = this.state.marker
-								marker.rating = rating
+								marker["rating"] = rating
 								this.setState({ marker: marker })
 							}}
 							starSize={20}
 						/>
-						<Text style={{ fontSize: 18 }}>${this.state.marker.price}.00/hr</Text>
+						<Text style={{ fontSize: 18 }}>${this.state.marker["price"]}.00/hr</Text>
 					</View>
 				</Animated.View> 
 			)
@@ -119,21 +119,23 @@ class SpotPreview extends React.Component {
 	}
 
 	render(){
-		let spot;
-		let spot_id = this.props.activeMarkerId;
-		let spotVaribles = { variable: {spot_id: spot_id}}
-		if (this.props.getSpot) {
-			spot = this.props.getSpot(spotVaribles).getSpot;
-		} else {
-			spot = {};
-		}
-		// console.log('markers: ', markers);
+		// let spot;
+		// let spot_id = this.props.activeMarkerId;
+		// let spotVaribles = { variable: {spot_id: spot_id}}
+		// if (this.props.getSpot) {
+		// 	spot = this.props.getSpot(spotVaribles).getSpot;
+		// 	this.setState({marker: spot})
+		// } else {
+		// 	spot = {};
+		// }
+		// console.log("SSSSSSPPPPPPOOOOOOOOTTTTTTT", spot)
+
 		const config = {
-			velocityThreshold: 0,
-			directionalOffsetThreshold: 80,
+			velocityThreshold: 0.3,
+			directionalOffsetThreshold: 10,
 		};
 		return(
-      		<View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
+      <View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
 				<GestureRecognizer
 					onSwipe={(direction, state) => this.onSwipe(direction, state)}
 					config={config}
