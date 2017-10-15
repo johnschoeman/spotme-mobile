@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
-import { AsyncStorage, View, Button } from 'react-native'
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { AsyncStorage, View, Button, StyleSheet, Text } from 'react-native'
+import { FormLabel, FormInput, FormValidationMessage, SocialIcon } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 
+import FBLoginFormContainer from '../SessionForm/SocialLogin/FBLoginFormContainer'
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../utils/constants';
-import { FORM_TYPE_SIGN_IN, FORM_TYPE_SIGN_UP } from '../Welcome/WelcomeScreen';
 import { CREATE_USER_MUTATION, SIGNIN_USER_MUTATION } from
   '../../../graphql/mutations/SessionMutations'
 import styles from '../../../styles/styles'
@@ -18,17 +18,18 @@ class SessionForm extends Component {
     this.state = {
       email: '',
       password: '',
+      isLogin: true,
     };
   }
 
   _handleSubmit = async () => {
-    const { email, password } = this.state
+    const { email, password, isLogin } = this.state
     const userVariables = { variables: { email, password } }
-    const { formType } = this.props.navigation.state.params
+
     let result;
-    if (formType === FORM_TYPE_SIGN_IN) {
+    if (isLogin) {
       result = await this.props.signinUserMutation(userVariables)
-    } else if (formType === FORM_TYPE_SIGN_UP) {
+    } else {
       result = await this.props.createUserMutation(userVariables)
     }
 
@@ -62,7 +63,7 @@ class SessionForm extends Component {
   render() {
 
     return (
-      <View style={styles.screen}>
+      <View style={localStyles.container}>
         <View>
           <FormLabel>Email</FormLabel>
           <FormInput onChangeText={(email) => this.setState({email})}/>
@@ -72,16 +73,41 @@ class SessionForm extends Component {
           {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
         </View>
 
-
         <Button
           onPress={() => this._handleSubmit()}
           title='Submit' />
       </View>
     )
   }
-
-
 }
+
+// <View style={localStyles.form}>
+//   <Text style={localStyles.heading}>Log in</Text>
+//   <Button
+//     onPress={() => navigate('SessionForm', { formType: FORM_TYPE_SIGN_IN })}
+//     title='Sign In' />
+//   <Button
+//     onPress={() => navigate('SessionForm', { formType: FORM_TYPE_SIGN_UP })}
+//     title='Sign Up' />
+//   <FBLoginFormContainer navigation={this.props.navigation}/>
+// </View>
+
+const localStyles = StyleSheet.create({
+  container: {
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: 20,
+    height: 300,
+    width: 300,
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+  },
+  heading: {
+    textAlign: 'center',
+    fontSize: 30,
+  }
+})
 
 export default compose(
 graphql(CREATE_USER_MUTATION, { name: 'createUserMutation' }),
