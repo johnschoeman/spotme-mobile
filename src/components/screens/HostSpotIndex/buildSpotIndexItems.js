@@ -13,7 +13,7 @@ const buildSpotIndexItems = (spots, navigate) => {
         key={spot.id}
         line1={line1}
         line2={line2}
-        onPress={() => navigate('', { spot })}/>
+        onPress={() => navigate('SpotShow', { spot })}/>
     )
   })
 }
