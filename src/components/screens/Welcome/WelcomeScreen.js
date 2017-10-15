@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, StatusBar } from 'react-native';
 import SessionFormContainer from '../SessionForm/SessionFormContainer'
 
 
