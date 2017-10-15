@@ -7,9 +7,10 @@ import {
 import { NavigationActions } from 'react-navigation'
 
 import FBLoginFormContainer from '../SessionForm/SocialLogin/FBLoginFormContainer'
-import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../utils/constants';
+import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../utils/constants';
 import { CREATE_USER_MUTATION, SIGNIN_USER_MUTATION } from
   '../../../graphql/mutations/SessionMutations'
+import { resetNavigateHome } from './sessionFunctions'
 
 class SessionForm extends Component {
 
@@ -21,6 +22,8 @@ class SessionForm extends Component {
       password: '',
       isLogin: true,
     };
+
+    resetNavigateHome = resetNavigateHome.bind(this)
   }
 
   _handleSubmit = async () => {
@@ -35,13 +38,13 @@ class SessionForm extends Component {
     }
 
     this._saveUserData(result)
-    this._navigateHome()
+    resetNavigateHome()
   }
 
   _saveUserData = (res) => {
     const { user, token } = res.data.signinUser
-    AsyncStorage.setItem(GC_USER_ID, user.id)
-    AsyncStorage.setItem(GC_AUTH_TOKEN, token)
+    AsyncStorage.setItem(SPOTME_USER_ID, user.id)
+    AsyncStorage.setItem(SPOTME_AUTH_TOKEN, token)
 
     const { spots } = user
     delete user.spots
@@ -49,16 +52,7 @@ class SessionForm extends Component {
     this.props.receiveCurrentUser( { user, spots } )
 
     // console.log('*** RESULT', res);
-    // AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
-  }
-
-  _navigateHome() {
-    const resetNavigateHome = NavigationActions.reset({
-      index: 0,
-      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
-    })
-    const { dispatch } = this.props.navigation;
-    dispatch(resetNavigateHome)
+    // AsyncStorage.getItem(SPOTME_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   render() {
