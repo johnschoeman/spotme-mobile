@@ -2,13 +2,12 @@ import React from 'react';
 import { AsyncStorage, Alert } from 'react-native';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import Expo, { AuthSession } from 'expo';
+import { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
 import { NavigationActions } from 'react-navigation'
 import { Button } from 'react-native-elements'
 
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
-import styles from '../../../../styles/styles'
 
 const auth0ClientId = 'PODS1ov5gcTRNmWec61GhXDZO9jLt-yT';
 const auth0Domain = 'https://spotme.auth0.com';
@@ -73,8 +72,8 @@ class FBLoginForm extends React.Component {
 
     this.props.receiveCurrentUser( { user, spots } )
 
-    console.log('*** RESULT', res);
-    AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
+    // console.log('*** RESULT', res);
+    // AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   _navigateHome() {
@@ -97,7 +96,6 @@ class FBLoginForm extends React.Component {
         onPress={this.loginWithAuth0FB}
         backgroundColor='#3B5998'
         borderRadius={25}
-        buttonStyle={{}}
       />
     )
   }
