@@ -3,6 +3,7 @@ import { Animated, LayoutAnimation, StyleSheet, Text, View, Image, Dimensions } 
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import Modal from 'react-native-modal';
 import StarRating from 'react-native-star-rating';
+import { Ionicons } from '@expo/vector-icons';
 
 export default class SpotShow extends React.Component {
   constructor() {
@@ -48,13 +49,16 @@ export default class SpotShow extends React.Component {
         `Longitude: ${spot.longitude}`
       const description = spot.description ? spot.description : "N/A"
       return (
-        <Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
+        <Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 12 }}>
           <GestureRecognizer
             onSwipe={(direction, state) => this.onSwipe(direction, state)}
             onPress={() => this.setState({ height: height - 25 })}
             config={config}
           >
-            <View style={{ flexDirection: 'row', paddingTop: 10, paddingRight: 5, paddingLeft: 5, justifyContent: 'space-between' }}>
+            <View style={{ width, alignItems: 'center'}}>
+              <Ionicons name="ios-arrow-down" size={20} color="black" />
+            </View>
+            <View style={{ flexDirection: 'row', paddingTop: 10, paddingHorizontal: 5, justifyContent: 'space-between' }}>
               <View style={{
                 flexDirection: 'column'
               }}>
