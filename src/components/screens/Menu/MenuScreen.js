@@ -1,29 +1,58 @@
 import React from 'react'
 import {
-  View, Text, StyleSheet, ScrollView, Platform
+  Image, View, Text, StyleSheet, ScrollView, Platform, AsyncStorage
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 import OneLineMenuButton from '../../modules/OneLineMenuButton'
+import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../utils/constants';
 
 export default class HostSpotIndexScreen extends React.Component {
 
-  constructor(props) {
-    super(props)
+  // constructor(props) {
+  //   super(props)
+  // }
+
+  logoutAndNavigateHome() {
+    AsyncStorage.removeItem(SPOTME_USER_ID)
+    AsyncStorage.removeItem(SPOTME_AUTH_TOKEN)
+    this._resetNavigateHome()
+    this.props.logoutUser();
+  }
+
+  _resetNavigateHome = () => {
+    const resetNavigateHomeAction = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHomeAction)
   }
 
   render() {
-    const { navigate } = this.props.navigation
+    const { currentUser, navigation } = this.props
+    const { navigate } = navigation
 
     return (
       <View style={localStyles.screen}>
         <View style={localStyles.screenTopSection}>
-          <View style={localStyles.headerView}>
-            <Text style={localStyles.headerText}>SETTINGS</Text>
-          </View>
+
+          {
+            currentUser &&
+            <View style={localStyles.headerView}>
+              <Image
+                style={{ width: 50, height: 50, borderRadius: 25 }}
+                source={{ uri: currentUser.avatar_url }} />
+              <Text style={localStyles.headerText}>{currentUser.username}</Text>
+            </View>
+          }
           <ScrollView>
             <OneLineMenuButton
               content='My Spots'
               onPress={() => navigate('HostSpotIndex')}/>
+            <OneLineMenuButton
+              content='Log out'
+              onPress={() => this.logoutAndNavigateHome()}/>
           </ScrollView>
         </View>
       </View>
@@ -45,6 +74,7 @@ const localStyles = StyleSheet.create({
 
   },
   headerView: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 10,
@@ -55,12 +85,14 @@ const localStyles = StyleSheet.create({
     shadowOffset: { width: 0,  height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
+    backgroundColor: 'rgb(150, 0, 0)',
   },
   headerText: {
     fontSize: 30,
     marginTop: 15,
     marginBottom: 15,
-    color: '#999',
+    color: 'white',
+    marginLeft: 20
   },
   addButtonView: {
     alignItems: 'center',
