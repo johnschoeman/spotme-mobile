@@ -1,12 +1,34 @@
 import React from 'react'
 import {
-  Image, View, Text, StyleSheet, ScrollView, Platform
+  Image, View, Text, StyleSheet, ScrollView, Platform, AsyncStorage
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 import OneLineMenuButton from '../../modules/OneLineMenuButton'
+import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../utils/constants';
 
 export default class HostSpotIndexScreen extends React.Component {
 
+  // constructor(props) {
+  //   super(props)
+  // }
+
+  logoutAndNavigateHome() {
+    this.props.logoutUser();
+    AsyncStorage.removeItem(SPOTME_USER_ID)
+    AsyncStorage.removeItem(SPOTME_AUTH_TOKEN)
+    this._resetNavigateHome()
+  }
+
+  _resetNavigateHome = () => {
+    const resetNavigateHomeAction = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHomeAction)
+  }
+  
   render() {
     const { navigate } = this.props.navigation
     console.log("CurrentUser, ", this.props.currentUser)
@@ -23,6 +45,9 @@ export default class HostSpotIndexScreen extends React.Component {
             <OneLineMenuButton
               content='My Spots'
               onPress={() => navigate('HostSpotIndex')}/>
+            <OneLineMenuButton
+              content='Log out'
+              onPress={() => this.logoutAndNavigateHome()}/>
           </ScrollView>
         </View>
       </View>

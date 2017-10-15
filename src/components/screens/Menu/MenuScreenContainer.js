@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 
+import { logoutUser } from '../../../redux/actions/sessionActions'
 import MenuScreen from './MenuScreen'
 
 const mapStateToProps = (state, ownProps) => {
@@ -13,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
-
+    logoutUser: () => dispatch(logoutUser())
   };
 };
 

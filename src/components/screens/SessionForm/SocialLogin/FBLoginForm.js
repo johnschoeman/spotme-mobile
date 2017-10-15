@@ -4,10 +4,10 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
-import { NavigationActions } from 'react-navigation'
 import { Button } from 'react-native-elements'
+import { NavigationActions } from 'react-navigation'
 
-import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
+import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../../utils/constants';
 
 const auth0ClientId = 'PODS1ov5gcTRNmWec61GhXDZO9jLt-yT';
 const auth0Domain = 'https://spotme.auth0.com';
@@ -60,14 +60,23 @@ class FBLoginForm extends React.Component {
       let res;
       res = await this.props.createUserSocialMutation(userVariables);
       this._saveUserData(res)
-      this._navigateHome()
+      this._resetNavigateHome()
     }
+  }
+
+  _resetNavigateHome = () => {
+    const resetNavigateHomeAction = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHomeAction)
   }
 
   _saveUserData = (res) => {
     const { user, token } = res.data.signInSocial
-    AsyncStorage.setItem(GC_USER_ID, user.id)
-    AsyncStorage.setItem(GC_AUTH_TOKEN, token)
+    AsyncStorage.setItem(SPOTME_USER_ID, user.id)
+    AsyncStorage.setItem(SPOTME_AUTH_TOKEN, token)
 
     const { spots } = user
     delete user.spots
@@ -75,16 +84,7 @@ class FBLoginForm extends React.Component {
     this.props.receiveCurrentUser( { user, spots } )
 
     // console.log('*** RESULT', res);
-    // AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
-  }
-
-  _navigateHome() {
-    const resetNavigateHome = NavigationActions.reset({
-      index: 0,
-      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
-    })
-    const { dispatch } = this.props.navigation;
-    dispatch(resetNavigateHome)
+    // AsyncStorage.getItem(SPOTME_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   render() {

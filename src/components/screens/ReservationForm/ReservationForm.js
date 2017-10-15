@@ -22,23 +22,24 @@ class ReservationForm extends Component {
         const { spot_id, start_time, end_time } = this.state
         const reservationVariables = { variables: { spot_id, start_time, end_time } }
         const result = await this.props.createReservationMutation(reservationVariables)
-        this._navigateHome()
+        this._resetNavigateHome()
     }
 
-    _navigateHome() {
-        const resetNavigateHome = NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Home' })]
-        })
-        const { dispatch } = this.props.navigation;
-        dispatch(resetNavigateHome)
+    _resetNavigateHome = () => {
+      const resetNavigateHomeAction = NavigationActions.reset({
+        index: 0,
+        actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+      })
+      const { dispatch } = this.props.navigation;
+      dispatch(resetNavigateHomeAction)
     }
+
 
     render() {
 
         return (
           <View style={styles.screen}>
-
+          
           </View>
         )
     }
