@@ -1,13 +1,13 @@
 import React from 'react';
-import { AsyncStorage, Alert, Image, Button, Text, View } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import Expo, { AuthSession } from 'expo';
+import { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
 import { NavigationActions } from 'react-navigation'
+import { Button } from 'react-native-elements'
 
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../../../../utils/constants';
-import styles from '../../../../styles/styles'
 
 const auth0ClientId = 'PODS1ov5gcTRNmWec61GhXDZO9jLt-yT';
 const auth0Domain = 'https://spotme.auth0.com';
@@ -53,8 +53,8 @@ class FBLoginForm extends React.Component {
       const fbMutationResponse = await this.props.getFBTokenMutation(fbVariables);
       const idToken = fbMutationResponse.data.getFBToken.id_token
       const decodedToken = jwtDecoder(idToken);
+
       this.setState({email: decodedToken.email});
-      debugger
       const userVariables = {variables: { email: decodedToken.email } }
       let res;
       res = await this.props.createUserSocialMutation(userVariables);
@@ -64,7 +64,7 @@ class FBLoginForm extends React.Component {
   }
 
   _saveUserData = (res) => {
-    const { user, token } = res.data.signinUser
+    const { user, token } = res.data.signInSocial
     AsyncStorage.setItem(GC_USER_ID, user.id)
     AsyncStorage.setItem(GC_AUTH_TOKEN, token)
 
@@ -73,8 +73,8 @@ class FBLoginForm extends React.Component {
 
     this.props.receiveCurrentUser( { user, spots } )
 
-    console.log('*** RESULT', res);
-    AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
+    // console.log('*** RESULT', res);
+    // AsyncStorage.getItem(GC_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   _navigateHome() {
@@ -87,11 +87,17 @@ class FBLoginForm extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { formType } = this.props
+
     return (
-      <View style={styles.screen}>
-        <Button title="Login with Facebook" onPress={this.loginWithAuth0FB} />
-      </View>
+      <Button
+        title={`${formType} With Facebook`}
+        small
+        icon={{name: 'facebook', type: 'entypo'}}
+        onPress={this.loginWithAuth0FB}
+        backgroundColor='#3B5998'
+        borderRadius={25}
+      />
     )
   }
 }
@@ -121,6 +127,17 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
       user {
         id
         email
+        spots {
+          id
+          address_number
+          address_street
+          address_city
+          address_state
+          address_zip
+          latitude
+          longitude
+          host_id
+        }
       }
     }
   }
