@@ -84,8 +84,7 @@ const localStyles = StyleSheet.create({
     fontSize: 30,
     marginTop: 15,
     marginBottom: 15,
-    color: 'white',
-    marginLeft: 20
+    color: 'white'
   },
   addButtonView: {
     alignItems: 'center',
