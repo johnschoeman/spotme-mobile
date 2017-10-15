@@ -9,6 +9,8 @@ signinUser(email: {
   user {
     id
     email
+    avatar_url
+    username
     spots {
       id
       address_number

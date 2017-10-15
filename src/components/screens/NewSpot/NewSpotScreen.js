@@ -66,6 +66,7 @@ const localStyles = StyleSheet.create({
 
   },
   headerView: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 10,
@@ -73,15 +74,17 @@ const localStyles = StyleSheet.create({
     borderColor: '#CCC',
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: { width: 0,  height: 1 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
+    backgroundColor: 'rgb(150, 0, 0)',
   },
   headerText: {
     fontSize: 30,
     marginTop: 15,
     marginBottom: 15,
-    color: '#999',
+    color: 'white',
+    marginLeft: 20
   },
   addButtonView: {
     alignItems: 'center',
@@ -98,7 +101,7 @@ const localStyles = StyleSheet.create({
   addButton: {
     width: 150,
     padding: 7,
-    backgroundColor: '#999',
+    backgroundColor: 'rgb(150,0,0)',
     alignItems: 'center',
     borderRadius: 16,
   },

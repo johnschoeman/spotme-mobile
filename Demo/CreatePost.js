@@ -15,7 +15,6 @@ class CreatePost extends Component {
 
   _createPost = async () => {
     const { title, body } = this.state;
-    console.log('in createPost this.state: ', this.state);
     await this.props.createPostMutation({
       variables: {
         title,
