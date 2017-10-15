@@ -1,24 +1,23 @@
 import React from 'react'
 import {
-  View, Text, StyleSheet, ScrollView, Platform
+  Image, View, Text, StyleSheet, ScrollView, Platform
 } from 'react-native'
 
 import OneLineMenuButton from '../../modules/OneLineMenuButton'
 
 export default class HostSpotIndexScreen extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { navigate } = this.props.navigation
-
+    console.log("CurrentUser, ", this.props.currentUser)
     return (
       <View style={localStyles.screen}>
         <View style={localStyles.screenTopSection}>
           <View style={localStyles.headerView}>
-            <Text style={localStyles.headerText}>SETTINGS</Text>
+            <Image
+              style={{ width: 50, height: 50, borderRadius: 25 }}
+              source={{ uri: this.props.currentUser.avatar_url }} />
+            <Text style={localStyles.headerText}>{this.props.currentUser.username}</Text>
           </View>
           <ScrollView>
             <OneLineMenuButton
@@ -45,6 +44,7 @@ const localStyles = StyleSheet.create({
 
   },
   headerView: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 10,
@@ -55,12 +55,14 @@ const localStyles = StyleSheet.create({
     shadowOffset: { width: 0,  height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
+    backgroundColor: 'rgb(150, 0, 0)',
   },
   headerText: {
     fontSize: 30,
     marginTop: 15,
     marginBottom: 15,
-    color: '#999',
+    color: 'white',
+    marginLeft: 20
   },
   addButtonView: {
     alignItems: 'center',
