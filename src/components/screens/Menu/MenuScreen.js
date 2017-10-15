@@ -15,7 +15,6 @@ export default class HostSpotIndexScreen extends React.Component {
 
   logoutAndNavigateHome() {
     this.props.logoutUser();
-    debugger
     AsyncStorage.removeItem(SPOTME_USER_ID)
     AsyncStorage.removeItem(SPOTME_AUTH_TOKEN)
     this._resetNavigateHome()
