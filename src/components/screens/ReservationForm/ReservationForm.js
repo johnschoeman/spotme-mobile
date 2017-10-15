@@ -42,6 +42,7 @@ class ReservationForm extends Component {
         return (
           <View style={styles.screen}>
             <Slider />
+            <Text>Hihihihihihi</Text>
           </View>
         )
     }
