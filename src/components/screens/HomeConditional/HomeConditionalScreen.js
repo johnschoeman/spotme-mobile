@@ -23,6 +23,7 @@ export default class HomeConditionalScreen extends React.Component {
 
   render() {
     const { isLoggedIn, navigation } = this.props
+
     return (
 
       isLoggedIn ? (
