@@ -81,7 +81,6 @@ class Map extends React.Component {
         } else {
           spots = [];
 				}
-        debugger
         const config = {
           velocityThreshold: 0.3,
           directionalOffsetThreshold: 80,
