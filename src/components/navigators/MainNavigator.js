@@ -16,7 +16,7 @@ const MainNavigator = StackNavigator({
   HostSpotIndex: { screen: HostSpotIndexScreenContainer },
   NewSpot: { screen: NewSpotScreenContainer },
   Menu: { screen: MenuScreenContainer },
-  SpotShow: { screen: SpotShowScreen }
+  SpotShow: { screen: SpotShowScreen },
   // Profile: { screen: ProfileScreen },
 })
 

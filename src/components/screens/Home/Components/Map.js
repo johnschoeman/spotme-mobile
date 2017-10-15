@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapView, Location, Permissions } from 'expo';
-import { Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { Keyboard, StyleSheet, Text, View, Image, Dimensions, Platform } from 'react-native';
 import { graphql, gql } from 'react-apollo'
 import SpotPreview from './SpotPreview'
 
@@ -27,13 +27,7 @@ class Map extends React.Component {
     componentDidMount() {
       Location.getProviderStatusAsync({})
 			this._getLocationAsync()
-			// console.log("SPOTSSSSSKSDFLSKJFSDF", this.props.getSpots)
-			// this.props.getSpots()
 		}
-		
-		// _getspotsAsync = async () => {
-		// 	this.props.getSpots()
-		// }
 
     onRegionChange(region) {
         this.setState({ region })
@@ -45,19 +39,17 @@ class Map extends React.Component {
 
     _getLocationAsync = async () => {
       const { status } = await Permissions.askAsync(Permissions.LOCATION);
-      // console.log("STATUS:", status)
       if (status === 'granted') {
         const location = await Location.getCurrentPositionAsync({});
-        // console.log("LOCATION:", location);
         if(location !== this.state.location) {
           this.setState({
-            region: { latitude: location.coords.latitude, 
-                      longitude: location.coords.longitude, 
+            region: { latitude: location.coords.latitude,
+                      longitude: location.coords.longitude,
                       latitudeDelta: 0.02,
                       longitudeDelta: 0.02, }
           });
-          this.animateTo({ latitude: location.coords.latitude, 
-                                 longitude: location.coords.longitude, 
+          this.animateTo({ latitude: location.coords.latitude,
+                                 longitude: location.coords.longitude,
                                  latitudeDelta: 0.02,
                                  longitudeDelta: 0.02 })
           this.setState({ location });
@@ -67,7 +59,6 @@ class Map extends React.Component {
     };
     renderCurrentLocationMarker() {
       const locMarkerImg = require('../../../../../assets/icons/location_marker.png');
-      // console.log(Object.keys(this.state.location));
       if (Object.keys(this.state.location).length!== 0) {
         return (
           <MapView.Marker
@@ -79,11 +70,11 @@ class Map extends React.Component {
               style={{ width: 25, height: 25 }}/>
           </MapView.Marker>
         )
-      }      
+      }
     }
 
     render() {
-
+        console.log("OS", Platform.OS);
         let spots;
         if (this.props.getSpots.allSpots) {
           spots = this.props.getSpots.allSpots;
@@ -95,9 +86,12 @@ class Map extends React.Component {
           directionalOffsetThreshold: 80,
         };
         const { height, width } = Dimensions.get('window')
-        const spotImg = require('../../../../../assets/icons/spotme_marker.png');
-        const activeSpotImg = require('../../../../../assets/icons/spotme_marker_selected.png');
-        // console.log("MAPS", this.props.data.allSpots)
+        const spotImgiOS = require('../../../../../assets/icons/spotme_marker.png') 
+        const spotImgAndroid = require('../../../../../assets/icons/spotme_marker_android.png')
+        const activeSpotImgiOS = require('../../../../../assets/icons/spotme_marker_selected.png');
+        const activeSpotImgAndroid = require('../../../../../assets/icons/spotme_marker_selected_android.png')
+        const spotImg = Platform.OS === "ios" ? spotImgiOS : spotImgAndroid
+        const activeSpotImg = Platform.OS === "ios" ? activeSpotImgiOS : activeSpotImgAndroid
         return (
           <View>
               <MapView
@@ -107,13 +101,11 @@ class Map extends React.Component {
                 region={this.state.region}
                 onRegionChange={this.onRegionChange}>
                 {Object.keys(spots).map((key) => (
-                  <MapView.Marker 
+                  <MapView.Marker
                     coordinate={{ latitude: spots[key].latitude, longitude: spots[key].longitude}}
                     onPress={() => this.setState({ activeSpot: spots[key]})}
-                    key={key}>
-                    <Image source={spotImg}
-                      style={{ width: 25, height: 25 }}/>
-                  </MapView.Marker>
+                    key={key}
+                    image={this.state.activeSpot === spots[key] ? activeSpotImg : spotImg}/>
                 ))}
                 {this.renderCurrentLocationMarker()}
               </MapView>
@@ -131,37 +123,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 });
-
-// const GET_SPOTS = gql`
-//   query GetSpots {
-// 		allSpots {
-// 			id
-// 			latitude
-// 			longitude
-// 			description
-// 			image_url
-// 			price
-// 			rating
-// 			address_number
-// 			address_street
-// 			address_city
-// 			address_state
-// 			address_zip
-// 			reservations {
-// 			id
-// 			start_time
-// 			end_time
-// 			spot {
-// 				id
-// 			}
-// 			user {
-// 				id
-// 				email
-// 			}
-// 		}
-// 		}
-// 	}
-// `
 
 const GET_SPOTS = gql`
   query GetSpots($first: Int, $skip: Int) {
