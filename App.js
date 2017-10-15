@@ -8,11 +8,13 @@ import { colors } from './src/utils/constants';
 
 // switch out MainNavigator for Demo to test John's graphql demo app
 // import Demo from './Demo/Demo';
-import MainNavigator from './src/components/navigators/Main'
+import MainNavigatorContainer from './src/components/navigators/MainNavigatorContainer'
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
+
+
 
 const preloadedState = {
   entities: {
@@ -30,7 +32,7 @@ export default class App extends React.Component {
     return (
       <ApolloProvider store={store} client={client}>
         <ThemeProvider theme={colors}>
-          <MainNavigator/>
+          <MainNavigatorContainer/>
         </ThemeProvider>
       </ApolloProvider>
     );

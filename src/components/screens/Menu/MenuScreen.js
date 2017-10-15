@@ -7,9 +7,9 @@ import OneLineMenuButton from '../../modules/OneLineMenuButton'
 
 export default class HostSpotIndexScreen extends React.Component {
 
-  // constructor(props) {
-  //   super(props)
-  // }
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     const { navigate } = this.props.navigation
