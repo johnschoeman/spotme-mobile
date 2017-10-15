@@ -11,6 +11,12 @@ export default class HostSpotIndexScreen extends React.Component {
     super(props)
   }
 
+  logoutAndNavigateHome() {
+    const { navigate } = this.props.navigation;
+    this.props.logoutUser();
+    navigate('Home');
+  }
+
   render() {
     const { navigate } = this.props.navigation
 
@@ -24,6 +30,9 @@ export default class HostSpotIndexScreen extends React.Component {
             <OneLineMenuButton
               content='My Spots'
               onPress={() => navigate('HostSpotIndex')}/>
+            <OneLineMenuButton
+              content='Log out'
+              onPress={() => this.logoutAndNavigateHome}/>
           </ScrollView>
         </View>
       </View>
