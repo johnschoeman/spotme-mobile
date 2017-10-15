@@ -33,12 +33,10 @@ class GoogleAutocomplete extends React.Component {
             autoFocus={false}
             returnKeyType={'default'}
             getDefaultValue={() => {
-              console.log(this.state.text)
               this.state.text
             }}
             fetchDetails={true}
             onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-              console.log(data, details);
               this.setState({ height: 40 })
             }}
             query={{

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
-import { AsyncStorage, View, Button } from 'react-native'
+import { AsyncStorage, Text, View, Button } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 import Slider from "react-native-slider";
@@ -42,6 +42,7 @@ class ReservationForm extends Component {
         return (
           <View style={styles.screen}>
             <Slider />
+            <Text>Hihihihihihi</Text>
           </View>
         )
     }
