@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
 import { View } from 'react-native'
 import { NavigationActions } from 'react-navigation'
-import Slider from "react-native-slider";
 
 import { CREATE_RESERVATION_MUTATION } from
     '../../../graphql/mutations/ReservationMutations'
@@ -38,7 +37,7 @@ class ReservationForm extends Component {
 
         return (
           <View style={styles.screen}>
-            <Slider />
+      
           </View>
         )
     }
