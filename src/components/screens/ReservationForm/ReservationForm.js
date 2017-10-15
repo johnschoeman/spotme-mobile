@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
-import { View } from 'react-native'
+import { AsyncStorage, Text, View, Button } from 'react-native'
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 
 import { CREATE_RESERVATION_MUTATION } from
@@ -21,17 +22,18 @@ class ReservationForm extends Component {
         const { spot_id, start_time, end_time } = this.state
         const reservationVariables = { variables: { spot_id, start_time, end_time } }
         const result = await this.props.createReservationMutation(reservationVariables)
-        this._navigateHome()
+        this._resetNavigateHome()
     }
 
-    _navigateHome() {
-        const resetNavigateHome = NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Home' })]
-        })
-        const { dispatch } = this.props.navigation;
-        dispatch(resetNavigateHome)
+    _resetNavigateHome = () => {
+      const resetNavigateHomeAction = NavigationActions.reset({
+        index: 0,
+        actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+      })
+      const { dispatch } = this.props.navigation;
+      dispatch(resetNavigateHomeAction)
     }
+
 
     render() {
 
