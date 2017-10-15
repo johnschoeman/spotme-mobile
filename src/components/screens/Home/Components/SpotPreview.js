@@ -2,6 +2,7 @@ import React from 'react';
 import { Animated, LayoutAnimation, Text, View, Image, Dimensions } from 'react-native';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import StarRating from 'react-native-star-rating';
+import { Ionicons } from '@expo/vector-icons';
 import { graphql, gql } from 'react-apollo';
 import SpotShowScreen from '../../SpotShow/SpotShowScreen'
 
@@ -63,7 +64,10 @@ class SpotPreview extends React.Component {
 			return(
 				<Animated.View 
 					onPress={() => this.setState({ height: height - 25 })}
-					style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}> 
+					style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}>
+					<View>
+						<Ionicons name="md-checkmark-circle" size={15} color="black" />
+					</View>
 					<Image
 						style={{ width: 140, height: 80 }}
 						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
