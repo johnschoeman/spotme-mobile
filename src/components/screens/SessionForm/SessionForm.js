@@ -71,7 +71,7 @@ class SessionForm extends Component {
       <View style={localStyles.container}>
         <Text style={localStyles.heading}>{formTypeTrue}</Text>
         <View style={localStyles.form}>
-          <FormLabel>Email</FormLabel>
+          <FormLabel>Email or Username</FormLabel>
           <FormInput onChangeText={(email) => this.setState({email})}/>
           {/*<FormValidationMessage>Error message</FormValidationMessage>*/}
           <FormLabel>Password</FormLabel>
