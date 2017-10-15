@@ -3,6 +3,7 @@ import { Animated, LayoutAnimation, Text, View, Image, Dimensions } from 'react-
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import StarRating from 'react-native-star-rating';
 import { graphql, gql } from 'react-apollo';
+import SpotShowScreen from '../../SpotShow/SpotShowScreen'
 
 class SpotPreview extends React.Component {
 	constructor(){
@@ -19,17 +20,11 @@ class SpotPreview extends React.Component {
 	}
 
 	componentWillReceiveProps(newProps){
-<<<<<<< HEAD
 		if (newProps.activeMarker) {
 			if (this.state.marker !== newProps.activeMarker) {
 				console.log("I HAVE RECEIVED NEW PROPS", newProps)
 				this.setState({marker: newProps.activeMarker})
 			}
-=======
-		if (this.state.marker !== newProps.marker) {
-			// console.log("I HAVE RECEIVED NEW PROPS", newProps)
-			this.setState({marker: newProps.activeMarker})
->>>>>>> f7edb1ac6cab442dfdc69dc1c37f19967238e6fd
 		}
 	}
 
@@ -148,7 +143,7 @@ class SpotPreview extends React.Component {
 					onPress={() => this.setState({ height: height - 25})}
 					config={config}
 				>
-					{this.state.height <= 150 ? this._renderPreview() : this._renderFull()}
+					{this.state.height <= 150 ? this._renderPreview() : <SpotShowScreen />}
 				</GestureRecognizer>
 			</View>
 		)

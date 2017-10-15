@@ -3,13 +3,9 @@ import { MapView, Location, Permissions } from 'expo';
 import { Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { graphql, gql } from 'react-apollo'
 import SpotPreview from './SpotPreview'
-<<<<<<< HEAD
 import { graphql, gql } from 'react-apollo';
 import LocationAutocomplete from './LocationAutocomplete'
 import { Animated, LayoutAnimation, Keyboard, StyleSheet, Text, View, Image, Dimensions } from 'react-native';
-=======
-// import LocationAutocomplete from './LocationAutocomplete'
->>>>>>> f7edb1ac6cab442dfdc69dc1c37f19967238e6fd
 
 class Map extends React.Component {
     constructor() {
@@ -34,7 +30,6 @@ class Map extends React.Component {
     componentDidMount() {
       Location.getProviderStatusAsync({})
 			this._getLocationAsync()
-<<<<<<< HEAD
 			// console.log("SPOTSSSSSKSDFLSKJFSDF", this.props.getSpots)
 			// this.props.getSpots()
 		}
@@ -42,10 +37,6 @@ class Map extends React.Component {
 		// _getMarkersAsync = async () => {
 		// 	this.props.getSpots()
 		// }
-=======
-			// this.props.getSpots()
-    }
->>>>>>> f7edb1ac6cab442dfdc69dc1c37f19967238e6fd
 
     onRegionChange(region) {
         this.setState({ region })
@@ -57,15 +48,10 @@ class Map extends React.Component {
 
     _getLocationAsync = async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
-<<<<<<< HEAD
       // console.log("STATUS:", status)
       if (status === 'granted') {
         const location = await Location.getCurrentPositionAsync({});
         // console.log("LOCATION:", location);
-=======
-      if (status === 'granted') {
-        const location = await Location.getCurrentPositionAsync({});
->>>>>>> f7edb1ac6cab442dfdc69dc1c37f19967238e6fd
         if(location !== this.state.location) {
           this.setState({
             region: { latitude: location.coords.latitude, 
