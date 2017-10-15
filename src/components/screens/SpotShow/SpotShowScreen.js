@@ -24,10 +24,11 @@ export default class SpotShowScreen extends React.Component {
 
     render() {
         const { navigation } = this.props
-
+        const { spot } = this.props
+        console.log("I'M IN SPOT SHOW SCREEN: ", this.props)
         return (
             <View style={styles.screen}>
-                <SpotShow navigation={navigation}/>
+                <SpotShow navigation={navigation} spot={spot}/>
                 <ReservationFormContainer navigation={navigation} />
             </View>
         )
