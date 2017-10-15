@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { Animated, LayoutAnimation, Text, View, Image, Dimensions } from 'react-native';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
-import Modal from 'react-native-modal';
-import { Animated, LayoutAnimation } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import { Ionicons } from '@expo/vector-icons';
 import { graphql, gql } from 'react-apollo';
+import SpotShowScreen from '../../SpotShow/SpotShowScreen'
 
 class SpotPreview extends React.Component {
 	constructor(){
@@ -14,17 +14,17 @@ class SpotPreview extends React.Component {
 		this.onSwipe = this.onSwipe.bind(this)
 		
 		this.state = {
-			marker: {},
-			markerId: null,
+			spot: null,
+			spotId: null,
 			height: 150
 		}
 	}
 
 	componentWillReceiveProps(newProps){
-		if (newProps.activeMarker) {
-			if (this.state.markerId !== newProps.activeMarker.id) {
+		if (newProps.activeSpot) {
+			if (this.state.spot !== newProps.activeSpot) {
 				console.log("I HAVE RECEIVED NEW PROPS", newProps)
-				this.setState({markerId: newProps.activeMarker.id})
+				this.setState({spot: newProps.activeSpot})
 			}
 		}
 	}
@@ -49,53 +49,25 @@ class SpotPreview extends React.Component {
 
 	_renderFull(){
 		const { height, width } = Dimensions.get('window')
-		if (this.state.marker) {
-			console.log("MARKER SETTINGS!!!!!", this.state.marker)
-			return (
+		console.log("SPOT: ", this.state.spot);
+		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
-					<View style={{ flexDirection: 'row', paddingTop: 10, paddingRight: 5, paddingLeft: 5, justifyContent: 'space-between' }}>
-						<View style={{
-							flexDirection: 'column'}}>
-							<Text>825 Tehama st,</Text>
-							<Text>San Francisco, CA</Text>
-						</View>
-						<View style={{ flexDirection: 'column' }}>
-							<StarRating
-								disabled={false}
-								maxStars={5}
-								rating={this.state.marker.rating}
-								selectedStar={(rating) => {
-									let marker = this.state.marker
-									marker.rating = rating
-									this.setState({ marker: marker })
-								}}
-								starSize={20}
-							/>
-							<Text style={{ fontSize: 18 }}>${this.state.marker.price}.00/hr</Text>
-						</View>
-					</View>
-					<View style={{ justifyContent: 'center', paddingTop: 10 }}>
-						<Image
-							style={{ height: 200, width: width }}
-							source={{ uri: 'http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg' }}
-						/>
-					</View>
-					<View>
-						<Text>DESCRIPTIONS</Text>
-					</View>
-					<View style={{ justifyContent: 'center', paddingTop: 10 }}>
-						<Text>RESERVE NOW</Text>
-					</View>
+					<SpotShowScreen spot={this.state.spot}/>
 				</Animated.View>
-			)
-		}
+		)
 	}
 
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
-		if (this.state.marker) {
+		console.log("HEY YOU HAVE A SPOT?", this.state.spot)
+		if (this.state.spot) {
 			return(
-				<Animated.View style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}> 
+				<Animated.View 
+					onPress={() => this.setState({ height: height - 25 })}
+					style={{ height: 170, width: width, flexDirection: 'row', paddingTop: 20, paddingLeft: 10}}>
+					<View>
+						<Ionicons name="md-checkmark-circle" size={15} color="black" />
+					</View>
 					<Image
 						style={{ width: 140, height: 80 }}
 						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
@@ -103,15 +75,15 @@ class SpotPreview extends React.Component {
 						<StarRating
 							disabled={false}
 							maxStars={5}
-							rating={this.state.marker.rating}
+							rating={this.state.spot["rating"]}
 							selectedStar={(rating) => {
-								let marker = this.state.marker
-								marker.rating = rating
-								this.setState({ marker: marker })
+								let spot = this.state.spot
+								spot["rating"] = rating
+								this.setState({ spot: spot })
 							}}
 							starSize={20}
 						/>
-						<Text style={{ fontSize: 18 }}>${this.state.marker.price}.00/hr</Text>
+						<Text style={{ fontSize: 18 }}>${this.state.spot["price"]}/hr</Text>
 					</View>
 				</Animated.View> 
 			)
@@ -119,23 +91,28 @@ class SpotPreview extends React.Component {
 	}
 
 	render(){
-		let spot;
-		let spot_id = this.props.activeMarkerId;
-		let spotVaribles = { variable: {spot_id: spot_id}}
-		if (this.props.getSpot) {
-			spot = this.props.getSpot(spotVaribles).getSpot;
-		} else {
-			spot = {};
-		}
-		// console.log('markers: ', markers);
+		// let spot;
+		// let spot_id = this.props.activespotId;
+		// let spotVaribles = { variable: {spot_id: spot_id}}
+		// if (this.props.getSpot) {
+		// 	spot = this.props.getSpot(spotVaribles).getSpot;
+		// 	this.setState({spot: spot})
+		// } else {
+		// 	spot = {};
+		// }
+		// console.log("SSSSSSPPPPPPOOOOOOOOTTTTTTT", spot)
+
+		const { height, width } = Dimensions.get('window')
 		const config = {
-			velocityThreshold: 0,
-			directionalOffsetThreshold: 80,
+			velocityThreshold: 0.3,
+			directionalOffsetThreshold: 10,
 		};
+		console.log("THIS HEIGHT: ", this.state.height)
 		return(
-      		<View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
+      <View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
 				<GestureRecognizer
 					onSwipe={(direction, state) => this.onSwipe(direction, state)}
+					onPress={() => this.setState({ height: height - 25})}
 					config={config}
 				>
 					{this.state.height <= 150 ? this._renderPreview() : this._renderFull()}

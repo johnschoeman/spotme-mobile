@@ -19,7 +19,6 @@ export default class WelcomeScreen extends React.Component {
   }
 
   render() {
-    console.log(this.state.activeMarker)
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.screen}>
