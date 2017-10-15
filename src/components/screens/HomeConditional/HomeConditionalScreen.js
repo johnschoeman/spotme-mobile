@@ -1,6 +1,6 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import { Platform } from 'react-native'
 import HomeScreen from '../Home/HomeScreen'
 import WelcomeScreen from '../Welcome/WelcomeScreen'
 
@@ -10,6 +10,7 @@ export default class HomeConditionalScreen extends React.Component {
     const { navigate } = navigation
     return {
       title: screenProps.isLoggedIn ? 'Home' : 'Welcome',
+      headerStyle: Platform.OS === 'ios' ? {} : { marginTop: 25 },
       headerRight: screenProps.isLoggedIn && (
         <Icon.Button
           name='gear'

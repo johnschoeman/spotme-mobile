@@ -6,6 +6,7 @@ import Map from './Components/Map'
 import styles from '../../../styles/styles'
 
 export default class WelcomeScreen extends React.Component {
+
   constructor(){
     super()
     this.setMarker = this.setMarker.bind(this)
