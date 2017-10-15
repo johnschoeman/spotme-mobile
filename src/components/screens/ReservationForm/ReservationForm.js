@@ -3,7 +3,6 @@ import { graphql, compose } from 'react-apollo'
 import { AsyncStorage, View, Button } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
-import Slider from "react-native-slider";
 
 import { CREATE_RESERVATION_MUTATION } from
     '../../../graphql/mutations/ReservationMutations'
@@ -17,7 +16,7 @@ class ReservationForm extends Component {
       this.state = {
         spot_id: 1,
         start_time: "2018-12-13T20:02:39Z",
-        end_time: "2018-12-13T20:02:56Z",   
+        end_time: "2018-12-13T20:02:56Z",
       };
     }
 
@@ -25,23 +24,23 @@ class ReservationForm extends Component {
         const { spot_id, start_time, end_time } = this.state
         const reservationVariables = { variables: { spot_id, start_time, end_time } }
         const result = await this.props.createReservationMutation(reservationVariables)
-        this._navigateHome()
+        this._resetNavigateHome()
     }
 
-    _navigateHome() {
-        const resetNavigateHome = NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Home' })]
-        })
-        const { dispatch } = this.props.navigation;
-        dispatch(resetNavigateHome)
+    _resetNavigateHome = () => {
+      const resetNavigateHomeAction = NavigationActions.reset({
+        index: 0,
+        actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+      })
+      const { dispatch } = this.props.navigation;
+      dispatch(resetNavigateHomeAction)
     }
+
 
     render() {
 
         return (
           <View style={styles.screen}>
-            <Slider />
           </View>
         )
     }
