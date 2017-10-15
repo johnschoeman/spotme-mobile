@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
-import { View, Slider, Text, StyleSheet } from 'react-native'
+import {
+  View, Slider, Text, StyleSheet, TouchableOpacity
+} from 'react-native'
 import { FormLabel } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 
 import { CREATE_RESERVATION_MUTATION } from
     '../../../graphql/mutations/ReservationMutations'
-import styles from '../../../styles/styles'
 
 class ReservationForm extends Component {
 
@@ -44,7 +45,7 @@ class ReservationForm extends Component {
   }
 
   timeUnitsToString(time) {
-    timeString = String(time)
+    const timeString = String(time)
     return time < 10 ? `0${timeString}` : timeString
   }
 
@@ -59,12 +60,12 @@ class ReservationForm extends Component {
 
 
     return (
-      <View style={styles.screen}>
+      <View style={localStyles.container}>
         <Text>Reserve this spot!</Text>
         <FormLabel>How long?</FormLabel>
         <View>
           <Text>Duration: {`${hoursString}:${minutesString}`}</Text>
-          <Text>Ending: {timeNow}</Text>
+          <Text>Ending: {nowString}</Text>
         </View>
         <Slider
           maximumValue={60 * 24}
@@ -84,6 +85,9 @@ class ReservationForm extends Component {
 }
 
 const localStyles = StyleSheet.create({
+  container: {
+
+  },
   reserveButton: {
     width: 150,
     padding: 7,

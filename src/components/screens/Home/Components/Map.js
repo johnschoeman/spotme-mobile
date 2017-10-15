@@ -30,7 +30,7 @@ class Map extends React.Component {
 			// console.log("SPOTSSSSSKSDFLSKJFSDF", this.props.getSpots)
 			// this.props.getSpots()
 		}
-		
+
 		// _getspotsAsync = async () => {
 		// 	this.props.getSpots()
 		// }
@@ -51,13 +51,13 @@ class Map extends React.Component {
         // console.log("LOCATION:", location);
         if(location !== this.state.location) {
           this.setState({
-            region: { latitude: location.coords.latitude, 
-                      longitude: location.coords.longitude, 
+            region: { latitude: location.coords.latitude,
+                      longitude: location.coords.longitude,
                       latitudeDelta: 0.02,
                       longitudeDelta: 0.02, }
           });
-          this.animateTo({ latitude: location.coords.latitude, 
-                                 longitude: location.coords.longitude, 
+          this.animateTo({ latitude: location.coords.latitude,
+                                 longitude: location.coords.longitude,
                                  latitudeDelta: 0.02,
                                  longitudeDelta: 0.02 })
           this.setState({ location });
@@ -79,7 +79,7 @@ class Map extends React.Component {
               style={{ width: 25, height: 25 }}/>
           </MapView.Marker>
         )
-      }      
+      }
     }
 
     render() {
@@ -90,6 +90,7 @@ class Map extends React.Component {
         } else {
           spots = [];
 				}
+        debugger
         const config = {
           velocityThreshold: 0.3,
           directionalOffsetThreshold: 80,
@@ -107,12 +108,13 @@ class Map extends React.Component {
                 region={this.state.region}
                 onRegionChange={this.onRegionChange}>
                 {Object.keys(spots).map((key) => (
-                  <MapView.Marker 
+                  <MapView.Marker
                     coordinate={{ latitude: spots[key].latitude, longitude: spots[key].longitude}}
                     onPress={() => this.setState({ activeSpot: spots[key]})}
-                    key={key}>
-                    <Image source={spotImg}
-                      style={{ width: 25, height: 25 }}/>
+                    key={key}
+                    image={spotImg}>
+                    {/*<Image source={spotImg}
+                      style={{ width: 25, height: 25 }}/>*/}
                   </MapView.Marker>
                 ))}
                 {this.renderCurrentLocationMarker()}
