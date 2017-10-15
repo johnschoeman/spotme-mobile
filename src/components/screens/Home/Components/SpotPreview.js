@@ -74,7 +74,7 @@ class SpotPreview extends React.Component {
 					<View style={{ flexDirection: 'row', paddingTop: 20 }}>
 						<Image
 							style={{ width: 140, height: 80 }}
-							source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }} />
+							source={{ uri: spot.image_url }} />
 						<View style={{ flexDirection: 'column', paddingLeft: 100, paddingTop: 10, paddingRight: 20 }}>
 							<StarRating
 								disabled={false}
