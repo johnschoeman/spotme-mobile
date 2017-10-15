@@ -14,7 +14,9 @@ export default class HomeConditionalScreen extends React.Component {
         <Icon.Button
           name='gear'
           onPress={() => navigate('Menu')}
-          style={{marginRight: 10}}/>
+          color='#555'
+          backgroundColor='transparent'
+          style={{ marginRight: 3 }}/>
       )
     }
   }
