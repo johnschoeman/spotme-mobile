@@ -90,7 +90,6 @@ class Map extends React.Component {
         } else {
           spots = [];
 				}
-				console.log("ACTIVE SPOT: ", this.state.activeSpot)
         const config = {
           velocityThreshold: 0.3,
           directionalOffsetThreshold: 80,
