@@ -2,24 +2,31 @@ import React from 'react'
 import {
   View, Text, StyleSheet, ScrollView, Platform, AsyncStorage
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 import OneLineMenuButton from '../../modules/OneLineMenuButton'
-import { resetNavigateHome } from '../SessionForm/sessionFunctions'
 import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../utils/constants';
 
 export default class HostSpotIndexScreen extends React.Component {
 
-  constructor(props) {
-    super(props)
-
-    resetNavigateHome = resetNavigateHome.bind(this)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   logoutAndNavigateHome() {
     this.props.logoutUser();
     AsyncStorage.removeItem(SPOTME_USER_ID)
     AsyncStorage.removeItem(SPOTME_AUTH_TOKEN)
-    resetNavigateHome();
+    this._resetNavigateHome()
+  }
+
+  _resetNavigateHome = () => {
+    const resetNavigateHomeAction = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHomeAction)
   }
 
   render() {

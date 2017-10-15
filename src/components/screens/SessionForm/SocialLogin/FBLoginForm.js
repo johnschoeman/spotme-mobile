@@ -5,9 +5,9 @@ import gql from 'graphql-tag';
 import { AuthSession } from 'expo';
 import jwtDecoder from 'jwt-decode';
 import { Button } from 'react-native-elements'
+import { NavigationActions } from 'react-navigation'
 
 import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../../utils/constants';
-import { resetNavigateHome } from '../sessionFunctions'
 
 const auth0ClientId = 'PODS1ov5gcTRNmWec61GhXDZO9jLt-yT';
 const auth0Domain = 'https://spotme.auth0.com';
@@ -26,8 +26,6 @@ class FBLoginForm extends React.Component {
     this.state = {
         email: null,
     }
-
-    resetNavigateHome = resetNavigateHome.bind(this)
   }
 
   loginWithAuth0FB = async () => {
@@ -61,8 +59,17 @@ class FBLoginForm extends React.Component {
       let res;
       res = await this.props.createUserSocialMutation(userVariables);
       this._saveUserData(res)
-      resetNavigateHome()
+      this._resetNavigateHome()
     }
+  }
+
+  _resetNavigateHome = () => {
+    const resetNavigateHomeAction = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHomeAction)
   }
 
   _saveUserData = (res) => {

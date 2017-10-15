@@ -10,7 +10,6 @@ import FBLoginFormContainer from '../SessionForm/SocialLogin/FBLoginFormContaine
 import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../utils/constants';
 import { CREATE_USER_MUTATION, SIGNIN_USER_MUTATION } from
   '../../../graphql/mutations/SessionMutations'
-import { resetNavigateHome } from './sessionFunctions'
 
 class SessionForm extends Component {
 
@@ -22,8 +21,6 @@ class SessionForm extends Component {
       password: '',
       isLogin: true,
     };
-
-    resetNavigateHome = resetNavigateHome.bind(this)
   }
 
   _handleSubmit = async () => {
@@ -38,8 +35,18 @@ class SessionForm extends Component {
     }
 
     this._saveUserData(result)
-    resetNavigateHome()
+    this._resetNavigateHome()
   }
+
+  _resetNavigateHome = () => {
+    const resetNavigateHomeAction = NavigationActions.reset({
+      index: 0,
+      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
+    })
+    const { dispatch } = this.props.navigation;
+    dispatch(resetNavigateHomeAction)
+  }
+
 
   _saveUserData = (res) => {
     const { user, token } = res.data.signinUser
