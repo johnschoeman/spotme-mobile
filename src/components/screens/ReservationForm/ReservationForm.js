@@ -5,6 +5,7 @@ import {
 } from 'react-native'
 import { FormLabel } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
+import dateFormat from 'dateformat'
 
 import { CREATE_RESERVATION_MUTATION } from
     '../../../graphql/mutations/ReservationMutations'
@@ -56,29 +57,45 @@ class ReservationForm extends Component {
     const minutes = duration % 60
     const minutesString = this.timeUnitsToString(minutes)
     const now = new Date()
-    const nowString = now.toLocaleTimeString()
+    const nowString = dateFormat(
+      this.addMinutes(now, duration),
+      'h:MM TT'
+    )
 
 
     return (
       <View style={localStyles.container}>
-        <Text>Reserve this spot!</Text>
-        <FormLabel>How long?</FormLabel>
-        <View>
-          <Text>Duration: {`${hoursString}:${minutesString}`}</Text>
-          <Text>Ending: {nowString}</Text>
+        <View style={localStyles.headerView}>
+          <Text style={localStyles.headerText}>Reserve this spot!</Text>
+        </View>
+        <View style={localStyles.labelContainer}>
+          <FormLabel labelStyle={localStyles.sliderLabel}>
+            How long?
+          </FormLabel>
+          <View>
+            <Text style={localStyles.labelDurationText}>
+              Duration: {`${hoursString}:${minutesString}`}
+            </Text>
+            <Text style={localStyles.labelDurationText}>
+              Ending: {nowString}
+            </Text>
+          </View>
         </View>
         <Slider
+          style={localStyles.slider}
           maximumValue={60 * 24}
           minimumValue={15}
           step={15}
           value={this.state.duration}
           onValueChange={(val) => this.setState({duration: val})}
         />
-        <TouchableOpacity
-          style={localStyles.reserveButton}
-          onPress={() => this._handleSubmit()}>
-          <Text style={localStyles.reserveButtonText}>RESERVE NOW</Text>
-        </TouchableOpacity>
+        <View style={localStyles.addButtonView}>
+          <TouchableOpacity
+            style={localStyles.reserveButton}
+            onPress={() => this._handleSubmit()}>
+            <Text style={localStyles.reserveButtonText}>RESERVE NOW</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -86,7 +103,47 @@ class ReservationForm extends Component {
 
 const localStyles = StyleSheet.create({
   container: {
+    padding: 30,
+    alignItems: 'stretch',
+    justifyContent: 'space-around',
+    flex: 1,
+  },
+  headerView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerText: {
+    fontSize: 30,
+    color: '#666',
+    fontWeight: '500',
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  sliderLabel: {
+    fontSize: 20,
+  },
+  labelDurationText: {
+    textAlign: 'right',
+    marginRight: 25,
+    color: '#666'
+  },
+  slider: {
 
+  },
+  addButtonView: {
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0,  height: -1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    borderColor: '#CCC',
+    // elevation: 2,
   },
   reserveButton: {
     width: 150,
