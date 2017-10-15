@@ -4,8 +4,8 @@ import { View } from 'react-native';
 import ReservationFormContainer from './ReservationFormContainer'
 import styles from '../../../styles/styles'
 
-// export default class ReservationFormScreen extends React.Component {
-//
+export default class ReservationFormScreen extends React.Component {
+
 //   static navigationOptions = ({ navigation }) => {
 //     switch (navigation.state.params.formType) {
 //       case 'logIn':

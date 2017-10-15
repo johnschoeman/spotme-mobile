@@ -23,7 +23,6 @@ class SpotPreview extends React.Component {
 	componentWillReceiveProps(newProps){
 		if (newProps.activeSpot) {
 			if (this.state.spot !== newProps.activeSpot) {
-				console.log("I HAVE RECEIVED NEW PROPS", newProps)
 				this.setState({spot: newProps.activeSpot})
 			}
 		}
@@ -35,7 +34,6 @@ class SpotPreview extends React.Component {
 		switch (gestureName) {
 			case SWIPE_UP:
 				LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-				console.log("IT SWIPEES UP")
 				this.setState({height: height - 25})
 				break;
 			case SWIPE_DOWN:
@@ -49,7 +47,6 @@ class SpotPreview extends React.Component {
 
 	_renderFull(){
 		const { height, width } = Dimensions.get('window')
-		console.log("SPOT: ", this.state.spot);
 		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
 					<SpotShowScreen spot={this.state.spot}/>
@@ -59,7 +56,6 @@ class SpotPreview extends React.Component {
 
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
-		console.log("HEY YOU HAVE A SPOT?", this.state.spot)
 		if (this.state.spot) {
 			const spot = this.state.spot
 			const address1 = spot.address_street && spot.address_number ?
@@ -116,7 +112,6 @@ class SpotPreview extends React.Component {
 			velocityThreshold: 0.3,
 			directionalOffsetThreshold: 10,
 		};
-		console.log("THIS HEIGHT: ", this.state.height)
 		return(
       <View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
 				<GestureRecognizer
