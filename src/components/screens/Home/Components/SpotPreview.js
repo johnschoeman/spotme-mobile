@@ -14,17 +14,7 @@ class SpotPreview extends React.Component {
 		this.onSwipe = this.onSwipe.bind(this)
 
 		this.state = {
-			spot: null,
-			spotId: null,
 			height: 150
-		}
-	}
-
-	componentWillReceiveProps(newProps){
-		if (newProps.activeSpot) {
-			if (this.state.spot !== newProps.activeSpot) {
-				this.setState({spot: newProps.activeSpot})
-			}
 		}
 	}
 
@@ -51,18 +41,19 @@ class SpotPreview extends React.Component {
 
 	_renderFull(){
 		const { height, width } = Dimensions.get('window')
-		const { navigation } = this.props
+		const { navigation, activeSpot } = this.props
 		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
-					<SpotShowScreen spot={this.state.spot} navigation={navigation}/>
+					<SpotShowScreen spot={activeSpot} navigation={navigation}/>
 				</Animated.View>
 		)
 	}
 
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
-		if (this.state.spot) {
-			const spot = this.state.spot
+		const { activeSpot } = this.props
+		if (activeSpot) {
+			const spot = activeSpot
 			const address1 = spot.address_street && spot.address_number ?
 				`${spot.address_number} ${spot.address_street}` :
 				`Latitude: ${spot.latitude}`
@@ -83,13 +74,20 @@ class SpotPreview extends React.Component {
 								<Text style={localStyles.addressText}>{address2}</Text>
 							</View>
 							<View style={{ width, flexDirection: 'row', paddingTop: 25, paddingLeft: 10, paddingRight: 10, backgroundColor: 'transparent', justifyContent: 'space-between' }}>
-								<Text style={{ backgroundColor: 'transparent', fontSize: 24, fontWeight: '900', color: 'white' }}>${this.state.spot["price"]}/hr</Text>
+								<Text style={{
+										backgroundColor: 'transparent',
+										fontSize: 24,
+										fontWeight: '900',
+										color: 'white'
+									}}>
+									${this._formatPriceString(activeSpot["price"])}/hr
+								</Text>
 								<StarRating
 									disabled={true}
 									maxStars={5}
-									rating={this.state.spot["rating"]}
+									rating={activeSpot["rating"]}
 									selectedStar={(rating) => {
-										let spot = this.state.spot
+										let spot = activeSpot
 										spot["rating"] = rating
 										this.setState({ spot: spot })
 									}}
