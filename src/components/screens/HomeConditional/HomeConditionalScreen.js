@@ -9,7 +9,8 @@ export default class HomeConditionalScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => {
     const { navigate } = navigation
     return {
-      title: screenProps.isLoggedIn ? <Text style={{color: "white"}}>Home</Text> : <Text style={{color: 'white'}}>Welcome</Text>,
+      title: screenProps.isLoggedIn ? "Home": "Welcome",
+      headerTitleStyle: {color: 'white'},
       headerStyle: Platform.OS === 'ios' ? { backgroundColor: 'rgb(150, 0, 0)'} : { backgroundColor: 'rgb(150, 0, 0)', marginTop: 25 },
       headerRight: screenProps.isLoggedIn && (
         <Icon.Button

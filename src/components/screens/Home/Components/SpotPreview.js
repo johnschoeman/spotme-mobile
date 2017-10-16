@@ -14,17 +14,7 @@ class SpotPreview extends React.Component {
 		this.onSwipe = this.onSwipe.bind(this)
 
 		this.state = {
-			spot: null,
-			spotId: null,
 			height: 150
-		}
-	}
-
-	componentWillReceiveProps(newProps){
-		if (newProps.activeSpot) {
-			if (this.state.spot !== newProps.activeSpot) {
-				this.setState({spot: newProps.activeSpot})
-			}
 		}
 	}
 
@@ -45,20 +35,25 @@ class SpotPreview extends React.Component {
 		}
 	}
 
+	_formatPriceString(price) {
+		return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+	}
+
 	_renderFull(){
 		const { height, width } = Dimensions.get('window')
-		const { navigation } = this.props
+		const { navigation, activeSpot } = this.props
 		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
-					<SpotShowScreen spot={this.state.spot} navigation={navigation}/>
+					<SpotShowScreen spot={activeSpot} navigation={navigation}/>
 				</Animated.View>
 		)
 	}
 
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
-		if (this.state.spot) {
-			const spot = this.state.spot
+		const { activeSpot } = this.props
+		if (activeSpot) {
+			const spot = activeSpot
 			const address1 = spot.address_street && spot.address_number ?
 				`${spot.address_number} ${spot.address_street}` :
 				`Latitude: ${spot.latitude}`
@@ -71,21 +66,21 @@ class SpotPreview extends React.Component {
 					style={{ height: 200, width, alignItems: 'center'}}>
 					<Image
 						style={localStyles.backgroundImg}
-						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }}>
+						source={{ uri: spot.image_url }}>
 						<View style={localStyles.dimmingBackground}>
 							<Ionicons name="ios-arrow-up" size={20} color="white" style={{ backgroundColor: 'transparent' }}/>
 							<View style={{ width, justifyContent: 'flex-start', paddingLeft: 10 }}>
 								<Text style={localStyles.addressText}>{address1}</Text>
 								<Text style={localStyles.addressText}>{address2}</Text>
 							</View>
-							<View style={{ width, flexDirection: 'row', paddingTop: 25, paddingLeft: 10, paddingRight: 10, backgroundColor: 'transparent', justifyContent: 'space-between' }}>
-								<Text style={{ backgroundColor: 'transparent', fontSize: 24, fontWeight: '900', color: 'white' }}>${this.state.spot["price"]}/hr</Text>
+							<View style={localStyles.priceAndRatingContainer}>
+								<Text style={localStyles.priceText}>${this._formatPriceString(activeSpot["price"])}/hr</Text>
 								<StarRating
-									disabled={true}
+									disabled
 									maxStars={5}
-									rating={this.state.spot["rating"]}
+									rating={activeSpot["rating"]}
 									selectedStar={(rating) => {
-										let spot = this.state.spot
+										let spot = activeSpot
 										spot["rating"] = rating
 										this.setState({ spot: spot })
 									}}
@@ -167,6 +162,7 @@ query GetSpot($spot_id: Int) {
 export default SpotPreview;
 
 const resizeMode = 'center';
+const { height, width } = Dimensions.get('window')
 const localStyles = StyleSheet.create({
 	addressText: {
 		fontSize: 20,
@@ -189,5 +185,20 @@ const localStyles = StyleSheet.create({
 		backgroundColor: 'rgba(0,0,0,.3)',
 		paddingTop: 5,
 		alignItems: 'center'
+	},
+	priceAndRatingContainer: {
+		width, 
+		flexDirection: 'row', 
+		paddingTop: 25, 
+		paddingLeft: 10, 
+		paddingRight: 10, 
+		backgroundColor: 'transparent', 
+		justifyContent: 'space-between'
+	}, 
+	priceText: { 
+		backgroundColor: 'transparent', 
+		fontSize: 24, 
+		fontWeight: '900', 
+		color: 'white' 
 	}
 })
