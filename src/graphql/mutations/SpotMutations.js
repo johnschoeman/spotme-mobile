@@ -1,9 +1,10 @@
 import { gql } from 'react-apollo'
 
 export const CREATE_SPOT_MUTATION = gql`
-mutation CreateSpotMutation($address: String!) {
+mutation CreateSpotMutation($address: String!, $price: Float!) {
   createSpot(
     address: $address
+    price: $price
   ) {
     id
     address_number
@@ -11,6 +12,7 @@ mutation CreateSpotMutation($address: String!) {
     address_city
     address_state
     address_zip
+    price
     latitude
     longitude
     host_id
