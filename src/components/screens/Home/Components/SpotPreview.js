@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, LayoutAnimation, Text, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, Animated, LayoutAnimation, Text, View, Image, Dimensions } from 'react-native';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import StarRating from 'react-native-star-rating';
 import { Ionicons } from '@expo/vector-icons';
@@ -63,34 +63,39 @@ class SpotPreview extends React.Component {
 				`${spot.address_number} ${spot.address_street}` :
 				`Latitude: ${spot.latitude}`
 			const address2 = spot.address_city && spot.address_state && spot.address_zip ?
-				`${spot.address_city}, ${spot.address_state} ${spot.address_zip}` :
+				`${spot.address_city}, ${spot.address_state}` :
 				`Longitude: ${spot.longitude}`
 			return(
 				<Animated.View
 					onPress={() => this.setState({ height: height - 25 })}
-					style={{ height: 200, width, paddingTop: 5, paddingLeft: 10, alignItems: 'center'}}>
-					<Ionicons name="ios-arrow-up" size={20} color="black" />
-					<Text>{address1}</Text>
-					<Text>{address2}</Text>
-					<View style={{ flexDirection: 'row', paddingTop: 20 }}>
-						<Image
-							style={{ width: 140, height: 80 }}
-							source={{ uri: spot.image_url }} />
-						<View style={{ flexDirection: 'column', paddingLeft: 100, paddingTop: 10, paddingRight: 20 }}>
-							<StarRating
-								disabled={false}
-								maxStars={5}
-								rating={this.state.spot["rating"]}
-								selectedStar={(rating) => {
-									let spot = this.state.spot
-									spot["rating"] = rating
-									this.setState({ spot: spot })
-								}}
-								starSize={20}
-							/>
-							<Text style={{ fontSize: 18 }}>${this.state.spot["price"]}/hr</Text>
+					style={{ height: 200, width, alignItems: 'center'}}>
+					<Image
+						style={localStyles.backgroundImg}
+						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }}>
+						<View style={localStyles.dimmingBackground}>
+							<Ionicons name="ios-arrow-up" size={20} color="white" style={{ backgroundColor: 'transparent' }}/>
+							<View style={{ width, justifyContent: 'flex-start', paddingLeft: 10 }}>
+								<Text style={localStyles.addressText}>{address1}</Text>
+								<Text style={localStyles.addressText}>{address2}</Text>
+							</View>
+							<View style={{ width, flexDirection: 'row', paddingTop: 25, paddingLeft: 10, paddingRight: 10, backgroundColor: 'transparent', justifyContent: 'space-between' }}>
+								<Text style={{ backgroundColor: 'transparent', fontSize: 24, fontWeight: '900', color: 'white' }}>${this.state.spot["price"]}/hr</Text>
+								<StarRating
+									disabled={true}
+									maxStars={5}
+									rating={this.state.spot["rating"]}
+									selectedStar={(rating) => {
+										let spot = this.state.spot
+										spot["rating"] = rating
+										this.setState({ spot: spot })
+									}}
+									starSize={20}
+									starColor='white'
+									emptyStarColor='white'
+								/>
+							</View>
 						</View>
-					</View>
+					</Image>
 				</Animated.View>
 			)
 		}
@@ -111,7 +116,7 @@ class SpotPreview extends React.Component {
 		const { height, width } = Dimensions.get('window')
 		const config = {
 			velocityThreshold: 0.3,
-			directionalOffsetThreshold: 10,
+			directionalOffsetThreshold: 80,
 		};
 		return(
       <View style={{position: "absolute", bottom: 0, backgroundColor: "white", zIndex: 9999 }}>
@@ -160,3 +165,29 @@ query GetSpot($spot_id: Int) {
 
 // export default graphql(GET_SPOT_QUERY, {name: 'getSpot'})(SpotPreview);
 export default SpotPreview;
+
+const resizeMode = 'center';
+const localStyles = StyleSheet.create({
+	addressText: {
+		fontSize: 20,
+		fontWeight: '700',
+		backgroundColor: 'transparent',
+		color: 'white'
+	},
+	backgroundImg: {
+		backgroundColor: 'black',
+		flex: 1,
+		resizeMode,
+		position: 'absolute',
+		width: '100%',
+		height: '100%',
+		justifyContent: 'center',
+	},
+	dimmingBackground: {
+		width: '100%',
+		height: '100%',
+		backgroundColor: 'rgba(0,0,0,.3)',
+		paddingTop: 5,
+		alignItems: 'center'
+	}
+})
