@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Image, View, Text, StyleSheet, ScrollView, Platform, AsyncStorage
+  Image, View, Text, StyleSheet, ScrollView, Platform, AsyncStorage, StatusBar
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 
@@ -8,6 +8,15 @@ import OneLineMenuButton from '../../modules/OneLineMenuButton'
 import { SPOTME_USER_ID, SPOTME_AUTH_TOKEN } from '../../../utils/constants';
 
 export default class HostSpotIndexScreen extends React.Component {
+
+  static navigationOptions = ({ navigation, screenProps }) => {
+    const { navigate } = navigation
+    return {
+      title: "Menu",
+      headerTitleStyle: { color: 'black' },
+      headerStyle: Platform.OS === 'ios' ? { backgroundColor: 'white' } : { backgroundColor: 'white', marginTop: 25 },
+    }
+  }
 
   // constructor(props) {
   //   super(props)
@@ -32,9 +41,12 @@ export default class HostSpotIndexScreen extends React.Component {
   render() {
     const { currentUser, navigation } = this.props
     const { navigate } = navigation
-
     return (
       <View style={localStyles.screen}>
+        <StatusBar
+          backgroundColor="black"
+          barStyle="dark-content"
+        />
         <View style={localStyles.screenTopSection}>
 
           {
