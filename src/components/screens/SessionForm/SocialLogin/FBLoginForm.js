@@ -139,6 +139,7 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
           address_city
           address_state
           address_zip
+          price
           latitude
           longitude
           host_id
