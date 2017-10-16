@@ -23,7 +23,7 @@ class GoogleAutocomplete extends React.Component {
   }
 
   render() {
-    // console.log("TEXT STATE", this.state.text)
+
     const { height, width } = Dimensions.get('window')
     return (
       <View>
