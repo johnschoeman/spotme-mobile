@@ -9,14 +9,14 @@ import NewSpotScreenContainer from
   '../screens/NewSpot/NewSpotScreenContainer'
 import MenuScreenContainer from
   '../screens/Menu/MenuScreenContainer'
-import SpotShowScreen from '../screens/SpotShow/SpotShowScreen'
+import SpotShowContainer from '../screens/SpotShow/SpotShowContainer'
 
 const MainNavigator = StackNavigator({
   Home: { screen: HomeConditionalScreenContainer },
   HostSpotIndex: { screen: HostSpotIndexScreenContainer },
   NewSpot: { screen: NewSpotScreenContainer },
   Menu: { screen: MenuScreenContainer },
-  SpotShow: { screen: SpotShowScreen },
+  SpotShow: { screen: SpotShowContainer },
   // Profile: { screen: ProfileScreen },
 })
 
