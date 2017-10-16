@@ -25,6 +25,7 @@ class ReservationForm extends Component {
   }
 
   _handleSubmit = async () => {
+      const { navigate } = this.props.navigation
       const { duration } = this.state
       const spot_id = Number(this.props.spot.id)
       const now = new Date()
@@ -33,16 +34,7 @@ class ReservationForm extends Component {
       const reservationVariables = { variables: { spot_id, start_time, end_time } }
       const result = await this.props.createReservationMutation(reservationVariables)
       // redux dispatch?
-      this._resetNavigateHome()
-  }
-
-  _resetNavigateHome = () => {
-    const resetNavigateHomeAction = NavigationActions.reset({
-      index: 0,
-      actions: [ NavigationActions.navigate({ routeName: 'Home' }) ]
-    })
-    const { dispatch } = this.props.navigation;
-    dispatch(resetNavigateHomeAction)
+      navigate('ReservationShow', { reservation: result.data })
   }
 
   timeUnitsToString(time) {
