@@ -45,6 +45,10 @@ class ReservationForm extends Component {
     dispatch(resetNavigateHomeAction)
   }
 
+  _formatPriceString(price) {
+		return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+	}
+
   timeUnitsToString(time) {
     const timeString = String(time)
     return time < 10 ? `0${timeString}` : timeString
@@ -65,12 +69,15 @@ class ReservationForm extends Component {
     const { currentUser, spot } = this.props
     let headingText
     let buttonText
+    let isHosted
     if (spot.host_id == currentUser.id) {
       headingText = 'Place a temporary hold'
       buttonText = 'HOLD NOW'
+      isHosted = true
     } else {
       headingText = 'Reserve this spot!'
       buttonText = 'RESERVE NOW'
+      isHosted = false
     }
 
 
@@ -83,13 +90,19 @@ class ReservationForm extends Component {
           <FormLabel labelStyle={localStyles.sliderLabel}>
             How long?
           </FormLabel>
-          <View>
+          <View style={localStyles.labelDurationTextContainer}>
             <Text style={localStyles.labelDurationText}>
               Duration: {`${hoursString}:${minutesString}`}
             </Text>
             <Text style={localStyles.labelDurationText}>
               Ending: {nowString}
             </Text>
+            {
+              !isHosted &&
+              <Text style={localStyles.labelDurationText}>
+                Price: ${this._formatPriceString((duration / 60) * spot.price)}
+              </Text>
+            }
           </View>
         </View>
         <Slider
@@ -137,6 +150,9 @@ const localStyles = StyleSheet.create({
   sliderLabel: {
     fontSize: 20,
     color: 'rgb(80,80,80)'
+  },
+  labelDurationTextContainer: {
+    paddingTop: 18,
   },
   labelDurationText: {
     textAlign: 'right',
