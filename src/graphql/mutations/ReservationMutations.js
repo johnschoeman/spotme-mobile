@@ -10,8 +10,21 @@ mutation CreateReservationMutation($spot_id: Int!, $start_time: DateTime!, $end_
     id
     start_time
     end_time
+    duration
+    end_time_since_epoch
     spot {
       id
+      address_number
+      address_street
+      address_city
+      address_state
+      image_url
+      price
+      hostedBy {
+        id
+        username
+        email
+      }
     }
     user {
       id

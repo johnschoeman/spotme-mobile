@@ -74,7 +74,6 @@ class Map extends React.Component {
     }
 
     render() {
-        console.log("OS", Platform.OS);
         let spots;
         if (this.props.getSpots.allSpots) {
           spots = this.props.getSpots.allSpots;

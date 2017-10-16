@@ -10,6 +10,7 @@ import NewSpotScreenContainer from
 import MenuScreenContainer from
   '../screens/Menu/MenuScreenContainer'
 import SpotShowScreen from '../screens/SpotShow/SpotShowScreen'
+import ReservationShowScreen from '../screens/ReservationShow/ReservationShowScreen'
 
 const MainNavigator = StackNavigator({
   Home: { screen: HomeConditionalScreenContainer },
@@ -17,6 +18,7 @@ const MainNavigator = StackNavigator({
   NewSpot: { screen: NewSpotScreenContainer },
   Menu: { screen: MenuScreenContainer },
   SpotShow: { screen: SpotShowScreen },
+  ReservationShow: { screen : ReservationShowScreen }
   // Profile: { screen: ProfileScreen },
 })
 
