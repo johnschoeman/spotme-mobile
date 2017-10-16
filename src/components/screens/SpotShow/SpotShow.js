@@ -26,7 +26,7 @@ export default class SpotShow extends React.Component {
     switch (gestureName) {
       case SWIPE_DOWN:
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ height: 0 })
+        if(this.props.fromPreview) { this.setState({ height: 0 })}
         break;
       default:
         return
@@ -60,7 +60,7 @@ export default class SpotShow extends React.Component {
             config={config}
           >
             <View style={{ width, paddingTop: 5, alignItems: 'center'}}>
-              <Ionicons name="ios-arrow-down" size={20} color="black" />
+    {this.props.fromPreview ? <Ionicons name="ios-arrow-down" size={20} color="black" /> : <View style={{ height: 20 }}/>}
             </View>
             <View style={{ paddingTop: 10, paddingHorizontal: 10 }}>
               <View style={{
