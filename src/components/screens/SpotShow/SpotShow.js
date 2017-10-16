@@ -11,15 +11,13 @@ export default class SpotShow extends React.Component {
   constructor() {
     super()
     this.state = {
-      spot: {},
       height: 0
     }
   }
 
   componentDidMount() {
     const { height } = Dimensions.get('window')
-    this.setState({ spot: this.props.spot,
-                    height });
+    this.setState({ height });
   }
 
   onSwipe(gestureName, gestureState) {
@@ -41,16 +39,14 @@ export default class SpotShow extends React.Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 10,
     };
-    const { navigation } = this.props
-    if (this.state.spot) {
-      const spot = this.state.spot
+    const { navigation, spot } = this.props
+    if (spot) {
       const address1 = spot.address_street && spot.address_number ?
         `${spot.address_number} ${spot.address_street}` :
         `Latitude: ${spot.latitude}`
       const address2 = spot.address_city && spot.address_state && spot.address_zip ?
         `${spot.address_city}, ${spot.address_state} ${spot.address_zip}` :
         `Longitude: ${spot.longitude}`
-      const description = spot.description ? spot.description : "N/A"
       return (
         <Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 12 }}>
           <GestureRecognizer
@@ -70,17 +66,12 @@ export default class SpotShow extends React.Component {
               </View>
               <View style={{ flexDirection: 'column' }}>
                 <StarRating
-                  disabled={true}
+                  disabled
                   maxStars={5}
-                  rating={this.state.spot.rating}
-                  selectedStar={(rating) => {
-                    let spot = this.state.spot
-                    spot.rating = rating
-                    this.setState({ spot: spot })
-                  }}
+                  rating={spot.rating}
                   starSize={20}
                 />
-                <Text style={{ fontSize: 18 }}>${this.state.spot.price}.00/hr</Text>
+                <Text style={{ fontSize: 18 }}>${spot.price}.00/hr</Text>
               </View>
             </View>
             <View style={{ justifyContent: 'center', paddingTop: 10 }}>
