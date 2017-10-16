@@ -18,6 +18,7 @@ signinUser(email: {
       address_city
       address_state
       address_zip
+      price
       latitude
       longitude
       host_id

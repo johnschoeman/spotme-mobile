@@ -81,8 +81,8 @@ class FBLoginForm extends React.Component {
 
     this.props.receiveCurrentUser( { user, spots } )
 
-    // console.log('*** RESULT', res);
-    // AsyncStorage.getItem(SPOTME_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
+
+
   }
 
   render() {
@@ -137,6 +137,7 @@ const CREATE_USER_SOCIAL_MUTATION = gql`
           address_city
           address_state
           address_zip
+          price
           latitude
           longitude
           host_id

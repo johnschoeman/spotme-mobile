@@ -114,7 +114,7 @@ class Map extends React.Component {
                 {this.renderCurrentLocationMarker()}
               </MapView>
               <SpotPreview
-                activeSpot={this.state.activeSpot} 
+                activeSpot={this.state.activeSpot}
                 navigation={navigation}/>
           </View>
         );
