@@ -5,7 +5,7 @@ import SpotShow from './SpotShow'
 const mapStateToProps = (state, ownProps) => {
 
   return {
-
+    currentUser: state.session.currentUser
   };
 };
 
