@@ -58,19 +58,20 @@ export default class SpotShow extends React.Component {
             onPress={() => this.setState({ height: height - 25 })}
             config={config}
           >
-            <View style={{ width, alignItems: 'center'}}>
+            <View style={{ width, paddingTop: 5, alignItems: 'center'}}>
               <Ionicons name="ios-arrow-down" size={20} color="black" />
             </View>
-            <View style={{ flexDirection: 'row', paddingTop: 10, paddingHorizontal: 30, justifyContent: 'space-between' }}>
+            <View style={{ paddingTop: 10, paddingHorizontal: 10 }}>
               <View style={{
-                flexDirection: 'column'
+                flexDirection: 'column', justifyContent: 'flex-start'
               }}>
-                <Text>{address1}</Text>
-                <Text>{address2}</Text>
+                <Text style={localStyles.addressText}>{address1}</Text>
+                <Text style={localStyles.addressText}>{address2}</Text>
               </View>
-              <View style={{ flexDirection: 'column' }}>
+              <View style={localStyles.priceAndRatingContainer}>
+                <Text style={localStyles.priceText}>${this.state.spot.price}/hr</Text>
                 <StarRating
-                  disabled={true}
+                  disabled
                   maxStars={5}
                   rating={this.state.spot.rating}
                   selectedStar={(rating) => {
@@ -79,14 +80,15 @@ export default class SpotShow extends React.Component {
                     this.setState({ spot: spot })
                   }}
                   starSize={20}
+                  starColor='rgb(80,80,80)'
+                  emptyStarColor='rgb(80,80,80)'
                 />
-                <Text style={{ fontSize: 18 }}>${this.state.spot.price}.00/hr</Text>
               </View>
             </View>
             <View style={{ justifyContent: 'center', paddingTop: 10 }}>
               <Image
                 style={{ height: 200, width: width }}
-                source={{ uri: 'http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg' }}
+                source={{ uri: spot.image_url }}
               />
             </View>
           </GestureRecognizer>
@@ -96,3 +98,26 @@ export default class SpotShow extends React.Component {
     }
   }
 }
+
+const { height, width } = Dimensions.get('window')
+const localStyles = StyleSheet.create({
+  addressText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: 'rgb(80,80,80)'
+  },
+  priceAndRatingContainer: {
+    width,
+    flexDirection: 'row',
+    paddingTop: 25,
+    paddingLeft: 0,
+    paddingRight: 20,
+    justifyContent: 'space-between'
+  },
+  priceText: {
+    backgroundColor: 'transparent',
+    fontSize: 24,
+    fontWeight: '900',
+    color: 'rgb(80,80,80)'
+  }
+})
