@@ -6,7 +6,7 @@ import { receiveReservation } from '../../../redux/actions/reservationActions'
 const mapStateToProps = (state, ownProps) => {
 
     return {
-
+      currentUser: state.session.currentUser
     };
 };
 
