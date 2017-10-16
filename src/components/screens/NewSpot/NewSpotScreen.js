@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
 import {
-  View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform, Slider
 } from 'react-native'
 import { FormLabel, FormInput } from 'react-native-elements'
 import { CREATE_SPOT_MUTATION } from '../../../graphql/mutations/SpotMutations'
@@ -13,12 +13,17 @@ class NewSpotScreen extends React.Component {
 
     this.state = {
       address: '',
+      price: 2.5,
     };
   }
 
+  _formatPriceString(price) {
+		return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+	}
+
   _handleSubmit = async () => {
-    const { address } = this.state
-    const spotVariables = { variables: { address } }
+    const { address, price } = this.state
+    const spotVariables = { variables: { address, price } }
 
     const result = await this.props.createSpotMutation(spotVariables)
     const spot = result.data.createSpot
@@ -28,6 +33,7 @@ class NewSpotScreen extends React.Component {
   }
 
   render() {
+    const {price} = this.state
 
     return (
       <View style={localStyles.screen}>
@@ -38,6 +44,20 @@ class NewSpotScreen extends React.Component {
           <ScrollView>
             <FormLabel>ADDRESS</FormLabel>
             <FormInput onChangeText={(address) => this.setState({address})}/>
+            <View style={localStyles.sliderLabelContainer}>
+              <FormLabel>PRICE</FormLabel>
+              <Text style={localStyles.price}>
+                ${this._formatPriceString(price)}
+              </Text>
+            </View>
+            <Slider
+              style={localStyles.slider}
+              maximumValue={30}
+              minimumValue={0}
+              step={0.5}
+              value={2.5}
+              onValueChange={(val) => this.setState({price: val})}
+            />
           </ScrollView>
         </View>
         <View style={localStyles.addButtonView}>
@@ -97,6 +117,19 @@ const localStyles = StyleSheet.create({
     borderTopWidth: (Platform.OS === 'android') ? 1 : 0,
     borderColor: '#CCC',
     // elevation: 2,
+  },
+  sliderLabelContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  price: {
+    marginRight: 25,
+    textAlign: 'right',
+    paddingTop: 15,
+  },
+  slider: {
+    margin: 10,
   },
   addButton: {
     width: 150,
