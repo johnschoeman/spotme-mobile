@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapView, Location, Permissions } from 'expo';
-import { Keyboard, StyleSheet, Text, View, Image, Dimensions, Platform } from 'react-native';
+import { Keyboard, StyleSheet, Text, View, Image, Dimensions, Platform, StatusBar } from 'react-native';
 import { graphql, gql } from 'react-apollo'
 import SpotPreview from './SpotPreview'
 
@@ -94,6 +94,10 @@ class Map extends React.Component {
         const activeSpotImg = Platform.OS === "ios" ? activeSpotImgiOS : activeSpotImgAndroid
         return (
           <View>
+              <StatusBar
+                backgroundColor="white"
+                barStyle="light-content"
+              />
               <MapView
                 ref={ref => (this.map = ref)}
                 onPress={() => Keyboard.dismiss}
