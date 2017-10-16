@@ -33,6 +33,10 @@ export default class SpotShow extends React.Component {
     }
   }
 
+  _formatPriceString(price) {
+		return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+	}
+
   render() {
     const { height, width } = Dimensions.get('window')
     const config = {
@@ -71,7 +75,7 @@ export default class SpotShow extends React.Component {
                   rating={spot.rating}
                   starSize={20}
                 />
-                <Text style={{ fontSize: 18 }}>${spot.price}.00/hr</Text>
+              <Text style={{ fontSize: 18 }}>${this._formatPriceString(spot.price)}/hr</Text>
               </View>
             </View>
             <View style={{ justifyContent: 'center', paddingTop: 10 }}>
