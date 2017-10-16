@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, StatusBar } from 'react-native';
 import SessionFormContainer from '../SessionForm/SessionFormContainer'
 
 
@@ -11,6 +11,10 @@ export default class WelcomeScreen extends React.Component {
       <Image
         style={localStyles.backgroundImage}
         source={require('../../../../assets/images/welcome_bg.jpeg')}>
+         <StatusBar
+            backgroundColor="white"
+            barStyle="light-content"
+          />
         <SessionFormContainer navigation={this.props.navigation}/>
       </Image>
     )
