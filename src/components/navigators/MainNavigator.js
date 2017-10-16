@@ -19,11 +19,6 @@ const MainNavigator = StackNavigator({
   Menu: { screen: MenuScreenContainer },
   SpotShow: { screen: SpotShowScreen },
   // Profile: { screen: ProfileScreen },
-}, {
-  navigationOptions: {
-    headerTitleStyle: { color: 'white' },
-    headerStyle: Platform.OS === 'ios' ? { backgroundColor: 'rgb(150, 0, 0)' } : { backgroundColor: 'rgb(150, 0, 0)', marginTop: 25 }
-  }
 })
 
 export default MainNavigator;

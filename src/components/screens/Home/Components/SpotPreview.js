@@ -44,7 +44,7 @@ class SpotPreview extends React.Component {
 		const { navigation, activeSpot } = this.props
 		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
-					<SpotShowScreen spot={activeSpot} navigation={navigation}/>
+					<SpotShowScreen fromPreview spot={activeSpot} navigation={navigation}/>
 				</Animated.View>
 		)
 	}
