@@ -1,6 +1,6 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { Platform } from 'react-native'
+import { Text, Platform, StatusBar } from 'react-native'
 import HomeScreen from '../Home/HomeScreen'
 import WelcomeScreen from '../Welcome/WelcomeScreen'
 
@@ -9,13 +9,13 @@ export default class HomeConditionalScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => {
     const { navigate } = navigation
     return {
-      title: screenProps.isLoggedIn ? 'Home' : 'Welcome',
-      headerStyle: Platform.OS === 'ios' ? {} : { marginTop: 25 },
+      title: screenProps.isLoggedIn ? <Text style={{color: "white"}}>Home</Text> : <Text style={{color: 'white'}}>Welcome</Text>,
+      headerStyle: Platform.OS === 'ios' ? { backgroundColor: 'rgb(150, 0, 0)'} : { backgroundColor: 'rgb(150, 0, 0)', marginTop: 25 },
       headerRight: screenProps.isLoggedIn && (
         <Icon.Button
           name='gear'
           onPress={() => navigate('Menu')}
-          color='#555'
+          color='white'
           backgroundColor='transparent'
           style={{ marginRight: 3 }}/>
       )

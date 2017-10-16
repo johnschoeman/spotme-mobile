@@ -20,10 +20,10 @@ export default class WelcomeScreen extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
     return (
       <View style={styles.screen}>
-        <Map setMarker={this.setMarker}/>
+        <Map setMarker={this.setMarker} navigation={navigation}/>
       </View>
     )
   }
