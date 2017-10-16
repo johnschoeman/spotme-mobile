@@ -43,7 +43,8 @@ export default class SpotShow extends React.Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 10,
     };
-    const { navigation, spot, currentUser } = this.props
+    const { navigation, spot } = this.props
+
     if (spot) {
       const address1 = spot.address_street && spot.address_number ?
         `${spot.address_number} ${spot.address_street}` :
@@ -69,7 +70,7 @@ export default class SpotShow extends React.Component {
                 <Text style={localStyles.addressText}>{address2}</Text>
               </View>
               <View style={localStyles.priceAndRatingContainer}>
-                <Text style={localStyles.priceText}>${this._formatPriceString(spot.price)}/hr</Text>
+                <Text style={localStyles.priceText}>${this._formatPriceString(spot.price || 1.5)}/hr</Text>
                 <StarRating
                   disabled
                   maxStars={5}
