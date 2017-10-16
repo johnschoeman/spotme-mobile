@@ -106,7 +106,6 @@ class SpotPreview extends React.Component {
 		// } else {
 		// 	spot = {};
 		// }
-		// console.log("SSSSSSPPPPPPOOOOOOOOTTTTTTT", spot)
 
 		const { height, width } = Dimensions.get('window')
 		const config = {
@@ -187,18 +186,18 @@ const localStyles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	priceAndRatingContainer: {
-		width, 
-		flexDirection: 'row', 
-		paddingTop: 25, 
-		paddingLeft: 10, 
-		paddingRight: 10, 
-		backgroundColor: 'transparent', 
+		width,
+		flexDirection: 'row',
+		paddingTop: 25,
+		paddingLeft: 10,
+		paddingRight: 10,
+		backgroundColor: 'transparent',
 		justifyContent: 'space-between'
-	}, 
-	priceText: { 
-		backgroundColor: 'transparent', 
-		fontSize: 24, 
-		fontWeight: '900', 
-		color: 'white' 
+	},
+	priceText: {
+		backgroundColor: 'transparent',
+		fontSize: 24,
+		fontWeight: '900',
+		color: 'white'
 	}
 })

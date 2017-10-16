@@ -57,9 +57,6 @@ class SessionForm extends Component {
     delete user.spots
 
     this.props.receiveCurrentUser( { user, spots } )
-
-    // console.log('*** RESULT', res);
-    // AsyncStorage.getItem(SPOTME_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
   render() {
