@@ -12,7 +12,7 @@ class SpotPreview extends React.Component {
 		this._renderPreview = this._renderPreview.bind(this)
 		this._renderFull = this._renderFull.bind(this)
 		this.onSwipe = this.onSwipe.bind(this)
-		
+
 		this.state = {
 			spot: null,
 			spotId: null,
@@ -41,15 +41,16 @@ class SpotPreview extends React.Component {
 				this.setState({ height: 150 })
 				break;
 			default:
-				return 
+				return
 		}
 	}
 
 	_renderFull(){
 		const { height, width } = Dimensions.get('window')
+		const { navigation } = this.props
 		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
-					<SpotShowScreen spot={this.state.spot}/>
+					<SpotShowScreen spot={this.state.spot} navigation={navigation}/>
 				</Animated.View>
 		)
 	}
@@ -65,7 +66,7 @@ class SpotPreview extends React.Component {
 				`${spot.address_city}, ${spot.address_state}` :
 				`Longitude: ${spot.longitude}`
 			return(
-				<Animated.View 
+				<Animated.View
 					onPress={() => this.setState({ height: height - 25 })}
 					style={{ height: 200, width, alignItems: 'center'}}>
 					<Image
@@ -95,7 +96,7 @@ class SpotPreview extends React.Component {
 							</View>
 						</View>
 					</Image>
-				</Animated.View> 
+				</Animated.View>
 			)
 		}
 	}
@@ -183,10 +184,10 @@ const localStyles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	dimmingBackground: {
-		width: '100%', 
-		height: '100%', 
-		backgroundColor: 'rgba(0,0,0,.3)', 
-		paddingTop: 5, 
+		width: '100%',
+		height: '100%',
+		backgroundColor: 'rgba(0,0,0,.3)',
+		paddingTop: 5,
 		alignItems: 'center'
 	}
 })
