@@ -62,11 +62,22 @@ class ReservationForm extends Component {
       'h:MM TT'
     )
 
+    const { currentUser, spot } = this.props
+    let headingText
+    let buttonText
+    if (spot.host_id == currentUser.id) {
+      headingText = 'Place a temporary hold'
+      buttonText = 'HOLD NOW'
+    } else {
+      headingText = 'Reserve this spot!'
+      buttonText = 'RESERVE NOW'
+    }
+
 
     return (
       <View style={localStyles.container}>
         <View style={localStyles.headerView}>
-          <Text style={localStyles.headerText}>Reserve this spot!</Text>
+          <Text style={localStyles.headerText}>{headingText}</Text>
         </View>
         <View style={localStyles.labelContainer}>
           <FormLabel labelStyle={localStyles.sliderLabel}>
@@ -93,7 +104,7 @@ class ReservationForm extends Component {
           <TouchableOpacity
             style={localStyles.reserveButton}
             onPress={() => this._handleSubmit()}>
-            <Text style={localStyles.reserveButtonText}>RESERVE NOW</Text>
+            <Text style={localStyles.reserveButtonText}>{buttonText}</Text>
           </TouchableOpacity>
         </View>
       </View>

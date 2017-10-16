@@ -39,7 +39,7 @@ export default class SpotShow extends React.Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 10,
     };
-    const { navigation, spot } = this.props
+    const { navigation, spot, currentUser } = this.props
     if (spot) {
       const address1 = spot.address_street && spot.address_number ?
         `${spot.address_number} ${spot.address_street}` :
