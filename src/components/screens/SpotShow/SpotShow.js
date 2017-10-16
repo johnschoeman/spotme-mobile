@@ -41,7 +41,7 @@ export default class SpotShow extends React.Component {
     const { height, width } = Dimensions.get('window')
     const config = {
       velocityThreshold: 0.3,
-      directionalOffsetThreshold: 10,
+      directionalOffsetThreshold: 80,
     };
     const { navigation, spot } = this.props
 
