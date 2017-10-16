@@ -86,7 +86,7 @@ class ReservationForm extends Component {
           maximumValue={60 * 24}
           minimumValue={15}
           step={15}
-          value={this.state.duration}
+          value={60}
           onValueChange={(val) => this.setState({duration: val})}
         />
         <View style={localStyles.addButtonView}>
