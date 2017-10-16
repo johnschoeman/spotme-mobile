@@ -11,15 +11,13 @@ export default class SpotShow extends React.Component {
   constructor() {
     super()
     this.state = {
-      spot: {},
       height: 0
     }
   }
 
   componentDidMount() {
     const { height } = Dimensions.get('window')
-    this.setState({ spot: this.props.spot,
-                    height });
+    this.setState({ height });
   }
 
   onSwipe(gestureName, gestureState) {
@@ -35,22 +33,24 @@ export default class SpotShow extends React.Component {
     }
   }
 
+  _formatPriceString(price) {
+		return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+	}
+
   render() {
     const { height, width } = Dimensions.get('window')
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 10,
     };
-    const { navigation } = this.props
-    if (this.state.spot) {
-      const spot = this.state.spot
+    const { navigation, spot } = this.props
+    if (spot) {
       const address1 = spot.address_street && spot.address_number ?
         `${spot.address_number} ${spot.address_street}` :
         `Latitude: ${spot.latitude}`
       const address2 = spot.address_city && spot.address_state && spot.address_zip ?
         `${spot.address_city}, ${spot.address_state} ${spot.address_zip}` :
         `Longitude: ${spot.longitude}`
-      const description = spot.description ? spot.description : "N/A"
       return (
         <Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 12 }}>
           <GestureRecognizer
@@ -69,16 +69,11 @@ export default class SpotShow extends React.Component {
                 <Text style={localStyles.addressText}>{address2}</Text>
               </View>
               <View style={localStyles.priceAndRatingContainer}>
-                <Text style={localStyles.priceText}>${this.state.spot.price}/hr</Text>
+                <Text style={localStyles.priceText}>${this._formatPriceString(spot.price)}/hr</Text>
                 <StarRating
                   disabled
                   maxStars={5}
-                  rating={this.state.spot.rating}
-                  selectedStar={(rating) => {
-                    let spot = this.state.spot
-                    spot.rating = rating
-                    this.setState({ spot: spot })
-                  }}
+                  rating={spot.rating}
                   starSize={20}
                   starColor='rgb(80,80,80)'
                   emptyStarColor='rgb(80,80,80)'

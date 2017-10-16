@@ -12,19 +12,9 @@ class SpotPreview extends React.Component {
 		this._renderPreview = this._renderPreview.bind(this)
 		this._renderFull = this._renderFull.bind(this)
 		this.onSwipe = this.onSwipe.bind(this)
-		
-		this.state = {
-			spot: null,
-			spotId: null,
-			height: 150
-		}
-	}
 
-	componentWillReceiveProps(newProps){
-		if (newProps.activeSpot) {
-			if (this.state.spot !== newProps.activeSpot) {
-				this.setState({spot: newProps.activeSpot})
-			}
+		this.state = {
+			height: 150
 		}
 	}
 
@@ -41,23 +31,29 @@ class SpotPreview extends React.Component {
 				this.setState({ height: 150 })
 				break;
 			default:
-				return 
+				return
 		}
+	}
+
+	_formatPriceString(price) {
+		return parseFloat(Math.round(price * 100) / 100).toFixed(2);
 	}
 
 	_renderFull(){
 		const { height, width } = Dimensions.get('window')
+		const { navigation, activeSpot } = this.props
 		return (
 				<Animated.View style={{ height: this.state.height, width, flexDirection: "column", paddingTop: 10 }}>
-					<SpotShowScreen spot={this.state.spot}/>
+					<SpotShowScreen spot={activeSpot} navigation={navigation}/>
 				</Animated.View>
 		)
 	}
 
 	_renderPreview(){
 		const { height, width } = Dimensions.get('window')
-		if (this.state.spot) {
-			const spot = this.state.spot
+		const { activeSpot } = this.props
+		if (activeSpot) {
+			const spot = activeSpot
 			const address1 = spot.address_street && spot.address_number ?
 				`${spot.address_number} ${spot.address_street}` :
 				`Latitude: ${spot.latitude}`
@@ -65,7 +61,7 @@ class SpotPreview extends React.Component {
 				`${spot.address_city}, ${spot.address_state}` :
 				`Longitude: ${spot.longitude}`
 			return(
-				<Animated.View 
+				<Animated.View
 					onPress={() => this.setState({ height: height - 25 })}
 					style={{ height: 200, width, alignItems: 'center'}}>
 					<Image
@@ -78,13 +74,13 @@ class SpotPreview extends React.Component {
 								<Text style={localStyles.addressText}>{address2}</Text>
 							</View>
 							<View style={localStyles.priceAndRatingContainer}>
-								<Text style={localStyles.priceText}>${this.state.spot["price"]}/hr</Text>
+								<Text style={localStyles.priceText}>${this._formatPriceString(activeSpot["price"])}/hr</Text>
 								<StarRating
 									disabled
 									maxStars={5}
-									rating={this.state.spot["rating"]}
+									rating={activeSpot["rating"]}
 									selectedStar={(rating) => {
-										let spot = this.state.spot
+										let spot = activeSpot
 										spot["rating"] = rating
 										this.setState({ spot: spot })
 									}}
@@ -95,7 +91,7 @@ class SpotPreview extends React.Component {
 							</View>
 						</View>
 					</Image>
-				</Animated.View> 
+				</Animated.View>
 			)
 		}
 	}
@@ -184,10 +180,10 @@ const localStyles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	dimmingBackground: {
-		width: '100%', 
-		height: '100%', 
-		backgroundColor: 'rgba(0,0,0,.3)', 
-		paddingTop: 5, 
+		width: '100%',
+		height: '100%',
+		backgroundColor: 'rgba(0,0,0,.3)',
+		paddingTop: 5,
 		alignItems: 'center'
 	},
 	priceAndRatingContainer: {
