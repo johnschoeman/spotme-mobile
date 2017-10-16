@@ -74,7 +74,6 @@ class Map extends React.Component {
     }
 
     render() {
-        console.log("OS", Platform.OS);
         let spots;
         if (this.props.getSpots.allSpots) {
           spots = this.props.getSpots.allSpots;
@@ -115,7 +114,7 @@ class Map extends React.Component {
                 {this.renderCurrentLocationMarker()}
               </MapView>
               <SpotPreview
-                activeSpot={this.state.activeSpot} 
+                activeSpot={this.state.activeSpot}
                 navigation={navigation}/>
           </View>
         );
