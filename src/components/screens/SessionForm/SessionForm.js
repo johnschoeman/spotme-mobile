@@ -23,8 +23,8 @@ class SessionForm extends Component {
     };
   }
 
-  _handleSubmit = async () => {
-    const { email, password, isLogin } = this.state
+  _handleSubmit = async (demoUser) => {
+    const { email, password, isLogin } = demoUser || this.state
     const userVariables = { variables: { email, password } }
 
     let result;
@@ -62,6 +62,10 @@ class SessionForm extends Component {
     // AsyncStorage.getItem(SPOTME_USER_ID).then((storageId) => console.log('######STOR_ID', storageId))
   }
 
+  loginDemoUser() {
+    this._handleSubmit({email: 'anonymous_alien@gmail.com', password: 'password', isLogin: true})
+  }
+
   render() {
     const { isLogin } = this.state
     const formTypeTrue = this.state.isLogin ? 'Sign In' : 'Sign Up'
@@ -97,8 +101,14 @@ class SessionForm extends Component {
             onPress={() => this.setState({isLogin: !isLogin})}
             title={`Switch to ${formTypeFalse}`}
             backgroundColor='transparent'
-            color='blue'
-            buttonStyle={localStyles.button}/>
+            color='#3B5998'
+            buttonStyle={{marginTop: 5, paddingVertical: 8}}/>
+          <Button
+            onPress={() => {this.loginDemoUser()}}
+            title='Demo Login'
+            backgroundColor='transparent'
+            color='#3B5998'
+            buttonStyle={{marginVertical: 0, paddingVertical: 8}}/>
         </View>
       </View>
     )
