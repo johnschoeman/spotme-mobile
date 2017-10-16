@@ -115,7 +115,7 @@ const localStyles = StyleSheet.create({
   },
   headerText: {
     fontSize: 30,
-    color: '#666',
+    color: 'rgb(80,80,80)',
     fontWeight: '500',
   },
   labelContainer: {
@@ -125,11 +125,12 @@ const localStyles = StyleSheet.create({
   },
   sliderLabel: {
     fontSize: 20,
+    color: 'rgb(80,80,80)'
   },
   labelDurationText: {
     textAlign: 'right',
     marginRight: 30,
-    color: '#666'
+    color: 'rgb(80,80,80)'
   },
   slider: {
 

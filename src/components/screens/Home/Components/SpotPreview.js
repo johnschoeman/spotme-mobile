@@ -70,17 +70,17 @@ class SpotPreview extends React.Component {
 					style={{ height: 200, width, alignItems: 'center'}}>
 					<Image
 						style={localStyles.backgroundImg}
-						source={{ uri: "http://res.cloudinary.com/ddgt25kwb/image/upload/v1507653351/garage-spot_bcnnyu.jpg" }}>
+						source={{ uri: spot.image_url }}>
 						<View style={localStyles.dimmingBackground}>
 							<Ionicons name="ios-arrow-up" size={20} color="white" style={{ backgroundColor: 'transparent' }}/>
 							<View style={{ width, justifyContent: 'flex-start', paddingLeft: 10 }}>
 								<Text style={localStyles.addressText}>{address1}</Text>
 								<Text style={localStyles.addressText}>{address2}</Text>
 							</View>
-							<View style={{ width, flexDirection: 'row', paddingTop: 25, paddingLeft: 10, paddingRight: 10, backgroundColor: 'transparent', justifyContent: 'space-between' }}>
-								<Text style={{ backgroundColor: 'transparent', fontSize: 24, fontWeight: '900', color: 'white' }}>${this.state.spot["price"]}/hr</Text>
+							<View style={localStyles.priceAndRatingContainer}>
+								<Text style={localStyles.priceText}>${this.state.spot["price"]}/hr</Text>
 								<StarRating
-									disabled={true}
+									disabled
 									maxStars={5}
 									rating={this.state.spot["rating"]}
 									selectedStar={(rating) => {
@@ -166,6 +166,7 @@ query GetSpot($spot_id: Int) {
 export default SpotPreview;
 
 const resizeMode = 'center';
+const { height, width } = Dimensions.get('window')
 const localStyles = StyleSheet.create({
 	addressText: {
 		fontSize: 20,
@@ -188,5 +189,20 @@ const localStyles = StyleSheet.create({
 		backgroundColor: 'rgba(0,0,0,.3)', 
 		paddingTop: 5, 
 		alignItems: 'center'
+	},
+	priceAndRatingContainer: {
+		width, 
+		flexDirection: 'row', 
+		paddingTop: 25, 
+		paddingLeft: 10, 
+		paddingRight: 10, 
+		backgroundColor: 'transparent', 
+		justifyContent: 'space-between'
+	}, 
+	priceText: { 
+		backgroundColor: 'transparent', 
+		fontSize: 24, 
+		fontWeight: '900', 
+		color: 'white' 
 	}
 })
