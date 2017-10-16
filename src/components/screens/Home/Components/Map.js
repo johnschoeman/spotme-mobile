@@ -86,12 +86,13 @@ class Map extends React.Component {
           directionalOffsetThreshold: 80,
         };
         const { height, width } = Dimensions.get('window')
-        const spotImgiOS = require('../../../../../assets/icons/spotme_marker.png') 
+        const spotImgiOS = require('../../../../../assets/icons/spotme_marker.png')
         const spotImgAndroid = require('../../../../../assets/icons/spotme_marker_android.png')
         const activeSpotImgiOS = require('../../../../../assets/icons/spotme_marker_selected.png');
         const activeSpotImgAndroid = require('../../../../../assets/icons/spotme_marker_selected_android.png')
         const spotImg = Platform.OS === "ios" ? spotImgiOS : spotImgAndroid
         const activeSpotImg = Platform.OS === "ios" ? activeSpotImgiOS : activeSpotImgAndroid
+        const { navigation } = this.props
         return (
           <View>
               <StatusBar
@@ -113,7 +114,9 @@ class Map extends React.Component {
                 ))}
                 {this.renderCurrentLocationMarker()}
               </MapView>
-              <SpotPreview activeSpot={this.state.activeSpot}/>
+              <SpotPreview
+                activeSpot={this.state.activeSpot} 
+                navigation={navigation}/>
           </View>
         );
     }
