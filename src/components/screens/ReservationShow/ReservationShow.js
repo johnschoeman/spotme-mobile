@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, StatusBar, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, StatusBar, Dimensions, Platform } from 'react-native';
 import Timer from 'react-native-timer';
 
 export default class ReservationShow extends React.Component {
+
   constructor() {
     super()
     this.state = {
