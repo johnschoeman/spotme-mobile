@@ -35,7 +35,8 @@ export default class ReservationShow extends React.Component {
     const address2 = `${spot.address_city}, ${spot.address_state}`
     const timeRemaining = this.state.timeRemaining
     const timeRemainingHours = this.pad(Math.floor((timeRemaining/3600)))
-    const timeRemainingMinutes = this.pad(Math.floor((timeRemaining/60)))
+    const timeRemainingMinutes = this.pad(Math.floor(((timeRemaining % 3600) /60)))
+    console.log("Time remaining minutes", timeRemainingMinutes)
     const timeRemainingSeconds = this.pad(timeRemaining % 60)
     const timeRemainingString = `${timeRemainingHours}:${timeRemainingMinutes}:${timeRemainingSeconds}`
     return (
