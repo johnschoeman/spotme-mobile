@@ -13,7 +13,7 @@ export default class ReservationShow extends React.Component {
   componentDidMount() {
     const endTime = this.props.navigation.state.params.reservation.createReservation.end_time_since_epoch
     const startTime = new Date().getTime()
-    this.setState({ timeRemaining: endTime - startTime })
+    this.setState({ timeRemaining: Math.floor((endTime - startTime) / 1000)})
     Timer.setInterval(this, 'timer', 
                       () => {
                         if(this.state.timeRemaining > 0) {
@@ -35,7 +35,7 @@ export default class ReservationShow extends React.Component {
     const address2 = `${spot.address_city}, ${spot.address_state}`
     const timeRemaining = this.state.timeRemaining
     const timeRemainingHours = this.pad(Math.floor((timeRemaining/3600)))
-    const timeRemainingMinutes = this.pad(Math.floor((timeRemaining/60)))
+    const timeRemainingMinutes = this.pad(Math.floor(((timeRemaining % 3600) /60)))
     const timeRemainingSeconds = this.pad(timeRemaining % 60)
     const timeRemainingString = `${timeRemainingHours}:${timeRemainingMinutes}:${timeRemainingSeconds}`
     return (
