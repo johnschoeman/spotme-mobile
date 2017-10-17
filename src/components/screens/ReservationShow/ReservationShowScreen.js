@@ -1,10 +1,21 @@
 import React from 'react'
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 
 import ReservationShow from './ReservationShow'
 import styles from '../../../styles/styles'
 
 export default class ReservationShowScreen extends React.Component {
+
+  static navigationOptions = ({ navigation, screenProps }) => {
+    const { navigate } = navigation
+    return {
+      title: "Reservation",
+      headerTitleStyle: { color: 'white' },
+      headerStyle: Platform.OS === 'ios' ? { backgroundColor: 'rgb(150, 0, 0)' } : { backgroundColor: 'rgb(150, 0, 0)', marginTop: 25 },
+      headerTintColor: 'white'
+    }
+  }
+
 
   // static navigationOptions = ({ navigation }) => {
   // }
