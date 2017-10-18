@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo'
-import { AsyncStorage, View, StyleSheet, Text } from 'react-native'
+import { Image, AsyncStorage, View, StyleSheet, Text } from 'react-native'
 import {
   FormLabel, FormInput, FormValidationMessage, Button
 } from 'react-native-elements'
@@ -65,11 +65,14 @@ class SessionForm extends Component {
 
   render() {
     const { isLogin } = this.state
-    const formTypeTrue = this.state.isLogin ? 'Sign In' : 'Sign Up'
-    const formTypeFalse = this.state.isLogin ?  'Sign Up' : 'Sign In'
+    const formTypeTrue = this.state.isLogin ? 'Sign in' : 'Sign up'
+    const formTypeFalse = this.state.isLogin ?  'Sign up' : 'Sign in'
 
     return (
       <View style={localStyles.container}>
+        <Image style={localStyles.logo}
+          resizeMode={'contain'}
+          source={require('../../../../assets/icons/spotme_logo.png')} />
         <Text style={localStyles.heading}>{formTypeTrue}</Text>
         <View style={localStyles.form}>
           <FormLabel>Email or Username</FormLabel>
@@ -133,6 +136,11 @@ const localStyles = StyleSheet.create({
     alignItems: 'stretch',
     paddingHorizontal: 10,
     paddingVertical: 20,
+  },
+  logo: {
+    alignSelf: 'stretch',
+    width: '90%',
+    marginLeft: 15
   },
   heading: {
     textAlign: 'center',
