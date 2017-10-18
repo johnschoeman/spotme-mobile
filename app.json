@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "spotme-mobile",
-    "description": "spotme on mobile",
+    "name": "SpotMe",
+    "description": "SpotMe on mobile",
     "slug": "expo-auth0",
     "privacy": "public",
     "sdkVersion": "21.0.0",
@@ -17,7 +17,8 @@
       "assetExts": ["ttf", "mp4"]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aateam.spotme"
     },
     "android": {
       "package": "com.aateam.spotme"
