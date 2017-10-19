@@ -18,6 +18,7 @@ mutation CreateReservationMutation($spot_id: Int!, $start_time: DateTime!, $end_
       address_street
       address_city
       address_state
+      address_zip
       image_url
       price
       hostedBy {
