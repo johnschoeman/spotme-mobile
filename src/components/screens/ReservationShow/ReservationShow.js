@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, StatusBar, Dimensions, Platform } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, StatusBar, Dimensions, Platform } from 'react-native';
 import Timer from 'react-native-timer';
+import getDirections from 'react-native-google-maps-directions'
 
 export default class ReservationShow extends React.Component {
 
@@ -29,6 +30,31 @@ export default class ReservationShow extends React.Component {
     return (num < 10) ? '0' + num.toString() : num.toString();
   }
 
+  handleGetDirections = () => {
+    const reservation = this.props.navigation.state.params.reservation.createReservation
+    const spot = reservation.spot
+    console.log("LAT, ", spot.latitude)
+    console.log("LONG, ", spot.longitude)
+    const data = {
+      source: {
+        latitude: spot.latitude,
+        longitude: spot.longitude
+      },
+      // destination: {
+      //   latitude: spot.latitude,
+      //   longitude: spot.longitude
+      // },
+      params: [
+        {
+          key: "dirflg",
+          value: "d"
+        }
+      ]
+    }
+
+    getDirections(data)
+  }
+
   render() {
     const reservation = this.props.navigation.state.params.reservation.createReservation
     const spot = reservation.spot
@@ -52,6 +78,7 @@ export default class ReservationShow extends React.Component {
         />
         <Text style={localStyles.defaultText}>Your reservation expires in:</Text>
         <Text style={localStyles.timerText}>{timeRemainingString}</Text>
+        <Button onPress={this.handleGetDirections} title="Get Directions" />
       </View>
     )
   }
