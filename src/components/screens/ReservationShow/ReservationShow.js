@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Image, StyleSheet, StatusBar, Dimensions, Platform } from 'react-native';
+import { TouchableOpacity, Linking, View, Text, Button, Image, StyleSheet, StatusBar, Dimensions, Platform } from 'react-native';
 import Timer from 'react-native-timer';
 import getDirections from 'react-native-google-maps-directions'
 
@@ -7,6 +7,7 @@ export default class ReservationShow extends React.Component {
 
   constructor() {
     super()
+    this.handleGetDirections = this.handleGetDirections.bind(this)
     this.state = {
       timeRemaining: 0
     }
@@ -33,26 +34,9 @@ export default class ReservationShow extends React.Component {
   handleGetDirections = () => {
     const reservation = this.props.navigation.state.params.reservation.createReservation
     const spot = reservation.spot
-    console.log("LAT, ", spot.latitude)
-    console.log("LONG, ", spot.longitude)
-    const data = {
-      source: {
-        latitude: spot.latitude,
-        longitude: spot.longitude
-      },
-      // destination: {
-      //   latitude: spot.latitude,
-      //   longitude: spot.longitude
-      // },
-      params: [
-        {
-          key: "dirflg",
-          value: "d"
-        }
-      ]
-    }
-
-    getDirections(data)
+    const address1 = `${spot.address_number} ${spot.address_street}`.split(" ").join("+")
+    const address2 = `${spot.address_city} ${spot.address_state} ${spot.address_zip}`.split(" ").join("+")
+    Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${address1}+${address2}&travelmode=driving`)
   }
 
   render() {
@@ -78,7 +62,11 @@ export default class ReservationShow extends React.Component {
         />
         <Text style={localStyles.defaultText}>Your reservation expires in:</Text>
         <Text style={localStyles.timerText}>{timeRemainingString}</Text>
-        <Button onPress={this.handleGetDirections} title="Get Directions" />
+        <TouchableOpacity
+          style={localStyles.dirButton}
+          onPress={() => this.handleGetDirections}>
+          <Text style={localStyles.dirButtonText}>Get Directions</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -105,5 +93,17 @@ const localStyles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '500',
     color: 'rgb(80,80,80)'
+  },
+  dirButton: {
+    width: 150,
+    padding: 7,
+    backgroundColor: 'rgb(150, 0, 0)',
+    alignItems: 'center',
+    borderRadius: 16,
+  },
+  dirButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
   }
 })
