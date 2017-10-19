@@ -62,11 +62,13 @@ export default class ReservationShow extends React.Component {
         />
         <Text style={localStyles.defaultText}>Your reservation expires in:</Text>
         <Text style={localStyles.timerText}>{timeRemainingString}</Text>
-        <TouchableOpacity
-          style={localStyles.dirButton}
-          onPress={() => this.handleGetDirections}>
-          <Text style={localStyles.dirButtonText}>Get Directions</Text>
-        </TouchableOpacity>
+        <View style={localStyles.addButtonView}>
+          <TouchableOpacity
+            style={localStyles.dirButton}
+            onPress={() => this.handleGetDirections()}>
+            <Text style={localStyles.dirButtonText}>Get Directions</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -93,6 +95,11 @@ const localStyles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '500',
     color: 'rgb(80,80,80)'
+  },
+  addButtonView: {
+    alignItems: 'center',
+    paddingTop: 140,
+    paddingBottom: 30,
   },
   dirButton: {
     width: 150,
